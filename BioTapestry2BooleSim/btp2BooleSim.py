@@ -87,10 +87,7 @@ def generate_bool_expression(rc_spec, incoming_edges):
     for edge in incoming_edges:
         if edge.get_interaction_num() > 0: activator_nodes.append(edge.get_from_node())
         elif edge.get_interaction_num() < 0: repressor_nodes.append(edge.get_from_node())
-        else: neutral_nodes.add(edge.get_from_node())
-    print('Activator Nodes: '+pp.pformat(activator_nodes))
-    print('Repressor Nodes: '+pp.pformat(repressor_nodes))
-    print('Neutral Nodes: '+pp.pformat(neutral_nodes))
+        else: neutral_nodes.append(edge.get_from_node())
 
     # generate expression based on rc_spec
     # rc-0: AllActivators AND NoRepressors
