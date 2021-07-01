@@ -159,7 +159,7 @@ def generate_bool_expression(rc_spec, incoming_edges):
     elif rc_spec == '17':
         bool_expression = Or(Not(all_repressors_expr(incoming_edges)), Not(no_activators_expr(incoming_edges)))
 
-    bool_expression = simplify(str(bool_expression))
+    bool_expression = simplify_logic(str(bool_expression))
     return clean_bool_expression(str(bool_expression))
 
 '''
@@ -231,8 +231,6 @@ def main():
                 node_to_incoming_edges[to_node].add(edge)
             else:
                 node_to_incoming_edges[to_node] = {edge}
-    pp.pprint(node_set)
-    pp.pprint(node_to_incoming_edges)
 
     # initialize default rc's for each node
     for node in node_set:
@@ -245,12 +243,13 @@ def main():
             rc_spec = tokens[1].rstrip()
             rc_specs[node_id] = rc_spec
 
+    print('rc_specs:')
     pp.pprint(rc_specs)
 
     # generate BooleSim rules for all nodes, using the rc_specs
     for node, incoming_edges in node_to_incoming_edges.items():
         boolesim_rules[node] = generate_bool_expression(rc_specs[node], incoming_edges)
-
+    print('answer:')
     pp.pprint(boolesim_rules)
 
 main()
