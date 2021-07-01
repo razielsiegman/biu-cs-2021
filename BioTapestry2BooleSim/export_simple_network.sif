@@ -1,4 +1,4 @@
-[Region 1]:Gene 1	PROMOTES	[Region 1]:Gene 5
-[Region 1]:Gene 2	PROMOTES	[Region 1]:Gene 5
-[Region 1]:Gene 3	REPRESSES	[Region 1]:Gene 5
-[Region 1]:Gene 4	REPRESSES	[Region 1]:Gene 5
+[Region 1]:Gene1	PROMOTES	[Region 1]:Gene5
+[Region 1]:Gene2	PROMOTES	[Region 1]:Gene5
+[Region 1]:Gene3	REPRESSES	[Region 1]:Gene5
+[Region 1]:Gene4	REPRESSES	[Region 1]:Gene5

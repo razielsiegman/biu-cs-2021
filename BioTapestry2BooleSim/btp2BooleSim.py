@@ -19,6 +19,8 @@ Steps:
 
 '''
 import pprint as pp
+from sympy.logic.boolalg import *
+from sympy import *
 
 DEFAULT_RC_SPEC = '8' # chose randomly
 
@@ -65,13 +67,40 @@ def interaction_num_to_str(interaction_num):
 def parse_node_id(full_node_id):
     return full_node_id[full_node_id.find(':')+1:]
 
+def clean_bool_expression(bool_expression):
+    bool_expression = bool_expression.replace('&','&&')
+    bool_expression = bool_expression.replace('~','!')
+    return bool_expression
+
 # takes in regulatory conditions specifications, along with the interactions of the node, 
 # and translates those into a boolean expression readable by BooleSim  
 def generate_bool_expression(rc_spec, incoming_edges):
-    bool_expression = ''
-    # rc-0: 
+    bool_expression = symbols('False')
+
+    # categorize nodes by interaction
+    activator_nodes = []
+    repressor_nodes = []
+    neutral_nodes = []
+    for edge in incoming_edges:
+        if edge.get_interaction_num() > 0: activator_nodes.append(edge.get_from_node())
+        elif edge.get_interaction_num() < 0: repressor_nodes.append(edge.get_from_node())
+        else: neutral_nodes.add(edge.get_from_node())
+    print('Activator Nodes: '+pp.pformat(activator_nodes))
+    print('Repressor Nodes: '+pp.pformat(repressor_nodes))
+    print('Neutral Nodes: '+pp.pformat(neutral_nodes))
+
+    # generate expression based on rc_spec
+    # rc-0: AllActivators AND NoRepressors
     if rc_spec == '0':
-        return None
+        activator_expr = symbols('True')
+        repressor_expr = symbols('True')
+        for i in range(len(activator_nodes)):
+            activator_expr = And(activator_expr,symbols(activator_nodes[i]))
+        for i in range(len(repressor_nodes)):
+            repressor_expr = And(repressor_expr,Not(symbols(repressor_nodes[i])))
+        bool_expression = And(activator_expr, repressor_expr)
+        bool_expression = simplify(str(bool_expression))
+        return clean_bool_expression(str(bool_expression))
 
 def main():
     # init data structures
