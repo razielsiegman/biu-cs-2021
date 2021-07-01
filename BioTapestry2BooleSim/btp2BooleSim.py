@@ -63,10 +63,13 @@ def interaction_num_to_str(interaction_num):
     }
     return switcher.get(interaction_num)
 
-#TODO still unfinished, check docs
+#TODO still unfinished, check btp docs
 def parse_node_id(full_node_id):
+    # replace spaces with underscores
+    # 
     return full_node_id[full_node_id.find(':')+1:]
 
+# translate from python boolean-logic syntax to BooleSim readable syntax
 def clean_bool_expression(bool_expression):
     bool_expression = bool_expression.replace('&','&&')
     bool_expression = bool_expression.replace('~','!')
