@@ -88,19 +88,39 @@ def generate_bool_expression(rc_spec, incoming_edges):
         if edge.get_interaction_num() > 0: activator_nodes.append(edge.get_from_node())
         elif edge.get_interaction_num() < 0: repressor_nodes.append(edge.get_from_node())
         else: neutral_nodes.append(edge.get_from_node())
-
+    
+    bool_expression
     # generate expression based on rc_spec
     # rc-0: AllActivators AND NoRepressors
     if rc_spec == '0':
-        activator_expr = symbols('True')
-        repressor_expr = symbols('True')
-        for i in range(len(activator_nodes)):
-            activator_expr = And(activator_expr,symbols(activator_nodes[i]))
-        for i in range(len(repressor_nodes)):
-            repressor_expr = And(repressor_expr,Not(symbols(repressor_nodes[i])))
-        bool_expression = And(activator_expr, repressor_expr)
-        bool_expression = simplify(str(bool_expression))
-        return clean_bool_expression(str(bool_expression))
+        bool_expression = And(get_all_activators_expr(activator_nodes), get_no_repressors_expr(repressor_nodes))
+
+    bool_expression = simplify(str(bool_expression))
+    return clean_bool_expression(str(bool_expression))
+
+def get_all_activators_expr(activator_nodes):
+    bool_expression = symbols('True')
+    for i in range(len(activator_nodes)):
+        bool_expression = And(bool_expression,symbols(activator_nodes[i]))
+    return simplify(str(bool_expression))
+
+def get_no_activators_expr(activator_nodes):
+    bool_expression = symbols('True')
+    for i in range(len(activator_nodes)):
+        bool_expression = And(bool_expression,Not(symbols(activator_nodes[i])))
+    return simplify(str(bool_expression))
+
+def get_all_repressors_expr(repressor_nodes):
+    bool_expression = symbols('True')
+    for i in range(len(repressor_nodes)):
+        bool_expression = And(bool_expression,symbols(repressor_nodes[i]))
+    return simplify(str(bool_expression))
+
+def get_no_repressors_expr(repressor_nodes):
+    bool_expression = symbols('True')
+    for i in range(len(repressor_nodes)):
+        bool_expression = And(bool_expression,Not(symbols(repressor_nodes[i])))
+    return simplify(str(bool_expression))
 
 def main():
     # init data structures
