@@ -72,6 +72,7 @@ def parse_node_id(full_node_id):
 # translate from python boolean-logic syntax to BooleSim readable syntax
 def clean_bool_expression(bool_expression):
     bool_expression = bool_expression.replace('&','&&')
+    bool_expression = bool_expression.replace('|','||')
     bool_expression = bool_expression.replace('~','!')
     return bool_expression
 
