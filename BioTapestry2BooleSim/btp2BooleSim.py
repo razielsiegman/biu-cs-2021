@@ -202,7 +202,7 @@ def get_activator_nodes(incoming_edges):
 def get_repressor_nodes(incoming_edges):
     repressor_nodes = []
     for edge in incoming_edges:
-        if edge.get_interaction_num() > 0: repressor_nodes.append(edge.get_from_node())
+        if edge.get_interaction_num() < 0: repressor_nodes.append(edge.get_from_node())
     return repressor_nodes
 
 def main():
