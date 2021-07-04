@@ -1,4 +1,4 @@
-Gene_2 = Gene_5 && True && !(Gene_4 && True)
-Gene_3 = Gene_4 && True && !True
-Gene_5 = Gene_1 && Gene_2 && True && !(Gene_3 && Gene_4 && True)
-Gene_1 = True && !(Gene_2 && True)
+Gene_2 = Gene_5 && !Gene_4
+Gene_3 = False
+Gene_5 = Gene_1 && Gene_2 && (!Gene_3 || !Gene_4)
+Gene_1 = !Gene_2

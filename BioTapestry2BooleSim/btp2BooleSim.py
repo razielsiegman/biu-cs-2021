@@ -55,7 +55,7 @@ def clean_bool_expression(bool_expression):
 # takes in regulatory conditions specifications, along with the interactions of the node, 
 # and translates those into a boolean expression readable by BooleSim  
 def generate_bool_expression(rc_spec, incoming_edges):
-    bool_expression = symbols('False') # random init
+    bool_expression = symbols('false') # random init
     
     # AllActivators AND NoRepressors
     if rc_spec == '0':
@@ -144,28 +144,28 @@ Shortcut methods to retrieve the 4 basic expressions
 '''
 def all_activators_expr(incoming_edges):
     activator_nodes = get_activator_nodes(incoming_edges)
-    bool_expression = symbols('True')
+    bool_expression = symbols('true')
     for i in range(len(activator_nodes)):
         bool_expression = And(bool_expression,symbols(activator_nodes[i]))
     return bool_expression
 
 def no_activators_expr(incoming_edges):
     activator_nodes = get_activator_nodes(incoming_edges)
-    bool_expression = symbols('True')
+    bool_expression = symbols('true')
     for i in range(len(activator_nodes)):
         bool_expression = And(bool_expression,Not(symbols(activator_nodes[i])))
     return bool_expression
 
 def all_repressors_expr(incoming_edges):
     repressor_nodes = get_repressor_nodes(incoming_edges)
-    bool_expression = symbols('True')
+    bool_expression = symbols('true')
     for i in range(len(repressor_nodes)):
         bool_expression = And(bool_expression,symbols(repressor_nodes[i]))
     return bool_expression
 
 def no_repressors_expr(incoming_edges):
     repressor_nodes = get_repressor_nodes(incoming_edges)
-    bool_expression = symbols('True')
+    bool_expression = symbols('true')
     for i in range(len(repressor_nodes)):
         bool_expression = And(bool_expression,Not(symbols(repressor_nodes[i])))
     return bool_expression
