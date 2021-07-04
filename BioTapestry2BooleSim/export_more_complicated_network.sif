@@ -1,8 +1,0 @@
-Gene 5	PROMOTES	Gene 2
-Gene 4	PROMOTES	Gene 3
-Gene 4	REPRESSES	Gene 2
-Gene 1	PROMOTES	Gene 5
-Gene 2	PROMOTES	Gene 5
-Gene 3	REPRESSES	Gene 5
-Gene 4	REPRESSES	Gene 5
-Gene 2	REPRESSES	Gene 1
