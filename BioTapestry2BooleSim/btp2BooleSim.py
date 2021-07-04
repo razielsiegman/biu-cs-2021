@@ -160,7 +160,7 @@ def generate_bool_expression(rc_spec, incoming_edges):
     elif rc_spec == '17':
         bool_expression = Or(Not(all_repressors_expr(incoming_edges)), Not(no_activators_expr(incoming_edges)))
 
-    bool_expression = simplify_logic(str(bool_expression))
+    #bool_expression = simplify_logic(str(bool_expression))
     return clean_bool_expression(str(bool_expression))
 
 '''
@@ -206,6 +206,9 @@ def get_repressor_nodes(incoming_edges):
         if edge.get_interaction_num() < 0: repressor_nodes.append(edge.get_from_node())
     return repressor_nodes
 
+'''
+Main Script
+'''
 def main():
     # init data structures
     node_set = set()
