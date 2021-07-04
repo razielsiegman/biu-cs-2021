@@ -2,7 +2,7 @@ import pprint as pp
 from sympy.logic.boolalg import *
 from sympy import *
 
-DEFAULT_RC_SPEC = '8' # chose randomly
+DEFAULT_RC_SPEC = '2' # chose randomly
 
 '''
 CLASSES 
@@ -45,8 +45,7 @@ def interaction_num_to_str(interaction_num):
 
 #TODO still unfinished, check btp docs
 def parse_node_id(full_node_id):
-    # replace spaces with underscores
-    # 
+    full_node_id = full_node_id.replace(' ','_')
     return full_node_id[full_node_id.find(':')+1:]
 
 # translate from python boolean-logic syntax to BooleSim readable syntax
@@ -137,8 +136,8 @@ def generate_bool_expression(rc_spec, incoming_edges):
     elif rc_spec == '17':
         bool_expression = Or(Not(all_repressors_expr(incoming_edges)), Not(no_activators_expr(incoming_edges)))
 
-    simplified_expression = simplify_logic(str(bool_expression))
-    return clean_bool_expression(str(simplified_expression))
+    bool_expression = simplify_logic(str(bool_expression))
+    return clean_bool_expression(str(bool_expression))
 
 '''
 Shortcut methods to retrieve the 4 basic expressions
