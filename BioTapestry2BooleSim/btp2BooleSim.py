@@ -1,23 +1,3 @@
-'''
-INPUT 1 -> .sif file detailing the edges of the network
-INPUT 2 -> regulatory conditions specifications (rc-specs) file (printing-pages format?)
-OUTPUT -> BooleSim readable rules-file
-
-Steps:
-0. Initialize data structures:
-    - List of Nodes
-    - Dictionary of type Node -> Set of Incoming Edges
-        > this assumes an Edge object, contains info on the affecting node and the type of interaction
-        > interactionType can be any of {REPRESSES=-1, NEUTRAL=0, PROMOTES=1}
-1. Iterate through edges, and for each one, do the following:
-    - add the affecting node and the affected node to the list of nodes (if not present)
-        > includes parsing the nodeID based on format specified in BTP documentation
-    - add the appropriate edge to the affected node's set of incoming edges in the dict
-2. For each node in the dict keyset, do the following:
-    - parse the regulatory condition associated with the node from the rc-specs file
-    - translate the rc into a boolean expression, and add it to 
-
-'''
 import pprint as pp
 from sympy.logic.boolalg import *
 from sympy import *
