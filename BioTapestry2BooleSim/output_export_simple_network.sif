@@ -1,0 +1,1 @@
+Gene5 = (Gene1 && Gene2 && True) || (True && !Gene3 && !Gene4)

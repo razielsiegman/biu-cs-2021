@@ -222,23 +222,23 @@ def main():
     # iterate through .sif file
     with open(sif_filename, 'r') as f:
         for line in f.readlines():
-            # parse the .sif line
+            # parse the .sif line as an edge. 
+            # format is 'nodeID1 [tab] [PROMOTES | REPRESSES | REGULATES] [tab] nodeID2'
             tokens = line.split('\t')
             from_node = parse_node_id(tokens[0])
             interaction_str = tokens[1]
-            to_node = parse_node_id(tokens[2]).rstrip()
+            to_node = parse_node_id(tokens[2]).rstrip() # remove newline char
             edge = Edge(from_node, to_node, interaction_str)
             
-            # update data structures
+            # update (node -> incoming edges) map
             node_set.update([from_node, to_node])
-            if to_node in node_to_incoming_edges:
-                node_to_incoming_edges[to_node].add(edge)
-            else:
-                node_to_incoming_edges[to_node] = {edge}
+            if to_node in node_to_incoming_edges: node_to_incoming_edges[to_node].add(edge)
+            else: node_to_incoming_edges[to_node] = {edge}
 
     # initialize default rc's for each node
     for node in node_set:
         rc_specs[node] = DEFAULT_RC_SPEC
+    
     # iterate through rc_specs and parse
     with open(rc_specs_filename, 'r') as f:
         for line in f.readlines():
@@ -247,14 +247,17 @@ def main():
             rc_spec = tokens[1].rstrip()
             rc_specs[node_id] = rc_spec
 
-    print('rc_specs:')
-    pp.pprint(rc_specs)
-
     # generate BooleSim rules for all nodes, using the rc_specs
     for node, incoming_edges in node_to_incoming_edges.items():
         boolesim_rules[node] = generate_bool_expression(rc_specs[node], incoming_edges)
     print('answer:')
     pp.pprint(boolesim_rules)
+
+    with open('output_'+sif_filename, 'w') as f:
+        text = ''
+        for node, rule in boolesim_rules.items():
+            text += '{} = {}\n'.format(node, rule)
+        f.write(text.rstrip())
 
 main()
 
