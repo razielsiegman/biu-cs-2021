@@ -8,41 +8,24 @@ DEFAULT_RC_SPEC = '2' # chose randomly
 CLASSES 
 '''
 class Edge:
-    def __init__(self, fromNode, toNode, interaction_str):
+    def __init__(self, fromNode, toNode, interaction):
         self.fromNode = fromNode
         self.toNode = toNode
-        self.interaction_num = interaction_str_to_num(interaction_str)
+        self.interaction = interaction
 
     def __str__(self) -> str:
-        interaction_str = interaction_num_to_str(self.interaction_num)
-        return '<Edge from {} to {} with interaction={}>'.format(self.fromNode, self.toNode, interaction_str)
+        return '<Edge from {} to {} with interaction={}>'.format(self.fromNode, self.toNode, self.interaction)
 
     def get_from_node(self):
         return self.fromNode
     def get_to_node(self):
         return self.toNode
-    def get_interaction_num(self):
-        return self.interaction_num
+    def get_interaction(self):
+        return self.interaction
 
 '''
 HELPER METHODS
 '''
-def interaction_str_to_num(interaction_str):
-    switcher = {
-        'REPRESSES': -1,
-        'NEUTRAL': 0,
-        'PROMOTES': 1,
-    }
-    return switcher.get(interaction_str)
-
-def interaction_num_to_str(interaction_num):
-    switcher = {
-        -1: 'REPRESSES',
-        0: 'NEUTRAL',
-        1: 'PROMOTES',
-    }
-    return switcher.get(interaction_num)
-
 #TODO still unfinished, check btp docs
 def parse_node_id(full_node_id):
     full_node_id = full_node_id.replace(' ','_')
@@ -173,13 +156,13 @@ def no_repressors_expr(incoming_edges):
 def get_activator_nodes(incoming_edges):
     activator_nodes = []
     for edge in incoming_edges:
-        if edge.get_interaction_num() > 0: activator_nodes.append(edge.get_from_node())
+        if edge.get_interaction() == 'PROMOTES': activator_nodes.append(edge.get_from_node())
     return activator_nodes
 
 def get_repressor_nodes(incoming_edges):
     repressor_nodes = []
     for edge in incoming_edges:
-        if edge.get_interaction_num() < 0: repressor_nodes.append(edge.get_from_node())
+        if edge.get_interaction() == 'REPRESSES': repressor_nodes.append(edge.get_from_node())
     return repressor_nodes
 
 '''
