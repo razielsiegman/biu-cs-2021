@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 
-OPTIONAL_STYLE = 'dot' # other option is 'dash', or even a tuple of ('dot','dash')
+OPTIONAL_STYLES = ('dot','dash') # other option is 'dash', or even a tuple of ('dot','dash')
 
 class Edge:
     def __init__(self, fromNode, toNode, interaction, is_optional=False):
@@ -73,21 +73,22 @@ def get_with_btp():
     for node in root.findall(".//drop[perLinkDrawStyle]"):
         style = node[0][0].attrib['style']
         edge = ref_to_edge[node.attrib['ref']]
-        if style == OPTIONAL_STYLE: edge.is_optional = True
+        if style in OPTIONAL_STYLES: edge.is_optional = True
     
     return edge_set
 
 def main():
     #edge_set = get_with_sif()
     edge_set = get_with_btp()
-    
-    print('EDGE SET:')
-    for e in edge_set: print(e)
 
-    with open('output2.txt', 'w') as f:
+    with open('output.txt', 'w') as f:
         text = ''
         for edge in edge_set:
-            text += '{}\t{}\t{};\n'.format(edge.fromNode, edge.toNode, edge.interaction)
+            text += '{fromNode}\t{toNode}\t{interaction}{opt};\n'.format( \
+                fromNode=edge.fromNode, \
+                toNode=edge.toNode, \
+                interaction=edge.interaction, \
+                opt='\toptional' if edge.is_optional else '')
         f.write(text.rstrip())
 
 main()
