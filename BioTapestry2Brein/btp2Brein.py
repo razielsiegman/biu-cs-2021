@@ -29,9 +29,8 @@ def parse_node_id(full_node_id):
     full_node_id = full_node_id.replace(' ','_')
     return full_node_id[full_node_id.find(':')+1:]
 
-def get_with_sif():
+def get_with_sif(sif_filename):
     edge_set = set()
-    sif_filename = input('Enter .sif filename: ')
 
     # iterate through .sif file
     with open(sif_filename, 'r') as f:
@@ -47,9 +46,8 @@ def get_with_sif():
             edge_set.add(edge)
     return edge_set
 
-def get_with_btp():
+def get_with_btp(btp_filename):
     edge_set = set()
-    btp_filename = input('Enter .btp filename: ')
     root = ET.parse(btp_filename).getroot()
 
     node_id_to_name = {}
@@ -79,8 +77,12 @@ def get_with_btp():
     return edge_set
 
 def main():
-    #edge_set = get_with_sif()
-    edge_set = get_with_btp()
+    edge_set = set()
+    filename = input('Enter filename: ')
+    suffix = filename[-4:]
+    if suffix == '.btp': edge_set = get_with_btp(filename)
+    elif suffix == '.sif': edge_set = get_with_sif(filename)
+    else: raise Exception('File type "{}" is not supported'.format(suffix))
 
     with open('model.net', 'w') as f:
         text = ''
