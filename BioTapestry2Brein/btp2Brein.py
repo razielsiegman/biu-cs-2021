@@ -101,6 +101,10 @@ def get_rc_text_one_by_one(node_set):
         )
     return rc_text
 
+def manually_enter_optionals(edge_set):
+    for edge in edge_set:
+        if input('Is {} optional [y/n]? '.format(str(edge))) == 'y':
+            edge.is_optional = True
 
 def main():
     edge_set = set()
@@ -131,6 +135,7 @@ def main():
     rc_text = rc_text.rstrip() + '\n'
 
     edges_text = ''
+    if suffix == '.sif': manually_enter_optionals(edge_set)
     for edge in edge_set:
         edges_text += '{fromNode}\t{toNode}\t{interaction}{opt};\n'.format(
             fromNode=edge.fromNode,
