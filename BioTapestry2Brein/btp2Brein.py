@@ -103,7 +103,7 @@ def get_rc_text_one_by_one(node_set):
 
 def manually_enter_optionals(edge_set):
     for edge in edge_set:
-        if input('Is {} optional [y/n]? '.format(str(edge))) == 'y':
+        if input('Should {} be optional [y/n]? '.format(str(edge))) == 'y':
             edge.is_optional = True
 
 def main():
