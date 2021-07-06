@@ -10,7 +10,8 @@ class Edge:
         self.is_optional = is_optional
 
     def __str__(self) -> str:
-        return '<Edge from {} to {} with interaction={}, optional={}>'.format(self.fromNode, self.toNode, self.interaction, self.is_optional)
+        return '<Edge from {} to {} with interaction={}, optional={}>'.format( \
+            self.fromNode, self.toNode, self.interaction, self.is_optional)
 
     def __eq__(self, o) -> bool:
         if isinstance(o, Edge):
@@ -81,7 +82,7 @@ def main():
     #edge_set = get_with_sif()
     edge_set = get_with_btp()
 
-    with open('output.txt', 'w') as f:
+    with open('model.net', 'w') as f:
         text = ''
         for edge in edge_set:
             text += '{fromNode}\t{toNode}\t{interaction}{opt};\n'.format( \
