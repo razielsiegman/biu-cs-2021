@@ -32,7 +32,21 @@ def parse_node_id(full_node_id):
     return full_node_id[full_node_id.find(':')+1:]
 
 
-def get_with_sif(sif_filename):
+def get_edge_set_from_file():
+    edge_set = set()
+    filename = input('Enter filename: ')
+    suffix = filename[-4:]
+    if suffix == '.btp':
+        return get_edge_set_with_btp(filename)
+    elif suffix == '.sif':
+        edge_set = get_edge_set_with_sif(filename)
+        if input('Would you like to manually input optional tags [y/n]? ') == 'y':
+            manually_enter_optionals(edge_set)
+        return edge_set
+    else:
+        raise Exception('File type "{}" is not supported'.format(suffix))
+
+def get_edge_set_with_sif(sif_filename):
     edge_set = set()
 
     # iterate through .sif file
@@ -51,7 +65,7 @@ def get_with_sif(sif_filename):
     return edge_set
 
 
-def get_with_btp(btp_filename):
+def get_edge_set_with_btp(btp_filename):
     edge_set = set()
     root = ET.parse(btp_filename).getroot()
 
@@ -101,47 +115,49 @@ def get_rc_text_one_by_one(node_set):
         )
     return rc_text
 
+
 def manually_enter_optionals(edge_set):
     for edge in edge_set:
         if input('Should {} be optional [y/n]? '.format(str(edge))) == 'y':
             edge.is_optional = True
 
-def main():
-    edge_set = set()
-    filename = input('Enter filename: ')
-    suffix = filename[-4:]
-    if suffix == '.btp':
-        edge_set = get_with_btp(filename)
-    elif suffix == '.sif':
-        edge_set = get_with_sif(filename)
-    else:
-        raise Exception('File type "{}" is not supported'.format(suffix))
 
-    directive_text = \
-        'directive updates {};\ndirective length {};\ndirective uniqueness {};\ndirective limit {};\ndirective regulation {};\n'.format(
-            input('directive updates: '),
-            input('directive length: '),
-            input('directive uniqueness: '),
-            input('directive limit: '),
-            input('directive regulation: ')
-        )
+def get_directive_text():
+    return 'directive updates {};\ndirective length {};\ndirective uniqueness {};\ndirective limit {};\ndirective regulation {};\n'.format(
+        input('directive updates: '),
+        input('directive length: '),
+        input('directive uniqueness: '),
+        input('directive limit: '),
+        input('directive regulation: ')
+    )
 
-    node_set = extract_nodes_from_edge_set(edge_set)
-    rc_pref = input('How would you like to enter regulatory conditions ["m" for manually, "o" for one-by-one]? ')
-    while (rc_pref not in ('m','o')):
+
+def get_rc_text(node_set):
+    rc_pref = input(
+        'How would you like to enter regulatory conditions ["m" for manually, "o" for one-by-one]? ')
+    while (rc_pref not in ('m', 'o')):
         print('***Invalid response to prompt: only "m" and "o" are acceptable...')
         rc_pref = input('How would you like to enter regulatory conditions ["m" for manually, "o" for one-by-one]? ')
     rc_text = input('Enter full regulatory conditions specs: ') if rc_pref == 'm' else get_rc_text_one_by_one(node_set)
-    rc_text = rc_text.rstrip() + '\n'
+    return rc_text.rstrip() + '\n'
 
+def get_edges_text(edge_set):
     edges_text = ''
-    if suffix == '.sif': manually_enter_optionals(edge_set)
     for edge in edge_set:
         edges_text += '{fromNode}\t{toNode}\t{interaction}{opt};\n'.format(
             fromNode=edge.fromNode,
             toNode=edge.toNode,
             interaction=edge.interaction,
             opt='\toptional' if edge.is_optional else '')
+    return edges_text
+
+
+def main():
+    edge_set = get_edge_set_from_file()
+
+    directive_text = get_directive_text()
+    rc_text = get_rc_text(extract_nodes_from_edge_set(edge_set))
+    edges_text = get_edges_text(edge_set)
 
     with open('model.net', 'w') as f:
         text = directive_text + rc_text + edges_text
