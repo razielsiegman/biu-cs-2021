@@ -1,0 +1,14 @@
+directive updates ;
+directive length ;
+directive uniqueness ;
+directive limit ;
+directive regulation ;
+
+Gene_3	Gene_2	positive	optional;
+Gene_0	Gene_4	positive;
+Gene_3	Gene_4	negative	optional;
+Gene_3	Gene_1	negative;
+Gene_2	Gene_4	negative;
+Gene_1	Gene_4	positive;
+Gene_4	Gene_1	positive	optional;
+Gene_1	Gene_0	negative;
