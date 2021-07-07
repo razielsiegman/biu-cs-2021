@@ -1,6 +1,8 @@
 *.sif
 *.txt
 *.idea
-.idea
 *.btp
 *.sbm
+*.smv
+*.class
+*.jar
