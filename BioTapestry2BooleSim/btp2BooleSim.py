@@ -2,7 +2,7 @@ import pprint as pp
 from sympy.logic.boolalg import *
 from sympy import *
 
-DEFAULT_RC_SPEC = '2' # chose randomly
+DEFAULT_RC_SPEC = '0' # chose randomly
 
 '''
 CLASSES 

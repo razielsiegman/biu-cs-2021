@@ -409,7 +409,7 @@ $FinalStatetwoiPlusLifEsrrbKnockout:=
  Klf4=1 and
  Gbxtwo=1 and
  Tbx3=1 and
- Tcf3=0 and
+ Tcf3=0 and9999
  Sall4=1 and
  Stat3=1
 };

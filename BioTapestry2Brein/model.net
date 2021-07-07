@@ -1,14 +1,12 @@
-directive updates ;
-directive length ;
-directive uniqueness ;
-directive limit ;
-directive regulation ;
-
-Gene_3	Gene_2	positive	optional;
-Gene_0	Gene_4	positive;
-Gene_3	Gene_4	negative	optional;
-Gene_3	Gene_1	negative;
-Gene_2	Gene_4	negative;
-Gene_1	Gene_4	positive;
-Gene_4	Gene_1	positive	optional;
-Gene_1	Gene_0	negative;
+directive updates sync;
+directive length 5;
+directive uniqueness interactions;
+directive limit 0;
+directive regulation default;
+Gene0[](0..17); Gene1[](0..17); Gene2[](0..17);
+Gene1	Gene2	positive    optional;
+Gene2	Gene1	positive;
+Gene0	Gene1	positive;
+Gene2	Gene0	negative;
+Gene1	Gene0	negative    optional;
+Gene0	Gene2	negative;
