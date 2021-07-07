@@ -1,0 +1,8 @@
+Gene 3	Gene 1	negative;
+Gene 2	Gene 4	negative;
+Gene 0	Gene 4	positive;
+Gene 1	Gene 4	positive	optional;
+Gene 3	Gene 2	positive	optional;
+Gene 1	Gene 0	negative	optional;
+Gene 4	Gene 1	positive;
+Gene 3	Gene 4	negative;
