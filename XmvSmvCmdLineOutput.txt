@@ -1,0 +1,1641 @@
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021>cd BREIN_nuSmv_version 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>echo RUNNING NUSMV 
+RUNNING NUSMV
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>CALL test_windows.bat 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>rem building NAE... 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>javac NAE\*.java validate\*.java 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>jar cvfm NAE.jar NAE\manifest.txt NAE\*.class validate\*.class 
+added manifest
+adding: NAE/Converter$SpecType.class(in = 1031) (out= 564)(deflated 45%)
+adding: NAE/Converter.class(in = 7532) (out= 3965)(deflated 47%)
+adding: NAE/ConverterFactory.class(in = 1453) (out= 801)(deflated 44%)
+adding: NAE/CTL$Experiment$Observation.class(in = 891) (out= 511)(deflated 42%)
+adding: NAE/CTL$Experiment.class(in = 1699) (out= 959)(deflated 43%)
+adding: NAE/CTL.class(in = 7208) (out= 3814)(deflated 47%)
+adding: NAE/Function.class(in = 9392) (out= 3469)(deflated 63%)
+adding: NAE/Input.class(in = 355) (out= 269)(deflated 24%)
+adding: NAE/NAE.class(in = 6202) (out= 3304)(deflated 46%)
+adding: NAE/Node.class(in = 4840) (out= 2329)(deflated 51%)
+adding: NAE/NuSMVInterface$1.class(in = 780) (out= 498)(deflated 36%)
+adding: NAE/NuSMVInterface.class(in = 3672) (out= 1841)(deflated 49%)
+adding: NAE/ResultSet$NodeData.class(in = 504) (out= 351)(deflated 30%)
+adding: NAE/ResultSet.class(in = 709) (out= 367)(deflated 48%)
+adding: NAE/TemporalLogic$Experiment$Observation.class(in = 971) (out= 528)(deflated 45%)
+adding: NAE/TemporalLogic$Experiment.class(in = 2257) (out= 1172)(deflated 48%)
+adding: NAE/TemporalLogic.class(in = 12708) (out= 6381)(deflated 49%)
+adding: NAE/TimeStep.class(in = 10567) (out= 5670)(deflated 46%)
+adding: validate/AbstractModel.class(in = 305) (out= 225)(deflated 26%)
+adding: validate/AbstractNode.class(in = 704) (out= 445)(deflated 36%)
+adding: validate/Assertion.class(in = 4459) (out= 2220)(deflated 50%)
+adding: validate/Input.class(in = 367) (out= 273)(deflated 25%)
+adding: validate/Observation.class(in = 1715) (out= 852)(deflated 50%)
+adding: validate/Predicate.class(in = 3462) (out= 1818)(deflated 47%)
+adding: validate/Validate$State.class(in = 1035) (out= 562)(deflated 45%)
+adding: validate/Validate.class(in = 10684) (out= 5056)(deflated 52%)
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>rem Running time_step models: 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 100 TestModels\toy_model\model.net TestModels\toy_model\observations.spec time_step | Out-Default}" 
+                   0  1  2  3  4  5  6  7  
+             B->C :?  ?  ?  ?  ?  ?  ?  ?  
+             B->A :      ?  ?        ?  ?  
+             A->B :?        ?  ?        ?  
+             A->C :            ?  ?  ?  ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 1
+Milliseconds      : 253
+Ticks             : 12531435
+TotalDays         : 1.45039756944444E-05
+TotalHours        : 0.000348095416666667
+TotalMinutes      : 0.020885725
+TotalSeconds      : 1.2531435
+TotalMilliseconds : 1253.1435
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 1 TestModels\minimal_pl\model.net TestModels\minimal_pl\observations.spec time_step | Out-Default}" 
+                   0  
+     Soxtwo->Oct4 :?  
+     Oct4->Soxtwo :   
+      Nanog->Tcf3 :   
+      Tcf3->Nanog :   
+    Soxtwo->Sall4 :   
+    Sall4->Soxtwo :?  
+    Soxtwo->Stat3 :?  
+    Stat3->Soxtwo :   
+      Tcf3->Stat3 :   
+      Stat3->Tcf3 :   
+ Sall4->Tfcptwol1 :   
+ Tfcptwol1->Sall4 :?  
+     Soxtwo->Tbx3 :   
+     Tbx3->Soxtwo :   
+       Tcf3->Tbx3 :?  
+       Tbx3->Tcf3 :   
+      Sall4->Tbx3 :   
+      Tbx3->Sall4 :   
+     Gbxtwo->Tbx3 :   
+     Tbx3->Gbxtwo :   
+  Tfcptwol1->Tbx3 :   
+  Tbx3->Tfcptwol1 :?  
+       Tcf3->Oct4 :   
+       Oct4->Tcf3 :   
+     Gbxtwo->Oct4 :   
+     Oct4->Gbxtwo :   
+  Tfcptwol1->Oct4 :   
+  Oct4->Tfcptwol1 :?  
+    Soxtwo->Nanog :   
+    Nanog->Soxtwo :?  
+ Tfcptwol1->Nanog :   
+ Nanog->Tfcptwol1 :   
+      Oct4->Nanog :?  
+      Nanog->Oct4 :   
+     Gbxtwo->Klf4 :?  
+     Klf4->Gbxtwo :   
+  Tfcptwol1->Klf4 :   
+  Klf4->Tfcptwol1 :?  
+       Tbx3->Klf4 :   
+       Klf4->Tbx3 :?  
+     Tcf3->Klftwo :   
+     Klftwo->Tcf3 :   
+    Sall4->Klftwo :?  
+    Klftwo->Sall4 :   
+   Gbxtwo->Klftwo :?  
+   Klftwo->Gbxtwo :?  
+Tfcptwol1->Klftwo :   
+Klftwo->Tfcptwol1 :?  
+     Tbx3->Klftwo :   
+     Klftwo->Tbx3 :?  
+     Oct4->Klftwo :   
+     Klftwo->Oct4 :?  
+    Nanog->Klftwo :   
+    Klftwo->Nanog :?  
+     Klf4->Klftwo :?  
+     Klftwo->Klf4 :   
+    Gbxtwo->Esrrb :   
+    Esrrb->Gbxtwo :   
+     Stat3->Esrrb :   
+     Esrrb->Stat3 :   
+ Tfcptwol1->Esrrb :?  
+ Esrrb->Tfcptwol1 :   
+      Tbx3->Esrrb :   
+      Esrrb->Tbx3 :?  
+      Oct4->Esrrb :?  
+      Esrrb->Oct4 :?  
+     Nanog->Esrrb :?  
+     Esrrb->Nanog :   
+      Klf4->Esrrb :   
+      Esrrb->Klf4 :   
+    Klftwo->Esrrb :   
+    Esrrb->Klftwo :?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 2
+Seconds           : 11
+Milliseconds      : 93
+Ticks             : 1310935192
+TotalDays         : 0.00151728610185185
+TotalHours        : 0.0364148664444444
+TotalMinutes      : 2.18489198666667
+TotalSeconds      : 131.0935192
+TotalMilliseconds : 131093.5192
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 1 TestModels\pluripotency_model\model.net TestModels\pluripotency_model\observation.spec time_step | Out-Default}" 
+                   0  
+      Nanog->Tcf3 :   
+      Tcf3->Nanog :   
+    Soxtwo->Sall4 :   
+    Sall4->Soxtwo :?  
+    Soxtwo->Stat3 :   
+    Stat3->Soxtwo :   
+      Tcf3->Stat3 :?  
+      Stat3->Tcf3 :   
+ Sall4->Tfcptwol1 :   
+ Tfcptwol1->Sall4 :?  
+     Soxtwo->Tbx3 :   
+     Tbx3->Soxtwo :   
+       Tcf3->Tbx3 :   
+       Tbx3->Tcf3 :   
+      Sall4->Tbx3 :?  
+      Tbx3->Sall4 :   
+     Gbxtwo->Tbx3 :   
+     Tbx3->Gbxtwo :   
+  Tfcptwol1->Tbx3 :   
+  Tbx3->Tfcptwol1 :   
+       Tcf3->Oct4 :   
+       Oct4->Tcf3 :   
+     Gbxtwo->Oct4 :   
+     Oct4->Gbxtwo :?  
+  Tfcptwol1->Oct4 :   
+  Oct4->Tfcptwol1 :?  
+    Soxtwo->Nanog :?  
+    Nanog->Soxtwo :?  
+ Tfcptwol1->Nanog :   
+ Nanog->Tfcptwol1 :   
+      Oct4->Nanog :?  
+      Nanog->Oct4 :   
+     Gbxtwo->Klf4 :?  
+     Klf4->Gbxtwo :   
+  Tfcptwol1->Klf4 :   
+  Klf4->Tfcptwol1 :?  
+       Tbx3->Klf4 :   
+       Klf4->Tbx3 :   
+     Tcf3->Klftwo :   
+     Klftwo->Tcf3 :   
+    Sall4->Klftwo :?  
+    Klftwo->Sall4 :   
+   Gbxtwo->Klftwo :?  
+   Klftwo->Gbxtwo :   
+Tfcptwol1->Klftwo :?  
+Klftwo->Tfcptwol1 :   
+     Tbx3->Klftwo :   
+     Klftwo->Tbx3 :?  
+     Oct4->Klftwo :   
+     Klftwo->Oct4 :?  
+    Nanog->Klftwo :   
+    Klftwo->Nanog :?  
+     Klf4->Klftwo :?  
+     Klftwo->Klf4 :   
+    Gbxtwo->Esrrb :   
+    Esrrb->Gbxtwo :   
+     Stat3->Esrrb :   
+     Esrrb->Stat3 :   
+ Tfcptwol1->Esrrb :?  
+ Esrrb->Tfcptwol1 :?  
+      Tbx3->Esrrb :   
+      Esrrb->Tbx3 :   
+      Oct4->Esrrb :   
+      Esrrb->Oct4 :?  
+     Nanog->Esrrb :?  
+     Esrrb->Nanog :   
+      Klf4->Esrrb :   
+      Esrrb->Klf4 :   
+    Klftwo->Esrrb :?  
+    Esrrb->Klftwo :   
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 1
+Seconds           : 13
+Milliseconds      : 545
+Ticks             : 735452036
+TotalDays         : 0.000851217634259259
+TotalHours        : 0.0204292232222222
+TotalMinutes      : 1.22575339333333
+TotalSeconds      : 73.5452036
+TotalMilliseconds : 73545.2036
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 5 TestModels\pluripotency_model\model.net TestModels\pluripotency_model\observation.spec time_step | Out-Default}" 
+                   0  1  2  3  4  
+      Nanog->Tcf3 :               
+      Tcf3->Nanog :               
+    Soxtwo->Sall4 :               
+    Sall4->Soxtwo :?  ?  ?  ?  ?  
+    Soxtwo->Stat3 :   ?        ?  
+    Stat3->Soxtwo :               
+      Tcf3->Stat3 :?     ?  ?     
+      Stat3->Tcf3 :               
+ Sall4->Tfcptwol1 :               
+ Tfcptwol1->Sall4 :?  ?  ?  ?  ?  
+     Soxtwo->Tbx3 :?              
+     Tbx3->Soxtwo :   ?  ?        
+       Tcf3->Tbx3 :?  ?  ?  ?  ?  
+       Tbx3->Tcf3 :               
+      Sall4->Tbx3 :   ?           
+      Tbx3->Sall4 :               
+     Gbxtwo->Tbx3 :   ?           
+     Tbx3->Gbxtwo :               
+  Tfcptwol1->Tbx3 :               
+  Tbx3->Tfcptwol1 :      ?  ?  ?  
+       Tcf3->Oct4 :               
+       Oct4->Tcf3 :               
+     Gbxtwo->Oct4 :?  ?           
+     Oct4->Gbxtwo :            ?  
+  Tfcptwol1->Oct4 :      ?        
+  Oct4->Tfcptwol1 :?  ?  ?  ?  ?  
+    Soxtwo->Nanog :?  ?  ?  ?  ?  
+    Nanog->Soxtwo :?  ?  ?  ?  ?  
+ Tfcptwol1->Nanog :               
+ Nanog->Tfcptwol1 :               
+      Oct4->Nanog :?  ?  ?  ?  ?  
+      Nanog->Oct4 :               
+     Gbxtwo->Klf4 :?  ?  ?  ?  ?  
+     Klf4->Gbxtwo :               
+  Tfcptwol1->Klf4 :               
+  Klf4->Tfcptwol1 :?  ?  ?  ?  ?  
+       Tbx3->Klf4 :               
+       Klf4->Tbx3 :?     ?  ?  ?  
+     Tcf3->Klftwo :               
+     Klftwo->Tcf3 :               
+    Sall4->Klftwo :?  ?  ?  ?  ?  
+    Klftwo->Sall4 :               
+   Gbxtwo->Klftwo :?  ?  ?  ?  ?  
+   Klftwo->Gbxtwo :?  ?  ?  ?     
+Tfcptwol1->Klftwo :      ?        
+Klftwo->Tfcptwol1 :      ?     ?  
+     Tbx3->Klftwo :            ?  
+     Klftwo->Tbx3 :?  ?  ?  ?  ?  
+     Oct4->Klftwo :               
+     Klftwo->Oct4 :?  ?  ?  ?  ?  
+    Nanog->Klftwo :               
+    Klftwo->Nanog :?  ?           
+     Klf4->Klftwo :?  ?  ?  ?  ?  
+     Klftwo->Klf4 :               
+    Gbxtwo->Esrrb :               
+    Esrrb->Gbxtwo :               
+     Stat3->Esrrb :               
+     Esrrb->Stat3 :               
+ Tfcptwol1->Esrrb :?  ?  ?  ?  ?  
+ Esrrb->Tfcptwol1 :?  ?           
+      Tbx3->Esrrb :               
+      Esrrb->Tbx3 :      ?  ?  ?  
+      Oct4->Esrrb :?  ?           
+      Esrrb->Oct4 :   ?  ?  ?  ?  
+     Nanog->Esrrb :?  ?  ?  ?  ?  
+     Esrrb->Nanog :               
+      Klf4->Esrrb :               
+      Esrrb->Klf4 :               
+    Klftwo->Esrrb :      ?        
+    Esrrb->Klftwo :?  ?     ?     
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 3
+Seconds           : 18
+Milliseconds      : 391
+Ticks             : 1983919624
+TotalDays         : 0.00229620326851852
+TotalHours        : 0.0551088784444444
+TotalMinutes      : 3.30653270666667
+TotalSeconds      : 198.3919624
+TotalMilliseconds : 198391.9624
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 1 TestModels\pluripotency_modified\model.net TestModels\pluripotency_modified\observations.spec time_step | Out-Default}" 
+                   0  
+    Esrrb->Gbxtwo :?  
+    Gbxtwo->Esrrb :   
+    Esrrb->Klftwo :   
+    Klftwo->Esrrb :?  
+      Esrrb->Klf4 :   
+      Klf4->Esrrb :   
+      Esrrb->Tbx3 :   
+      Tbx3->Esrrb :   
+     Esrrb->Nanog :   
+     Nanog->Esrrb :?  
+     Esrrb->Sall4 :   
+     Sall4->Esrrb :   
+     Esrrb->Stat3 :   
+     Stat3->Esrrb :   
+      Esrrb->Tcf3 :   
+      Tcf3->Esrrb :   
+ Esrrb->Tfcptwol1 :   
+ Tfcptwol1->Esrrb :   
+   Gbxtwo->Klftwo :   
+   Klftwo->Gbxtwo :   
+     Gbxtwo->Klf4 :   
+     Klf4->Gbxtwo :   
+     Gbxtwo->Oct4 :   
+     Oct4->Gbxtwo :?  
+     Gbxtwo->Tbx3 :?  
+     Tbx3->Gbxtwo :?  
+    Gbxtwo->Nanog :   
+    Nanog->Gbxtwo :   
+    Gbxtwo->Stat3 :   
+    Stat3->Gbxtwo :   
+     Gbxtwo->Tcf3 :   
+     Tcf3->Gbxtwo :?  
+Gbxtwo->Tfcptwol1 :   
+Tfcptwol1->Gbxtwo :   
+     Klftwo->Klf4 :   
+     Klf4->Klftwo :   
+     Klftwo->Oct4 :   
+     Oct4->Klftwo :   
+   Klftwo->Soxtwo :?  
+   Soxtwo->Klftwo :?  
+     Klftwo->Tbx3 :   
+     Tbx3->Klftwo :   
+    Klftwo->Nanog :?  
+    Nanog->Klftwo :   
+    Klftwo->Sall4 :?  
+    Sall4->Klftwo :   
+     Klftwo->Tcf3 :   
+     Tcf3->Klftwo :?  
+Klftwo->Tfcptwol1 :   
+Tfcptwol1->Klftwo :   
+       Klf4->Oct4 :   
+       Oct4->Klf4 :   
+       Klf4->Tbx3 :   
+       Tbx3->Klf4 :?  
+      Klf4->Sall4 :   
+      Sall4->Klf4 :   
+      Klf4->Stat3 :   
+      Stat3->Klf4 :   
+  Klf4->Tfcptwol1 :   
+  Tfcptwol1->Klf4 :   
+       Oct4->Tbx3 :   
+       Tbx3->Oct4 :   
+      Oct4->Nanog :   
+      Nanog->Oct4 :   
+      Oct4->Sall4 :   
+      Sall4->Oct4 :?  
+      Oct4->Stat3 :   
+      Stat3->Oct4 :?  
+       Oct4->Tcf3 :   
+       Tcf3->Oct4 :   
+  Oct4->Tfcptwol1 :?  
+  Tfcptwol1->Oct4 :   
+     Soxtwo->Tbx3 :   
+     Tbx3->Soxtwo :?  
+    Soxtwo->Nanog :   
+    Nanog->Soxtwo :?  
+    Soxtwo->Sall4 :   
+    Sall4->Soxtwo :   
+    Soxtwo->Stat3 :   
+    Stat3->Soxtwo :   
+     Soxtwo->Tcf3 :?  
+     Tcf3->Soxtwo :   
+      Tbx3->Nanog :   
+      Nanog->Tbx3 :   
+      Tbx3->Sall4 :   
+      Sall4->Tbx3 :   
+      Tbx3->Stat3 :   
+      Stat3->Tbx3 :   
+       Tbx3->Tcf3 :   
+       Tcf3->Tbx3 :   
+  Tbx3->Tfcptwol1 :   
+  Tfcptwol1->Tbx3 :   
+     Nanog->Sall4 :?  
+     Sall4->Nanog :   
+      Nanog->Tcf3 :   
+      Tcf3->Nanog :   
+ Nanog->Tfcptwol1 :   
+ Tfcptwol1->Nanog :?  
+     Sall4->Stat3 :?  
+     Stat3->Sall4 :   
+      Sall4->Tcf3 :   
+      Tcf3->Sall4 :   
+ Sall4->Tfcptwol1 :   
+ Tfcptwol1->Sall4 :   
+      Stat3->Tcf3 :   
+      Tcf3->Stat3 :?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 3
+Seconds           : 4
+Milliseconds      : 333
+Ticks             : 1843333019
+TotalDays         : 0.00213348729050926
+TotalHours        : 0.0512036949722222
+TotalMinutes      : 3.07222169833333
+TotalSeconds      : 184.3333019
+TotalMilliseconds : 184333.3019
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 10 TestModels\myloid_model\model.net TestModels\myloid_model\observations.spec time_step | Out-Default}" 
+                   0  1  
+     Gfi1->EgrNab :?     
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 2
+Milliseconds      : 527
+Ticks             : 25270922
+TotalDays         : 2.92487523148148E-05
+TotalHours        : 0.000701970055555555
+TotalMinutes      : 0.0421182033333333
+TotalSeconds      : 2.5270922
+TotalMilliseconds : 2527.0922
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 10 TestModels\pluripotency_model10\model.net TestModels\pluripotency_model10\observation.spec time_step | Out-Default}" 
+                   0  1  2  3  4  5  6  7  8  9  
+      Nanog->Tcf3 :                              
+      Tcf3->Nanog :                              
+    Soxtwo->Sall4 :?  ?  ?     ?        ?        
+    Sall4->Soxtwo :      ?     ?                 
+    Soxtwo->Stat3 :   ?  ?        ?     ?     ?  
+    Stat3->Soxtwo :                              
+      Tcf3->Stat3 :?     ?     ?     ?  ?  ?     
+      Stat3->Tcf3 :                              
+ Sall4->Tfcptwol1 :            ?  ?              
+ Tfcptwol1->Sall4 :?  ?  ?     ?     ?     ?  ?  
+     Soxtwo->Tbx3 :?     ?  ?  ?        ?     ?  
+     Tbx3->Soxtwo :               ?  ?        ?  
+       Tcf3->Tbx3 :?           ?  ?  ?  ?  ?     
+       Tbx3->Tcf3 :                              
+      Sall4->Tbx3 :   ?                       ?  
+      Tbx3->Sall4 :         ?     ?     ?  ?     
+     Gbxtwo->Tbx3 :                        ?     
+     Tbx3->Gbxtwo :                              
+  Tfcptwol1->Tbx3 :            ?           ?     
+  Tbx3->Tfcptwol1 :?  ?  ?           ?     ?     
+       Tcf3->Oct4 :                              
+       Oct4->Tcf3 :                              
+     Gbxtwo->Oct4 :?  ?     ?           ?     ?  
+     Oct4->Gbxtwo :      ?  ?        ?  ?        
+  Tfcptwol1->Oct4 :            ?  ?              
+  Oct4->Tfcptwol1 :         ?              ?     
+    Soxtwo->Nanog :   ?  ?  ?  ?  ?  ?  ?  ?  ?  
+    Nanog->Soxtwo :?     ?     ?  ?  ?  ?  ?  ?  
+ Tfcptwol1->Nanog :?        ?                    
+ Nanog->Tfcptwol1 :         ?              ?     
+      Oct4->Nanog :                              
+      Nanog->Oct4 :?  ?  ?  ?  ?        ?     ?  
+     Gbxtwo->Klf4 :                              
+     Klf4->Gbxtwo :                              
+  Tfcptwol1->Klf4 :                              
+  Klf4->Tfcptwol1 :   ?                          
+       Tbx3->Klf4 :                              
+       Klf4->Tbx3 :               ?  ?           
+     Tcf3->Klftwo :                              
+     Klftwo->Tcf3 :                              
+    Sall4->Klftwo :?  ?                          
+    Klftwo->Sall4 :         ?     ?              
+   Gbxtwo->Klftwo :         ?  ?  ?  ?  ?  ?  ?  
+   Klftwo->Gbxtwo :?  ?           ?        ?  ?  
+Tfcptwol1->Klftwo :?                          ?  
+Klftwo->Tfcptwol1 :?     ?                       
+     Tbx3->Klftwo :   ?  ?                       
+     Klftwo->Tbx3 :   ?  ?  ?  ?              ?  
+     Oct4->Klftwo :   ?           ?        ?  ?  
+     Klftwo->Oct4 :   ?           ?  ?     ?     
+    Nanog->Klftwo :?     ?  ?        ?  ?        
+    Klftwo->Nanog :                              
+     Klf4->Klftwo :            ?                 
+     Klftwo->Klf4 :   ?                          
+    Gbxtwo->Esrrb :                              
+    Esrrb->Gbxtwo :                              
+     Stat3->Esrrb :?  ?  ?  ?  ?     ?  ?  ?  ?  
+     Esrrb->Stat3 :                              
+ Tfcptwol1->Esrrb :?              ?  ?           
+ Esrrb->Tfcptwol1 :   ?        ?  ?     ?     ?  
+      Tbx3->Esrrb :   ?  ?     ?        ?  ?     
+      Esrrb->Tbx3 :      ?  ?                    
+      Oct4->Esrrb :   ?     ?  ?        ?  ?     
+      Esrrb->Oct4 :                  ?     ?     
+     Nanog->Esrrb :         ?     ?           ?  
+     Esrrb->Nanog :            ?        ?        
+      Klf4->Esrrb :                              
+      Esrrb->Klf4 :                              
+    Klftwo->Esrrb :?  ?           ?  ?        ?  
+    Esrrb->Klftwo :                  ?     ?     
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 56
+Milliseconds      : 264
+Ticks             : 562644841
+TotalDays         : 0.000651209306712963
+TotalHours        : 0.0156290233611111
+TotalMinutes      : 0.937741401666667
+TotalSeconds      : 56.2644841
+TotalMilliseconds : 56264.4841
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>rem Running LTL models: 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 100 LTL\toy_model_ltl\model.net LTL\toy_model_ltl\observations.ltlspec temporal_logic_bdd | Out-Default}" 
+                   0  1  2  3  4  5  6  7  
+             B->C :?  ?  ?  ?  ?  ?  ?  ?  
+             B->A :            ?  ?  ?  ?  
+             A->B :      ?  ?        ?  ?  
+             A->C :   ?     ?     ?     ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 0
+Milliseconds      : 808
+Ticks             : 8083019
+TotalDays         : 9.35534606481481E-06
+TotalHours        : 0.000224528305555556
+TotalMinutes      : 0.0134716983333333
+TotalSeconds      : 0.8083019
+TotalMilliseconds : 808.3019
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 100 LTL\toy_model_ltl\model.net LTL\toy_model_ltl\observations.ltlspec temporal_logic_bmc -bmc 20 | Out-Default}" 
+                   0  1  2  3  4  5  6  7  
+             B->C :?  ?  ?  ?  ?  ?  ?  ?  
+             B->A :            ?  ?  ?  ?  
+             A->B :   ?     ?     ?     ?  
+             A->C :      ?  ?        ?  ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 0
+Milliseconds      : 946
+Ticks             : 9469473
+TotalDays         : 1.09600381944444E-05
+TotalHours        : 0.000263040916666667
+TotalMinutes      : 0.015782455
+TotalSeconds      : 0.9469473
+TotalMilliseconds : 946.9473
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 10 LTL\pluripotency10_ltl\model.net LTL\pluripotency10_ltl\observation.ltlspec temporal_logic_bmc | Out-Default}" 
+                   0  1  2  3  4  5  6  7  8  9  
+      Nanog->Tcf3 :                              
+      Tcf3->Nanog :      ?                       
+    Soxtwo->Sall4 :         ?                    
+    Sall4->Soxtwo :?                             
+    Soxtwo->Stat3 :?              ?  ?  ?     ?  
+    Stat3->Soxtwo :               ?              
+      Tcf3->Stat3 :   ?  ?  ?  ?           ?  ?  
+      Stat3->Tcf3 :                              
+ Sall4->Tfcptwol1 :?                 ?  ?        
+ Tfcptwol1->Sall4 :?        ?  ?  ?  ?  ?  ?     
+     Soxtwo->Tbx3 :                           ?  
+     Tbx3->Soxtwo :      ?           ?           
+       Tcf3->Tbx3 :?  ?  ?  ?  ?  ?  ?  ?  ?  ?  
+       Tbx3->Tcf3 :                              
+      Sall4->Tbx3 :?  ?                          
+      Tbx3->Sall4 :   ?  ?                    ?  
+     Gbxtwo->Tbx3 :      ?                 ?     
+     Tbx3->Gbxtwo :                              
+  Tfcptwol1->Tbx3 :            ?     ?  ?        
+  Tbx3->Tfcptwol1 :   ?  ?                       
+       Tcf3->Oct4 :                              
+       Oct4->Tcf3 :                              
+     Gbxtwo->Oct4 :   ?                       ?  
+     Oct4->Gbxtwo :         ?                    
+  Tfcptwol1->Oct4 :?     ?  ?  ?                 
+  Oct4->Tfcptwol1 :         ?              ?     
+    Soxtwo->Nanog :?  ?        ?     ?     ?  ?  
+    Nanog->Soxtwo :?  ?  ?  ?     ?  ?     ?  ?  
+ Tfcptwol1->Nanog :      ?  ?                    
+ Nanog->Tfcptwol1 :               ?              
+      Oct4->Nanog :                     ?        
+      Nanog->Oct4 :?  ?        ?  ?     ?        
+     Gbxtwo->Klf4 :   ?              ?        ?  
+     Klf4->Gbxtwo :?  ?        ?     ?        ?  
+  Tfcptwol1->Klf4 :                              
+  Klf4->Tfcptwol1 :   ?  ?           ?           
+       Tbx3->Klf4 :                              
+       Klf4->Tbx3 :         ?     ?              
+     Tcf3->Klftwo :      ?                       
+     Klftwo->Tcf3 :                              
+    Sall4->Klftwo :                              
+    Klftwo->Sall4 :                        ?     
+   Gbxtwo->Klftwo :         ?  ?                 
+   Klftwo->Gbxtwo :?  ?  ?     ?     ?  ?  ?     
+Tfcptwol1->Klftwo :?  ?  ?           ?  ?     ?  
+Klftwo->Tfcptwol1 :?                             
+     Tbx3->Klftwo :                              
+     Klftwo->Tbx3 :            ?  ?        ?     
+     Oct4->Klftwo :?     ?        ?  ?  ?     ?  
+     Klftwo->Oct4 :      ?  ?        ?     ?  ?  
+    Nanog->Klftwo :   ?     ?  ?           ?     
+    Klftwo->Nanog :               ?              
+     Klf4->Klftwo :                  ?           
+     Klftwo->Klf4 :                              
+    Gbxtwo->Esrrb :                              
+    Esrrb->Gbxtwo :                              
+     Stat3->Esrrb :               ?              
+     Esrrb->Stat3 :                              
+ Tfcptwol1->Esrrb :   ?        ?     ?           
+ Esrrb->Tfcptwol1 :                              
+      Tbx3->Esrrb :?     ?  ?              ?     
+      Esrrb->Tbx3 :               ?              
+      Oct4->Esrrb :?                             
+      Esrrb->Oct4 :               ?     ?  ?     
+     Nanog->Esrrb :            ?              ?  
+     Esrrb->Nanog :                        ?     
+      Klf4->Esrrb :                     ?        
+      Esrrb->Klf4 :                              
+    Klftwo->Esrrb :         ?  ?     ?     ?  ?  
+    Esrrb->Klftwo :               ?        ?     
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 8
+Milliseconds      : 580
+Ticks             : 85802374
+TotalDays         : 9.93083032407407E-05
+TotalHours        : 0.00238339927777778
+TotalMinutes      : 0.143003956666667
+TotalSeconds      : 8.5802374
+TotalMilliseconds : 8580.2374
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 25 LTL\ComplexLTLExample\model.net LTL\ComplexLTLExample\observation.ltlspec temporal_logic_bmc | Out-Default}" 
+                   0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 
+      Nanog->Tcf3 :                                                                           
+      Tcf3->Nanog :            ?                                                              
+    Soxtwo->Sall4 :         ?     ?     ?           ?  ?        ?                    ?  ?  ?  
+    Sall4->Soxtwo :         ?  ?  ?                             ?  ?     ?           ?  ?     
+    Soxtwo->Stat3 :      ?     ?  ?  ?           ?  ?  ?  ?  ?  ?  ?     ?     ?           ?  
+    Stat3->Soxtwo :               ?  ?     ?                                            ?     
+      Tcf3->Stat3 :?  ?  ?  ?     ?  ?  ?  ?  ?  ?     ?           ?  ?     ?  ?  ?  ?     ?  
+      Stat3->Tcf3 :            ?        ?                 ?              ?     ?              
+ Sall4->Tfcptwol1 :         ?  ?        ?                          ?           ?     ?        
+ Tfcptwol1->Sall4 :      ?     ?  ?     ?              ?              ?        ?              
+     Soxtwo->Tbx3 :                                 ?              ?  ?     ?                 
+     Tbx3->Soxtwo :?  ?     ?        ?  ?                 ?  ?  ?           ?     ?           
+       Tcf3->Tbx3 :?  ?     ?  ?  ?  ?  ?     ?     ?  ?  ?     ?  ?  ?  ?  ?  ?  ?  ?  ?  ?  
+       Tbx3->Tcf3 :      ?           ?        ?     ?  ?              ?           ?     ?     
+      Sall4->Tbx3 :      ?              ?  ?           ?        ?                             
+      Tbx3->Sall4 :                  ?        ?  ?        ?     ?  ?  ?  ?  ?     ?           
+     Gbxtwo->Tbx3 :                     ?              ?              ?  ?                    
+     Tbx3->Gbxtwo :                     ?                       ?              ?              
+  Tfcptwol1->Tbx3 :   ?                                                                       
+  Tbx3->Tfcptwol1 :            ?              ?                                               
+       Tcf3->Oct4 :                              ?                       ?                    
+       Oct4->Tcf3 :                                                                           
+     Gbxtwo->Oct4 :            ?           ?     ?        ?                    ?     ?        
+     Oct4->Gbxtwo :         ?     ?     ?              ?        ?     ?     ?     ?        ?  
+  Tfcptwol1->Oct4 :?     ?                             ?        ?                       ?     
+  Oct4->Tfcptwol1 :   ?        ?                          ?     ?        ?                    
+    Soxtwo->Nanog :   ?                 ?     ?  ?  ?           ?        ?        ?           
+    Nanog->Soxtwo :   ?  ?  ?     ?     ?  ?     ?     ?     ?        ?  ?  ?  ?              
+ Tfcptwol1->Nanog :      ?     ?     ?  ?  ?           ?  ?                                ?  
+ Nanog->Tfcptwol1 :?  ?                                   ?                 ?     ?           
+      Oct4->Nanog :               ?                                                           
+      Nanog->Oct4 :      ?     ?           ?     ?  ?     ?     ?  ?           ?  ?     ?  ?  
+     Gbxtwo->Klf4 :                                                                           
+     Klf4->Gbxtwo :?     ?                 ?                             ?           ?  ?     
+  Tfcptwol1->Klf4 :                                                                           
+  Klf4->Tfcptwol1 :?  ?           ?     ?                          ?  ?  ?  ?                 
+       Tbx3->Klf4 :                                                                           
+       Klf4->Tbx3 :         ?  ?              ?     ?           ?                 ?        ?  
+     Tcf3->Klftwo :                     ?              ?        ?     ?  ?                    
+     Klftwo->Tcf3 :                                                                           
+    Sall4->Klftwo :      ?  ?           ?                 ?  ?  ?  ?        ?  ?     ?        
+    Klftwo->Sall4 :?  ?                 ?              ?  ?  ?              ?                 
+   Gbxtwo->Klftwo :            ?     ?              ?        ?        ?                       
+   Klftwo->Gbxtwo :      ?  ?  ?     ?  ?     ?  ?  ?     ?  ?     ?     ?     ?     ?        
+Tfcptwol1->Klftwo :      ?        ?     ?  ?              ?     ?  ?     ?        ?  ?        
+Klftwo->Tfcptwol1 :                                 ?                       ?  ?  ?     ?     
+     Tbx3->Klftwo :                              ?                          ?                 
+     Klftwo->Tbx3 :      ?           ?     ?     ?  ?  ?     ?     ?     ?        ?           
+     Oct4->Klftwo :?                       ?  ?     ?                 ?  ?        ?     ?  ?  
+     Klftwo->Oct4 :?  ?     ?     ?  ?  ?     ?        ?     ?        ?  ?  ?        ?     ?  
+    Nanog->Klftwo :         ?  ?  ?              ?     ?                                ?     
+    Klftwo->Nanog :?                 ?  ?                    ?              ?  ?     ?  ?     
+     Klf4->Klftwo :         ?  ?     ?                                      ?                 
+     Klftwo->Klf4 :                                                                           
+    Gbxtwo->Esrrb :                        ?  ?        ?     ?                       ?  ?     
+    Esrrb->Gbxtwo :         ?                             ?  ?  ?           ?           ?     
+     Stat3->Esrrb :                  ?                          ?                             
+     Esrrb->Stat3 :   ?                          ?     ?              ?        ?     ?        
+ Tfcptwol1->Esrrb :?           ?           ?        ?                                      ?  
+ Esrrb->Tfcptwol1 :      ?  ?  ?  ?     ?  ?     ?  ?  ?        ?     ?        ?        ?     
+      Tbx3->Esrrb :      ?           ?  ?     ?           ?        ?     ?                    
+      Esrrb->Tbx3 :?  ?           ?  ?           ?        ?  ?                 ?        ?     
+      Oct4->Esrrb :                              ?                 ?     ?  ?              ?  
+      Esrrb->Oct4 :   ?     ?     ?  ?  ?  ?  ?     ?        ?     ?  ?           ?           
+     Nanog->Esrrb :   ?        ?  ?     ?     ?  ?                    ?        ?  ?  ?        
+     Esrrb->Nanog :         ?                    ?                 ?  ?  ?  ?                 
+      Klf4->Esrrb :                                                         ?                 
+      Esrrb->Klf4 :                                                                           
+    Klftwo->Esrrb :               ?     ?           ?  ?  ?  ?  ?                    ?  ?     
+    Esrrb->Klftwo :?                          ?        ?                       ?  ?        ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 8
+Milliseconds      : 195
+Ticks             : 81954084
+TotalDays         : 9.48542638888889E-05
+TotalHours        : 0.00227650233333333
+TotalMinutes      : 0.13659014
+TotalSeconds      : 8.1954084
+TotalMilliseconds : 8195.4084
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>rem Running CTL models: 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 100 CTL\toy_model_ctl\model.net CTL\toy_model_ctl\observations.ctlspec temporal_logic_bdd | Out-Default}" 
+                   0  1  2  3  4  5  6  7  
+             B->C :?  ?  ?  ?  ?  ?  ?  ?  
+             B->A :            ?  ?  ?  ?  
+             A->B :      ?  ?        ?  ?  
+             A->C :   ?     ?     ?     ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 0
+Milliseconds      : 639
+Ticks             : 6399212
+TotalDays         : 7.40649537037037E-06
+TotalHours        : 0.000177755888888889
+TotalMinutes      : 0.0106653533333333
+TotalSeconds      : 0.6399212
+TotalMilliseconds : 639.9212
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 25 CTL\asyncMultiplePathExample\model.net CTL\asyncMultiplePathExample\observations.ctlspec temporal_logic_bdd | Out-Default}" 
+                   0  1  2  3  4  5  6  7  
+       CEBPa->PU1 :   ?     ?     ?     ?  
+     CEBPa->CEBPa :      ?  ?        ?  ?  
+     Gfi1->EgrNab :            ?  ?  ?  ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 0
+Milliseconds      : 775
+Ticks             : 7752387
+TotalDays         : 8.97267013888889E-06
+TotalHours        : 0.000215344083333333
+TotalMinutes      : 0.012920645
+TotalSeconds      : 0.7752387
+TotalMilliseconds : 775.2387
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>PAUSE
+Press any key to continue . . . 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>cd ../BREIN_nuXmv_version 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>CALL test_windows.bat 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>rem building NAE... 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>javac NAE\*.java validate\*.java 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>jar cvfm NAE.jar NAE\manifest.txt NAE\*.class validate\*.class 
+added manifest
+adding: NAE/Converter$SpecType.class(in = 1031) (out= 564)(deflated 45%)
+adding: NAE/Converter.class(in = 7532) (out= 3965)(deflated 47%)
+adding: NAE/ConverterFactory.class(in = 1453) (out= 801)(deflated 44%)
+adding: NAE/CTL$Experiment$Observation.class(in = 891) (out= 511)(deflated 42%)
+adding: NAE/CTL$Experiment.class(in = 1699) (out= 959)(deflated 43%)
+adding: NAE/CTL.class(in = 7208) (out= 3814)(deflated 47%)
+adding: NAE/Function.class(in = 9392) (out= 3469)(deflated 63%)
+adding: NAE/Input.class(in = 355) (out= 269)(deflated 24%)
+adding: NAE/NAE.class(in = 6202) (out= 3304)(deflated 46%)
+adding: NAE/Node.class(in = 4840) (out= 2329)(deflated 51%)
+adding: NAE/NuSMVInterface$1.class(in = 780) (out= 498)(deflated 36%)
+adding: NAE/NuSMVInterface.class(in = 3672) (out= 1844)(deflated 49%)
+adding: NAE/ResultSet$NodeData.class(in = 504) (out= 351)(deflated 30%)
+adding: NAE/ResultSet.class(in = 709) (out= 367)(deflated 48%)
+adding: NAE/TemporalLogic$Experiment$Observation.class(in = 971) (out= 528)(deflated 45%)
+adding: NAE/TemporalLogic$Experiment.class(in = 2257) (out= 1172)(deflated 48%)
+adding: NAE/TemporalLogic.class(in = 12708) (out= 6381)(deflated 49%)
+adding: NAE/TimeStep.class(in = 10567) (out= 5670)(deflated 46%)
+adding: validate/AbstractModel.class(in = 305) (out= 225)(deflated 26%)
+adding: validate/AbstractNode.class(in = 704) (out= 445)(deflated 36%)
+adding: validate/Assertion.class(in = 4459) (out= 2220)(deflated 50%)
+adding: validate/Input.class(in = 367) (out= 273)(deflated 25%)
+adding: validate/Observation.class(in = 1715) (out= 852)(deflated 50%)
+adding: validate/Predicate.class(in = 3462) (out= 1818)(deflated 47%)
+adding: validate/Validate$State.class(in = 1035) (out= 562)(deflated 45%)
+adding: validate/Validate.class(in = 10684) (out= 5056)(deflated 52%)
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>rem Running time_step models: 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 100 TestModels\toy_model\model.net TestModels\toy_model\observations.spec time_step | Out-Default}" 
+                   0  1  2  3  4  5  6  7  
+             B->C :?  ?  ?  ?  ?  ?  ?  ?  
+             B->A :      ?  ?        ?  ?  
+             A->B :?        ?  ?     ?     
+             A->C :            ?  ?  ?  ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 1
+Milliseconds      : 728
+Ticks             : 17282250
+TotalDays         : 2.00026041666667E-05
+TotalHours        : 0.0004800625
+TotalMinutes      : 0.02880375
+TotalSeconds      : 1.728225
+TotalMilliseconds : 1728.225
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 1 TestModels\minimal_pl\model.net TestModels\minimal_pl\observations.spec time_step | Out-Default}" 
+                   0  
+     Soxtwo->Oct4 :?  
+     Oct4->Soxtwo :   
+      Nanog->Tcf3 :   
+      Tcf3->Nanog :   
+    Soxtwo->Sall4 :   
+    Sall4->Soxtwo :?  
+    Soxtwo->Stat3 :   
+    Stat3->Soxtwo :   
+      Tcf3->Stat3 :?  
+      Stat3->Tcf3 :   
+ Sall4->Tfcptwol1 :   
+ Tfcptwol1->Sall4 :?  
+     Soxtwo->Tbx3 :?  
+     Tbx3->Soxtwo :   
+       Tcf3->Tbx3 :?  
+       Tbx3->Tcf3 :   
+      Sall4->Tbx3 :   
+      Tbx3->Sall4 :   
+     Gbxtwo->Tbx3 :?  
+     Tbx3->Gbxtwo :   
+  Tfcptwol1->Tbx3 :   
+  Tbx3->Tfcptwol1 :   
+       Tcf3->Oct4 :   
+       Oct4->Tcf3 :   
+     Gbxtwo->Oct4 :   
+     Oct4->Gbxtwo :?  
+  Tfcptwol1->Oct4 :   
+  Oct4->Tfcptwol1 :?  
+    Soxtwo->Nanog :   
+    Nanog->Soxtwo :?  
+ Tfcptwol1->Nanog :   
+ Nanog->Tfcptwol1 :   
+      Oct4->Nanog :?  
+      Nanog->Oct4 :   
+     Gbxtwo->Klf4 :?  
+     Klf4->Gbxtwo :?  
+  Tfcptwol1->Klf4 :   
+  Klf4->Tfcptwol1 :?  
+       Tbx3->Klf4 :   
+       Klf4->Tbx3 :   
+     Tcf3->Klftwo :   
+     Klftwo->Tcf3 :   
+    Sall4->Klftwo :?  
+    Klftwo->Sall4 :   
+   Gbxtwo->Klftwo :?  
+   Klftwo->Gbxtwo :   
+Tfcptwol1->Klftwo :?  
+Klftwo->Tfcptwol1 :   
+     Tbx3->Klftwo :   
+     Klftwo->Tbx3 :   
+     Oct4->Klftwo :   
+     Klftwo->Oct4 :?  
+    Nanog->Klftwo :   
+    Klftwo->Nanog :?  
+     Klf4->Klftwo :?  
+     Klftwo->Klf4 :   
+    Gbxtwo->Esrrb :   
+    Esrrb->Gbxtwo :   
+     Stat3->Esrrb :   
+     Esrrb->Stat3 :   
+ Tfcptwol1->Esrrb :?  
+ Esrrb->Tfcptwol1 :?  
+      Tbx3->Esrrb :   
+      Esrrb->Tbx3 :   
+      Oct4->Esrrb :   
+      Esrrb->Oct4 :?  
+     Nanog->Esrrb :?  
+     Esrrb->Nanog :   
+      Klf4->Esrrb :   
+      Esrrb->Klf4 :   
+    Klftwo->Esrrb :?  
+    Esrrb->Klftwo :   
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 2
+Seconds           : 18
+Milliseconds      : 780
+Ticks             : 1387809300
+TotalDays         : 0.00160626076388889
+TotalHours        : 0.0385502583333333
+TotalMinutes      : 2.3130155
+TotalSeconds      : 138.78093
+TotalMilliseconds : 138780.93
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 1 TestModels\pluripotency_model\model.net TestModels\pluripotency_model\observation.spec time_step | Out-Default}" 
+                   0  
+      Nanog->Tcf3 :   
+      Tcf3->Nanog :   
+    Soxtwo->Sall4 :?  
+    Sall4->Soxtwo :   
+    Soxtwo->Stat3 :   
+    Stat3->Soxtwo :   
+      Tcf3->Stat3 :?  
+      Stat3->Tcf3 :   
+ Sall4->Tfcptwol1 :   
+ Tfcptwol1->Sall4 :?  
+     Soxtwo->Tbx3 :   
+     Tbx3->Soxtwo :?  
+       Tcf3->Tbx3 :?  
+       Tbx3->Tcf3 :   
+      Sall4->Tbx3 :?  
+      Tbx3->Sall4 :   
+     Gbxtwo->Tbx3 :   
+     Tbx3->Gbxtwo :   
+  Tfcptwol1->Tbx3 :   
+  Tbx3->Tfcptwol1 :   
+       Tcf3->Oct4 :   
+       Oct4->Tcf3 :   
+     Gbxtwo->Oct4 :   
+     Oct4->Gbxtwo :   
+  Tfcptwol1->Oct4 :?  
+  Oct4->Tfcptwol1 :?  
+    Soxtwo->Nanog :   
+    Nanog->Soxtwo :?  
+ Tfcptwol1->Nanog :   
+ Nanog->Tfcptwol1 :   
+      Oct4->Nanog :?  
+      Nanog->Oct4 :   
+     Gbxtwo->Klf4 :?  
+     Klf4->Gbxtwo :   
+  Tfcptwol1->Klf4 :   
+  Klf4->Tfcptwol1 :?  
+       Tbx3->Klf4 :   
+       Klf4->Tbx3 :   
+     Tcf3->Klftwo :   
+     Klftwo->Tcf3 :   
+    Sall4->Klftwo :?  
+    Klftwo->Sall4 :   
+   Gbxtwo->Klftwo :   
+   Klftwo->Gbxtwo :?  
+Tfcptwol1->Klftwo :?  
+Klftwo->Tfcptwol1 :   
+     Tbx3->Klftwo :   
+     Klftwo->Tbx3 :   
+     Oct4->Klftwo :   
+     Klftwo->Oct4 :?  
+    Nanog->Klftwo :   
+    Klftwo->Nanog :   
+     Klf4->Klftwo :?  
+     Klftwo->Klf4 :   
+    Gbxtwo->Esrrb :   
+    Esrrb->Gbxtwo :   
+     Stat3->Esrrb :   
+     Esrrb->Stat3 :   
+ Tfcptwol1->Esrrb :?  
+ Esrrb->Tfcptwol1 :?  
+      Tbx3->Esrrb :   
+      Esrrb->Tbx3 :?  
+      Oct4->Esrrb :?  
+      Esrrb->Oct4 :   
+     Nanog->Esrrb :?  
+     Esrrb->Nanog :   
+      Klf4->Esrrb :   
+      Esrrb->Klf4 :   
+    Klftwo->Esrrb :   
+    Esrrb->Klftwo :?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 2
+Seconds           : 4
+Milliseconds      : 370
+Ticks             : 1243704432
+TotalDays         : 0.00143947272222222
+TotalHours        : 0.0345473453333333
+TotalMinutes      : 2.07284072
+TotalSeconds      : 124.3704432
+TotalMilliseconds : 124370.4432
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 5 TestModels\pluripotency_model\model.net TestModels\pluripotency_model\observation.spec time_step | Out-Default}" 
+                   0  1  2  3  4  
+      Nanog->Tcf3 :               
+      Tcf3->Nanog :               
+    Soxtwo->Sall4 :?              
+    Sall4->Soxtwo :   ?  ?  ?  ?  
+    Soxtwo->Stat3 :            ?  
+    Stat3->Soxtwo :               
+      Tcf3->Stat3 :?  ?  ?  ?     
+      Stat3->Tcf3 :               
+ Sall4->Tfcptwol1 :               
+ Tfcptwol1->Sall4 :?  ?  ?  ?  ?  
+     Soxtwo->Tbx3 :               
+     Tbx3->Soxtwo :?              
+       Tcf3->Tbx3 :?  ?  ?  ?  ?  
+       Tbx3->Tcf3 :               
+      Sall4->Tbx3 :?              
+      Tbx3->Sall4 :               
+     Gbxtwo->Tbx3 :               
+     Tbx3->Gbxtwo :               
+  Tfcptwol1->Tbx3 :               
+  Tbx3->Tfcptwol1 :   ?  ?  ?  ?  
+       Tcf3->Oct4 :               
+       Oct4->Tcf3 :               
+     Gbxtwo->Oct4 :   ?           
+     Oct4->Gbxtwo :   ?  ?     ?  
+  Tfcptwol1->Oct4 :?     ?  ?     
+  Oct4->Tfcptwol1 :?  ?  ?  ?  ?  
+    Soxtwo->Nanog :   ?  ?  ?  ?  
+    Nanog->Soxtwo :?  ?  ?  ?  ?  
+ Tfcptwol1->Nanog :               
+ Nanog->Tfcptwol1 :               
+      Oct4->Nanog :?  ?  ?  ?  ?  
+      Nanog->Oct4 :               
+     Gbxtwo->Klf4 :?  ?  ?  ?  ?  
+     Klf4->Gbxtwo :               
+  Tfcptwol1->Klf4 :               
+  Klf4->Tfcptwol1 :?  ?  ?  ?  ?  
+       Tbx3->Klf4 :               
+       Klf4->Tbx3 :   ?  ?  ?  ?  
+     Tcf3->Klftwo :               
+     Klftwo->Tcf3 :               
+    Sall4->Klftwo :?  ?  ?  ?  ?  
+    Klftwo->Sall4 :               
+   Gbxtwo->Klftwo :      ?        
+   Klftwo->Gbxtwo :?              
+Tfcptwol1->Klftwo :?     ?        
+Klftwo->Tfcptwol1 :      ?        
+     Tbx3->Klftwo :   ?     ?     
+     Klftwo->Tbx3 :   ?  ?  ?  ?  
+     Oct4->Klftwo :               
+     Klftwo->Oct4 :?  ?  ?  ?  ?  
+    Nanog->Klftwo :               
+    Klftwo->Nanog :               
+     Klf4->Klftwo :?  ?  ?  ?  ?  
+     Klftwo->Klf4 :               
+    Gbxtwo->Esrrb :               
+    Esrrb->Gbxtwo :               
+     Stat3->Esrrb :               
+     Esrrb->Stat3 :               
+ Tfcptwol1->Esrrb :?  ?  ?  ?  ?  
+ Esrrb->Tfcptwol1 :?              
+      Tbx3->Esrrb :               
+      Esrrb->Tbx3 :?  ?  ?  ?  ?  
+      Oct4->Esrrb :?  ?     ?  ?  
+      Esrrb->Oct4 :            ?  
+     Nanog->Esrrb :?  ?  ?  ?  ?  
+     Esrrb->Nanog :               
+      Klf4->Esrrb :               
+      Esrrb->Klf4 :               
+    Klftwo->Esrrb :      ?     ?  
+    Esrrb->Klftwo :?        ?  ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 4
+Seconds           : 14
+Milliseconds      : 157
+Ticks             : 2541576025
+TotalDays         : 0.00294163891782407
+TotalHours        : 0.0705993340277778
+TotalMinutes      : 4.23596004166667
+TotalSeconds      : 254.1576025
+TotalMilliseconds : 254157.6025
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 1 TestModels\pluripotency_modified\model.net TestModels\pluripotency_modified\observations.spec time_step | Out-Default}" 
+                   0  
+    Esrrb->Gbxtwo :   
+    Gbxtwo->Esrrb :   
+    Esrrb->Klftwo :   
+    Klftwo->Esrrb :   
+      Esrrb->Klf4 :   
+      Klf4->Esrrb :   
+      Esrrb->Tbx3 :?  
+      Tbx3->Esrrb :   
+     Esrrb->Nanog :   
+     Nanog->Esrrb :?  
+     Esrrb->Sall4 :?  
+     Sall4->Esrrb :   
+     Esrrb->Stat3 :   
+     Stat3->Esrrb :   
+      Esrrb->Tcf3 :   
+      Tcf3->Esrrb :   
+ Esrrb->Tfcptwol1 :?  
+ Tfcptwol1->Esrrb :   
+   Gbxtwo->Klftwo :   
+   Klftwo->Gbxtwo :   
+     Gbxtwo->Klf4 :?  
+     Klf4->Gbxtwo :   
+     Gbxtwo->Oct4 :?  
+     Oct4->Gbxtwo :   
+     Gbxtwo->Tbx3 :   
+     Tbx3->Gbxtwo :?  
+    Gbxtwo->Nanog :?  
+    Nanog->Gbxtwo :   
+    Gbxtwo->Stat3 :?  
+    Stat3->Gbxtwo :   
+     Gbxtwo->Tcf3 :   
+     Tcf3->Gbxtwo :?  
+Gbxtwo->Tfcptwol1 :   
+Tfcptwol1->Gbxtwo :   
+     Klftwo->Klf4 :   
+     Klf4->Klftwo :   
+     Klftwo->Oct4 :   
+     Oct4->Klftwo :   
+   Klftwo->Soxtwo :   
+   Soxtwo->Klftwo :   
+     Klftwo->Tbx3 :?  
+     Tbx3->Klftwo :?  
+    Klftwo->Nanog :?  
+    Nanog->Klftwo :   
+    Klftwo->Sall4 :   
+    Sall4->Klftwo :   
+     Klftwo->Tcf3 :   
+     Tcf3->Klftwo :?  
+Klftwo->Tfcptwol1 :   
+Tfcptwol1->Klftwo :   
+       Klf4->Oct4 :   
+       Oct4->Klf4 :   
+       Klf4->Tbx3 :   
+       Tbx3->Klf4 :   
+      Klf4->Sall4 :   
+      Sall4->Klf4 :   
+      Klf4->Stat3 :   
+      Stat3->Klf4 :   
+  Klf4->Tfcptwol1 :?  
+  Tfcptwol1->Klf4 :   
+       Oct4->Tbx3 :   
+       Tbx3->Oct4 :   
+      Oct4->Nanog :   
+      Nanog->Oct4 :   
+      Oct4->Sall4 :   
+      Sall4->Oct4 :?  
+      Oct4->Stat3 :   
+      Stat3->Oct4 :   
+       Oct4->Tcf3 :?  
+       Tcf3->Oct4 :   
+  Oct4->Tfcptwol1 :   
+  Tfcptwol1->Oct4 :   
+     Soxtwo->Tbx3 :   
+     Tbx3->Soxtwo :?  
+    Soxtwo->Nanog :   
+    Nanog->Soxtwo :?  
+    Soxtwo->Sall4 :   
+    Sall4->Soxtwo :   
+    Soxtwo->Stat3 :   
+    Stat3->Soxtwo :   
+     Soxtwo->Tcf3 :   
+     Tcf3->Soxtwo :?  
+      Tbx3->Nanog :   
+      Nanog->Tbx3 :?  
+      Tbx3->Sall4 :?  
+      Sall4->Tbx3 :   
+      Tbx3->Stat3 :   
+      Stat3->Tbx3 :   
+       Tbx3->Tcf3 :   
+       Tcf3->Tbx3 :   
+  Tbx3->Tfcptwol1 :   
+  Tfcptwol1->Tbx3 :   
+     Nanog->Sall4 :   
+     Sall4->Nanog :   
+      Nanog->Tcf3 :   
+      Tcf3->Nanog :   
+ Nanog->Tfcptwol1 :   
+ Tfcptwol1->Nanog :?  
+     Sall4->Stat3 :   
+     Stat3->Sall4 :   
+      Sall4->Tcf3 :   
+      Tcf3->Sall4 :   
+ Sall4->Tfcptwol1 :   
+ Tfcptwol1->Sall4 :   
+      Stat3->Tcf3 :   
+      Tcf3->Stat3 :?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 4
+Seconds           : 58
+Milliseconds      : 776
+Ticks             : 2987768817
+TotalDays         : 0.00345806576041667
+TotalHours        : 0.08299357825
+TotalMinutes      : 4.979614695
+TotalSeconds      : 298.7768817
+TotalMilliseconds : 298776.8817
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 10 TestModels\myloid_model\model.net TestModels\myloid_model\observations.spec time_step | Out-Default}" 
+                   0  1  
+     Gfi1->EgrNab :   ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 3
+Milliseconds      : 0
+Ticks             : 30008128
+TotalDays         : 3.47316296296296E-05
+TotalHours        : 0.000833559111111111
+TotalMinutes      : 0.0500135466666667
+TotalSeconds      : 3.0008128
+TotalMilliseconds : 3000.8128
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 10 TestModels\pluripotency_model10\model.net TestModels\pluripotency_model10\observation.spec time_step | Out-Default}" 
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 5
+Milliseconds      : 129
+Ticks             : 51296327
+TotalDays         : 5.93707488425926E-05
+TotalHours        : 0.00142489797222222
+TotalMinutes      : 0.0854938783333333
+TotalSeconds      : 5.1296327
+TotalMilliseconds : 5129.6327
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>rem Running LTL models: 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 100 LTL\toy_model_ltl\model.net LTL\toy_model_ltl\observations.ltlspec temporal_logic_bdd | Out-Default}" 
+                   0  1  2  3  4  5  6  7  
+             B->C :?  ?  ?  ?  ?  ?  ?  ?  
+             B->A :            ?  ?  ?  ?  
+             A->B :      ?  ?        ?  ?  
+             A->C :   ?     ?     ?     ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 0
+Milliseconds      : 834
+Ticks             : 8344929
+TotalDays         : 9.65848263888889E-06
+TotalHours        : 0.000231803583333333
+TotalMinutes      : 0.013908215
+TotalSeconds      : 0.8344929
+TotalMilliseconds : 834.4929
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 100 LTL\toy_model_ltl\model.net LTL\toy_model_ltl\observations.ltlspec temporal_logic_bmc -bmc 20 | Out-Default}" 
+                   0  1  2  3  4  5  6  7  
+             B->C :?  ?  ?  ?  ?  ?  ?  ?  
+             B->A :            ?  ?  ?  ?  
+             A->B :   ?     ?     ?     ?  
+             A->C :      ?  ?        ?  ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 0
+Milliseconds      : 932
+Ticks             : 9324308
+TotalDays         : 1.07920231481481E-05
+TotalHours        : 0.000259008555555556
+TotalMinutes      : 0.0155405133333333
+TotalSeconds      : 0.9324308
+TotalMilliseconds : 932.4308
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 10 LTL\pluripotency10_ltl\model.net LTL\pluripotency10_ltl\observation.ltlspec temporal_logic_bmc | Out-Default}" 
+                   0  1  2  3  4  5  6  7  8  9  
+      Nanog->Tcf3 :                              
+      Tcf3->Nanog :                              
+    Soxtwo->Sall4 :                           ?  
+    Sall4->Soxtwo :?                    ?        
+    Soxtwo->Stat3 :?     ?        ?     ?        
+    Stat3->Soxtwo :                              
+      Tcf3->Stat3 :   ?     ?  ?     ?     ?     
+      Stat3->Tcf3 :                              
+ Sall4->Tfcptwol1 :                              
+ Tfcptwol1->Sall4 :?  ?  ?  ?  ?     ?  ?  ?     
+     Soxtwo->Tbx3 :         ?                 ?  
+     Tbx3->Soxtwo :      ?                       
+       Tcf3->Tbx3 :?  ?     ?     ?  ?     ?  ?  
+       Tbx3->Tcf3 :                              
+      Sall4->Tbx3 :   ?                          
+      Tbx3->Sall4 :               ?           ?  
+     Gbxtwo->Tbx3 :                        ?     
+     Tbx3->Gbxtwo :                              
+  Tfcptwol1->Tbx3 :?     ?  ?     ?  ?  ?        
+  Tbx3->Tfcptwol1 :                              
+       Tcf3->Oct4 :                              
+       Oct4->Tcf3 :                              
+     Gbxtwo->Oct4 :?  ?                       ?  
+     Oct4->Gbxtwo :?  ?  ?           ?           
+  Tfcptwol1->Oct4 :               ?  ?  ?  ?     
+  Oct4->Tfcptwol1 :   ?                 ?        
+    Soxtwo->Nanog :                              
+    Nanog->Soxtwo :?  ?  ?  ?     ?  ?  ?  ?  ?  
+ Tfcptwol1->Nanog :            ?              ?  
+ Nanog->Tfcptwol1 :   ?                 ?     ?  
+      Oct4->Nanog :?  ?     ?                    
+      Nanog->Oct4 :?                             
+     Gbxtwo->Klf4 :            ?  ?        ?     
+     Klf4->Gbxtwo :            ?  ?  ?     ?     
+  Tfcptwol1->Klf4 :                              
+  Klf4->Tfcptwol1 :?     ?        ?        ?     
+       Tbx3->Klf4 :                              
+       Klf4->Tbx3 :                              
+     Tcf3->Klftwo :      ?                    ?  
+     Klftwo->Tcf3 :                              
+    Sall4->Klftwo :?                 ?           
+    Klftwo->Sall4 :                              
+   Gbxtwo->Klftwo :?  ?  ?  ?     ?     ?  ?     
+   Klftwo->Gbxtwo :         ?  ?  ?     ?  ?  ?  
+Tfcptwol1->Klftwo :                              
+Klftwo->Tfcptwol1 :            ?                 
+     Tbx3->Klftwo :                              
+     Klftwo->Tbx3 :      ?  ?  ?        ?        
+     Oct4->Klftwo :   ?  ?  ?                    
+     Klftwo->Oct4 :   ?  ?  ?  ?  ?  ?  ?  ?  ?  
+    Nanog->Klftwo :?           ?        ?     ?  
+    Klftwo->Nanog :      ?        ?     ?  ?     
+     Klf4->Klftwo :               ?        ?     
+     Klftwo->Klf4 :                              
+    Gbxtwo->Esrrb :                              
+    Esrrb->Gbxtwo :                              
+     Stat3->Esrrb :      ?        ?        ?  ?  
+     Esrrb->Stat3 :                              
+ Tfcptwol1->Esrrb :?  ?     ?        ?  ?        
+ Esrrb->Tfcptwol1 :               ?              
+      Tbx3->Esrrb :                              
+      Esrrb->Tbx3 :            ?                 
+      Oct4->Esrrb :?  ?  ?              ?     ?  
+      Esrrb->Oct4 :      ?  ?  ?     ?        ?  
+     Nanog->Esrrb :            ?                 
+     Esrrb->Nanog :                  ?           
+      Klf4->Esrrb :                              
+      Esrrb->Klf4 :                              
+    Klftwo->Esrrb :            ?           ?     
+    Esrrb->Klftwo :   ?  ?     ?     ?        ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 10
+Milliseconds      : 630
+Ticks             : 106304799
+TotalDays         : 0.000123037961805556
+TotalHours        : 0.00295291108333333
+TotalMinutes      : 0.177174665
+TotalSeconds      : 10.6304799
+TotalMilliseconds : 10630.4799
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 25 LTL\ComplexLTLExample\model.net LTL\ComplexLTLExample\observation.ltlspec temporal_logic_bmc | Out-Default}" 
+                   0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 
+      Nanog->Tcf3 :                                                                           
+      Tcf3->Nanog :            ?                       ?                                      
+    Soxtwo->Sall4 :?  ?  ?  ?  ?        ?              ?  ?        ?  ?           ?        ?  
+    Sall4->Soxtwo :      ?                 ?     ?              ?                 ?  ?        
+    Soxtwo->Stat3 :?  ?     ?  ?     ?  ?     ?  ?     ?     ?     ?  ?           ?  ?  ?     
+    Stat3->Soxtwo :   ?                                ?              ?                    ?  
+      Tcf3->Stat3 :?  ?  ?     ?  ?  ?  ?  ?  ?     ?  ?  ?  ?  ?        ?     ?  ?        ?  
+      Stat3->Tcf3 :   ?  ?     ?                    ?                    ?                 ?  
+ Sall4->Tfcptwol1 :      ?                 ?                                      ?     ?     
+ Tfcptwol1->Sall4 :               ?        ?     ?  ?                    ?           ?        
+     Soxtwo->Tbx3 :?  ?     ?     ?                          ?              ?                 
+     Tbx3->Soxtwo :   ?              ?        ?              ?     ?        ?     ?        ?  
+       Tcf3->Tbx3 :?     ?  ?  ?  ?  ?     ?  ?        ?  ?  ?     ?  ?  ?     ?  ?  ?  ?  ?  
+       Tbx3->Tcf3 :         ?        ?        ?           ?           ?                 ?     
+      Sall4->Tbx3 :      ?                       ?        ?                             ?  ?  
+      Tbx3->Sall4 :                                       ?     ?           ?                 
+     Gbxtwo->Tbx3 :?        ?                 ?        ?              ?                    ?  
+     Tbx3->Gbxtwo :?                          ?                                               
+  Tfcptwol1->Tbx3 :                  ?     ?        ?           ?                             
+  Tbx3->Tfcptwol1 :                           ?     ?        ?                    ?        ?  
+       Tcf3->Oct4 :               ?                 ?        ?        ?                       
+       Oct4->Tcf3 :                                                                           
+     Gbxtwo->Oct4 :            ?  ?     ?     ?                    ?     ?                    
+     Oct4->Gbxtwo :   ?  ?              ?        ?                    ?              ?  ?     
+  Tfcptwol1->Oct4 :                  ?                    ?  ?                       ?     ?  
+  Oct4->Tfcptwol1 :                  ?                                                     ?  
+    Soxtwo->Nanog :?     ?                 ?                          ?                 ?  ?  
+    Nanog->Soxtwo :   ?     ?  ?                       ?  ?           ?  ?  ?  ?  ?           
+ Tfcptwol1->Nanog :                                          ?  ?     ?           ?  ?        
+ Nanog->Tfcptwol1 :?  ?        ?                          ?        ?  ?  ?     ?              
+      Oct4->Nanog :         ?                 ?  ?     ?     ?           ?  ?     ?           
+      Nanog->Oct4 :?     ?  ?     ?     ?        ?     ?        ?     ?  ?        ?  ?     ?  
+     Gbxtwo->Klf4 :                                                                           
+     Klf4->Gbxtwo :      ?              ?        ?  ?                    ?  ?                 
+  Tfcptwol1->Klf4 :                                                                           
+  Klf4->Tfcptwol1 :?                                ?        ?                 ?           ?  
+       Tbx3->Klf4 :                                                                           
+       Klf4->Tbx3 :                              ?                          ?  ?     ?  ?     
+     Tcf3->Klftwo :?        ?              ?                                                  
+     Klftwo->Tcf3 :                                                                           
+    Sall4->Klftwo :      ?              ?           ?  ?     ?  ?     ?     ?        ?  ?     
+    Klftwo->Sall4 :                  ?        ?              ?     ?           ?     ?        
+   Gbxtwo->Klftwo :         ?        ?  ?     ?              ?  ?  ?           ?           ?  
+   Klftwo->Gbxtwo :      ?     ?     ?     ?  ?        ?     ?  ?  ?     ?        ?           
+Tfcptwol1->Klftwo :            ?                                            ?           ?     
+Klftwo->Tfcptwol1 :                              ?     ?              ?           ?           
+     Tbx3->Klftwo :?              ?        ?        ?  ?  ?           ?           ?           
+     Klftwo->Tbx3 :   ?              ?  ?        ?  ?     ?     ?                          ?  
+     Oct4->Klftwo :?        ?              ?  ?  ?        ?              ?                    
+     Klftwo->Oct4 :?  ?        ?     ?        ?     ?     ?  ?     ?           ?  ?     ?     
+    Nanog->Klftwo :   ?        ?  ?           ?        ?                          ?           
+    Klftwo->Nanog :?  ?        ?  ?  ?        ?           ?        ?           ?              
+     Klf4->Klftwo :                  ?  ?        ?                 ?        ?  ?           ?  
+     Klftwo->Klf4 :                                                                           
+    Gbxtwo->Esrrb :                                             ?        ?              ?  ?  
+    Esrrb->Gbxtwo :                                                               ?     ?     
+     Stat3->Esrrb :      ?     ?     ?                                                        
+     Esrrb->Stat3 :         ?  ?  ?     ?  ?        ?                 ?  ?     ?  ?        ?  
+ Tfcptwol1->Esrrb :               ?                 ?     ?        ?        ?                 
+ Esrrb->Tfcptwol1 :         ?     ?  ?  ?  ?     ?     ?              ?           ?  ?        
+      Tbx3->Esrrb :?        ?           ?  ?     ?                                   ?  ?     
+      Esrrb->Tbx3 :            ?        ?                          ?     ?        ?           
+      Oct4->Esrrb :                  ?  ?  ?           ?                                   ?  
+      Esrrb->Oct4 :?  ?  ?  ?                    ?     ?        ?     ?        ?        ?     
+     Nanog->Esrrb :   ?        ?              ?                 ?     ?        ?  ?           
+     Esrrb->Nanog :?              ?     ?        ?  ?  ?              ?  ?                    
+      Klf4->Esrrb :                                    ?                                      
+      Esrrb->Klf4 :                     ?                                                     
+    Klftwo->Esrrb :?  ?     ?  ?  ?              ?                       ?     ?     ?        
+    Esrrb->Klftwo :   ?  ?              ?                                            ?  ?     
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 8
+Milliseconds      : 829
+Ticks             : 88297989
+TotalDays         : 0.000102196746527778
+TotalHours        : 0.00245272191666667
+TotalMinutes      : 0.147163315
+TotalSeconds      : 8.8297989
+TotalMilliseconds : 8829.7989
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>rem Running CTL models: 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 100 CTL\toy_model_ctl\model.net CTL\toy_model_ctl\observations.ctlspec temporal_logic_bdd | Out-Default}" 
+                   0  1  2  3  4  5  6  7  
+             B->C :?  ?  ?  ?  ?  ?  ?  ?  
+             B->A :            ?  ?  ?  ?  
+             A->B :      ?  ?        ?  ?  
+             A->C :   ?     ?     ?     ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 0
+Milliseconds      : 742
+Ticks             : 7421982
+TotalDays         : 8.59025694444444E-06
+TotalHours        : 0.000206166166666667
+TotalMinutes      : 0.01236997
+TotalSeconds      : 0.7421982
+TotalMilliseconds : 742.1982
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 25 CTL\asyncMultiplePathExample\model.net CTL\asyncMultiplePathExample\observations.ctlspec temporal_logic_bdd | Out-Default}" 
+                   0  1  2  3  4  5  6  7  
+       CEBPa->PU1 :   ?     ?     ?     ?  
+     CEBPa->CEBPa :      ?  ?        ?  ?  
+     Gfi1->EgrNab :            ?  ?  ?  ?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 0
+Seconds           : 0
+Milliseconds      : 868
+Ticks             : 8687730
+TotalDays         : 1.00552430555556E-05
+TotalHours        : 0.000241325833333333
+TotalMinutes      : 0.01447955
+TotalSeconds      : 0.868773
+TotalMilliseconds : 868.773
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>PAUSE
+Press any key to continue . . . 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>cd .. 
