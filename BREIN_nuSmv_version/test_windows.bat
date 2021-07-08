@@ -26,5 +26,3 @@ rem Running CTL models:
 powershell -Command "Measure-Command { java -jar NAE.jar 100 CTL\toy_model_ctl\model.net CTL\toy_model_ctl\observations.ctlspec temporal_logic_bdd | Out-Default}"
 powershell -Command "Measure-Command { java -jar NAE.jar 25 CTL\asyncMultiplePathExample\model.net CTL\asyncMultiplePathExample\observations.ctlspec temporal_logic_bdd | Out-Default}"
 
-
-PAUSE
