@@ -1,0 +1,792 @@
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021>cd BREIN_nuSmv_version 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>CALL minimal_pl.bat 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>rem building NAE... 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>javac NAE\*.java validate\*.java 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>jar cvfm NAE.jar NAE\manifest.txt NAE\*.class validate\*.class 
+added manifest
+adding: NAE/Converter$SpecType.class(in = 1031) (out= 564)(deflated 45%)
+adding: NAE/Converter.class(in = 7532) (out= 3965)(deflated 47%)
+adding: NAE/ConverterFactory.class(in = 1453) (out= 801)(deflated 44%)
+adding: NAE/CTL$Experiment$Observation.class(in = 891) (out= 511)(deflated 42%)
+adding: NAE/CTL$Experiment.class(in = 1699) (out= 959)(deflated 43%)
+adding: NAE/CTL.class(in = 7208) (out= 3814)(deflated 47%)
+adding: NAE/Function.class(in = 9392) (out= 3469)(deflated 63%)
+adding: NAE/Input.class(in = 355) (out= 269)(deflated 24%)
+adding: NAE/NAE.class(in = 6202) (out= 3304)(deflated 46%)
+adding: NAE/Node.class(in = 4840) (out= 2329)(deflated 51%)
+adding: NAE/NuSMVInterface$1.class(in = 780) (out= 498)(deflated 36%)
+adding: NAE/NuSMVInterface.class(in = 3672) (out= 1841)(deflated 49%)
+adding: NAE/ResultSet$NodeData.class(in = 504) (out= 351)(deflated 30%)
+adding: NAE/ResultSet.class(in = 709) (out= 367)(deflated 48%)
+adding: NAE/TemporalLogic$Experiment$Observation.class(in = 971) (out= 528)(deflated 45%)
+adding: NAE/TemporalLogic$Experiment.class(in = 2257) (out= 1172)(deflated 48%)
+adding: NAE/TemporalLogic.class(in = 12708) (out= 6381)(deflated 49%)
+adding: NAE/TimeStep.class(in = 10567) (out= 5670)(deflated 46%)
+adding: validate/AbstractModel.class(in = 305) (out= 225)(deflated 26%)
+adding: validate/AbstractNode.class(in = 704) (out= 445)(deflated 36%)
+adding: validate/Assertion.class(in = 4459) (out= 2220)(deflated 50%)
+adding: validate/Input.class(in = 367) (out= 273)(deflated 25%)
+adding: validate/Observation.class(in = 1715) (out= 852)(deflated 50%)
+adding: validate/Predicate.class(in = 3462) (out= 1818)(deflated 47%)
+adding: validate/Validate$State.class(in = 1035) (out= 562)(deflated 45%)
+adding: validate/Validate.class(in = 10684) (out= 5056)(deflated 52%)
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>rem Running time_step models: 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 1 TestModels\minimal_pl\model.net TestModels\minimal_pl\observations.spec time_step | Out-Default}" 
+                   0  
+     Soxtwo->Oct4 :?  
+     Oct4->Soxtwo :   
+      Nanog->Tcf3 :   
+      Tcf3->Nanog :   
+    Soxtwo->Sall4 :   
+    Sall4->Soxtwo :?  
+    Soxtwo->Stat3 :   
+    Stat3->Soxtwo :   
+      Tcf3->Stat3 :?  
+      Stat3->Tcf3 :   
+ Sall4->Tfcptwol1 :   
+ Tfcptwol1->Sall4 :?  
+     Soxtwo->Tbx3 :?  
+     Tbx3->Soxtwo :   
+       Tcf3->Tbx3 :?  
+       Tbx3->Tcf3 :   
+      Sall4->Tbx3 :   
+      Tbx3->Sall4 :   
+     Gbxtwo->Tbx3 :?  
+     Tbx3->Gbxtwo :   
+  Tfcptwol1->Tbx3 :   
+  Tbx3->Tfcptwol1 :   
+       Tcf3->Oct4 :   
+       Oct4->Tcf3 :   
+     Gbxtwo->Oct4 :   
+     Oct4->Gbxtwo :   
+  Tfcptwol1->Oct4 :   
+  Oct4->Tfcptwol1 :?  
+    Soxtwo->Nanog :   
+    Nanog->Soxtwo :?  
+ Tfcptwol1->Nanog :   
+ Nanog->Tfcptwol1 :   
+      Oct4->Nanog :?  
+      Nanog->Oct4 :   
+     Gbxtwo->Klf4 :?  
+     Klf4->Gbxtwo :   
+  Tfcptwol1->Klf4 :   
+  Klf4->Tfcptwol1 :?  
+       Tbx3->Klf4 :   
+       Klf4->Tbx3 :   
+     Tcf3->Klftwo :   
+     Klftwo->Tcf3 :   
+    Sall4->Klftwo :?  
+    Klftwo->Sall4 :   
+   Gbxtwo->Klftwo :   
+   Klftwo->Gbxtwo :?  
+Tfcptwol1->Klftwo :?  
+Klftwo->Tfcptwol1 :   
+     Tbx3->Klftwo :   
+     Klftwo->Tbx3 :?  
+     Oct4->Klftwo :   
+     Klftwo->Oct4 :?  
+    Nanog->Klftwo :   
+    Klftwo->Nanog :?  
+     Klf4->Klftwo :?  
+     Klftwo->Klf4 :   
+    Gbxtwo->Esrrb :   
+    Esrrb->Gbxtwo :   
+     Stat3->Esrrb :   
+     Esrrb->Stat3 :   
+ Tfcptwol1->Esrrb :?  
+ Esrrb->Tfcptwol1 :?  
+      Tbx3->Esrrb :   
+      Esrrb->Tbx3 :   
+      Oct4->Esrrb :?  
+      Esrrb->Oct4 :?  
+     Nanog->Esrrb :?  
+     Esrrb->Nanog :   
+      Klf4->Esrrb :   
+      Esrrb->Klf4 :   
+    Klftwo->Esrrb :   
+    Esrrb->Klftwo :   
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 3
+Seconds           : 38
+Milliseconds      : 143
+Ticks             : 2181437185
+TotalDays         : 0.00252481155671296
+TotalHours        : 0.0605954773611111
+TotalMinutes      : 3.63572864166667
+TotalSeconds      : 218.1437185
+TotalMilliseconds : 218143.7185
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>cd ../BREIN_nuXmv_version 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>CALL minimal_pl.bat 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>rem building NAE... 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>javac NAE\*.java validate\*.java 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>jar cvfm NAE.jar NAE\manifest.txt NAE\*.class validate\*.class 
+added manifest
+adding: NAE/Converter$SpecType.class(in = 1031) (out= 564)(deflated 45%)
+adding: NAE/Converter.class(in = 7532) (out= 3965)(deflated 47%)
+adding: NAE/ConverterFactory.class(in = 1453) (out= 801)(deflated 44%)
+adding: NAE/CTL$Experiment$Observation.class(in = 891) (out= 511)(deflated 42%)
+adding: NAE/CTL$Experiment.class(in = 1699) (out= 959)(deflated 43%)
+adding: NAE/CTL.class(in = 7208) (out= 3814)(deflated 47%)
+adding: NAE/Function.class(in = 9392) (out= 3469)(deflated 63%)
+adding: NAE/Input.class(in = 355) (out= 269)(deflated 24%)
+adding: NAE/NAE.class(in = 6202) (out= 3304)(deflated 46%)
+adding: NAE/Node.class(in = 4840) (out= 2329)(deflated 51%)
+adding: NAE/NuSMVInterface$1.class(in = 780) (out= 498)(deflated 36%)
+adding: NAE/NuSMVInterface.class(in = 3672) (out= 1844)(deflated 49%)
+adding: NAE/ResultSet$NodeData.class(in = 504) (out= 351)(deflated 30%)
+adding: NAE/ResultSet.class(in = 709) (out= 367)(deflated 48%)
+adding: NAE/TemporalLogic$Experiment$Observation.class(in = 971) (out= 528)(deflated 45%)
+adding: NAE/TemporalLogic$Experiment.class(in = 2257) (out= 1172)(deflated 48%)
+adding: NAE/TemporalLogic.class(in = 12708) (out= 6381)(deflated 49%)
+adding: NAE/TimeStep.class(in = 10567) (out= 5670)(deflated 46%)
+adding: validate/AbstractModel.class(in = 305) (out= 225)(deflated 26%)
+adding: validate/AbstractNode.class(in = 704) (out= 445)(deflated 36%)
+adding: validate/Assertion.class(in = 4459) (out= 2220)(deflated 50%)
+adding: validate/Input.class(in = 367) (out= 273)(deflated 25%)
+adding: validate/Observation.class(in = 1715) (out= 852)(deflated 50%)
+adding: validate/Predicate.class(in = 3462) (out= 1818)(deflated 47%)
+adding: validate/Validate$State.class(in = 1035) (out= 562)(deflated 45%)
+adding: validate/Validate.class(in = 10684) (out= 5056)(deflated 52%)
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>rem Running time_step models: 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 1 TestModels\minimal_pl\model.net TestModels\minimal_pl\observations.spec time_step | Out-Default}" 
+                   0  
+     Soxtwo->Oct4 :?  
+     Oct4->Soxtwo :   
+      Nanog->Tcf3 :   
+      Tcf3->Nanog :   
+    Soxtwo->Sall4 :   
+    Sall4->Soxtwo :?  
+    Soxtwo->Stat3 :   
+    Stat3->Soxtwo :   
+      Tcf3->Stat3 :?  
+      Stat3->Tcf3 :   
+ Sall4->Tfcptwol1 :   
+ Tfcptwol1->Sall4 :?  
+     Soxtwo->Tbx3 :?  
+     Tbx3->Soxtwo :   
+       Tcf3->Tbx3 :?  
+       Tbx3->Tcf3 :   
+      Sall4->Tbx3 :   
+      Tbx3->Sall4 :   
+     Gbxtwo->Tbx3 :?  
+     Tbx3->Gbxtwo :   
+  Tfcptwol1->Tbx3 :   
+  Tbx3->Tfcptwol1 :   
+       Tcf3->Oct4 :   
+       Oct4->Tcf3 :   
+     Gbxtwo->Oct4 :   
+     Oct4->Gbxtwo :?  
+  Tfcptwol1->Oct4 :   
+  Oct4->Tfcptwol1 :?  
+    Soxtwo->Nanog :   
+    Nanog->Soxtwo :?  
+ Tfcptwol1->Nanog :   
+ Nanog->Tfcptwol1 :   
+      Oct4->Nanog :?  
+      Nanog->Oct4 :   
+     Gbxtwo->Klf4 :?  
+     Klf4->Gbxtwo :?  
+  Tfcptwol1->Klf4 :   
+  Klf4->Tfcptwol1 :?  
+       Tbx3->Klf4 :   
+       Klf4->Tbx3 :   
+     Tcf3->Klftwo :   
+     Klftwo->Tcf3 :   
+    Sall4->Klftwo :?  
+    Klftwo->Sall4 :   
+   Gbxtwo->Klftwo :?  
+   Klftwo->Gbxtwo :   
+Tfcptwol1->Klftwo :?  
+Klftwo->Tfcptwol1 :   
+     Tbx3->Klftwo :   
+     Klftwo->Tbx3 :   
+     Oct4->Klftwo :   
+     Klftwo->Oct4 :?  
+    Nanog->Klftwo :   
+    Klftwo->Nanog :?  
+     Klf4->Klftwo :?  
+     Klftwo->Klf4 :   
+    Gbxtwo->Esrrb :   
+    Esrrb->Gbxtwo :   
+     Stat3->Esrrb :   
+     Esrrb->Stat3 :   
+ Tfcptwol1->Esrrb :?  
+ Esrrb->Tfcptwol1 :?  
+      Tbx3->Esrrb :   
+      Esrrb->Tbx3 :   
+      Oct4->Esrrb :   
+      Esrrb->Oct4 :?  
+     Nanog->Esrrb :?  
+     Esrrb->Nanog :   
+      Klf4->Esrrb :   
+      Esrrb->Klf4 :   
+    Klftwo->Esrrb :?  
+    Esrrb->Klftwo :   
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 4
+Seconds           : 26
+Milliseconds      : 619
+Ticks             : 2666192770
+TotalDays         : 0.00308587126157407
+TotalHours        : 0.0740609102777778
+TotalMinutes      : 4.44365461666667
+TotalSeconds      : 266.619277
+TotalMilliseconds : 266619.277
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>cd .. 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021>cd BREIN_nuSmv_version 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>CALL minimal_pl.bat 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>rem building NAE... 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>javac NAE\*.java validate\*.java 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>jar cvfm NAE.jar NAE\manifest.txt NAE\*.class validate\*.class 
+added manifest
+adding: NAE/Converter$SpecType.class(in = 1031) (out= 564)(deflated 45%)
+adding: NAE/Converter.class(in = 7532) (out= 3965)(deflated 47%)
+adding: NAE/ConverterFactory.class(in = 1453) (out= 801)(deflated 44%)
+adding: NAE/CTL$Experiment$Observation.class(in = 891) (out= 511)(deflated 42%)
+adding: NAE/CTL$Experiment.class(in = 1699) (out= 959)(deflated 43%)
+adding: NAE/CTL.class(in = 7208) (out= 3814)(deflated 47%)
+adding: NAE/Function.class(in = 9392) (out= 3469)(deflated 63%)
+adding: NAE/Input.class(in = 355) (out= 269)(deflated 24%)
+adding: NAE/NAE.class(in = 6202) (out= 3304)(deflated 46%)
+adding: NAE/Node.class(in = 4840) (out= 2329)(deflated 51%)
+adding: NAE/NuSMVInterface$1.class(in = 780) (out= 498)(deflated 36%)
+adding: NAE/NuSMVInterface.class(in = 3672) (out= 1841)(deflated 49%)
+adding: NAE/ResultSet$NodeData.class(in = 504) (out= 351)(deflated 30%)
+adding: NAE/ResultSet.class(in = 709) (out= 367)(deflated 48%)
+adding: NAE/TemporalLogic$Experiment$Observation.class(in = 971) (out= 528)(deflated 45%)
+adding: NAE/TemporalLogic$Experiment.class(in = 2257) (out= 1172)(deflated 48%)
+adding: NAE/TemporalLogic.class(in = 12708) (out= 6381)(deflated 49%)
+adding: NAE/TimeStep.class(in = 10567) (out= 5670)(deflated 46%)
+adding: validate/AbstractModel.class(in = 305) (out= 225)(deflated 26%)
+adding: validate/AbstractNode.class(in = 704) (out= 445)(deflated 36%)
+adding: validate/Assertion.class(in = 4459) (out= 2220)(deflated 50%)
+adding: validate/Input.class(in = 367) (out= 273)(deflated 25%)
+adding: validate/Observation.class(in = 1715) (out= 852)(deflated 50%)
+adding: validate/Predicate.class(in = 3462) (out= 1818)(deflated 47%)
+adding: validate/Validate$State.class(in = 1035) (out= 562)(deflated 45%)
+adding: validate/Validate.class(in = 10684) (out= 5056)(deflated 52%)
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>rem Running time_step models: 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 1 TestModels\minimal_pl\model.net TestModels\minimal_pl\observations.spec time_step | Out-Default}" 
+                   0  
+     Soxtwo->Oct4 :   
+     Oct4->Soxtwo :?  
+      Nanog->Tcf3 :   
+      Tcf3->Nanog :   
+    Soxtwo->Sall4 :?  
+    Sall4->Soxtwo :   
+    Soxtwo->Stat3 :?  
+    Stat3->Soxtwo :   
+      Tcf3->Stat3 :   
+      Stat3->Tcf3 :   
+ Sall4->Tfcptwol1 :   
+ Tfcptwol1->Sall4 :?  
+     Soxtwo->Tbx3 :?  
+     Tbx3->Soxtwo :   
+       Tcf3->Tbx3 :?  
+       Tbx3->Tcf3 :   
+      Sall4->Tbx3 :   
+      Tbx3->Sall4 :?  
+     Gbxtwo->Tbx3 :?  
+     Tbx3->Gbxtwo :   
+  Tfcptwol1->Tbx3 :   
+  Tbx3->Tfcptwol1 :   
+       Tcf3->Oct4 :   
+       Oct4->Tcf3 :   
+     Gbxtwo->Oct4 :?  
+     Oct4->Gbxtwo :?  
+  Tfcptwol1->Oct4 :   
+  Oct4->Tfcptwol1 :   
+    Soxtwo->Nanog :   
+    Nanog->Soxtwo :   
+ Tfcptwol1->Nanog :?  
+ Nanog->Tfcptwol1 :   
+      Oct4->Nanog :   
+      Nanog->Oct4 :?  
+     Gbxtwo->Klf4 :   
+     Klf4->Gbxtwo :?  
+  Tfcptwol1->Klf4 :   
+  Klf4->Tfcptwol1 :?  
+       Tbx3->Klf4 :   
+       Klf4->Tbx3 :   
+     Tcf3->Klftwo :   
+     Klftwo->Tcf3 :   
+    Sall4->Klftwo :?  
+    Klftwo->Sall4 :   
+   Gbxtwo->Klftwo :?  
+   Klftwo->Gbxtwo :?  
+Tfcptwol1->Klftwo :   
+Klftwo->Tfcptwol1 :?  
+     Tbx3->Klftwo :   
+     Klftwo->Tbx3 :?  
+     Oct4->Klftwo :   
+     Klftwo->Oct4 :?  
+    Nanog->Klftwo :   
+    Klftwo->Nanog :?  
+     Klf4->Klftwo :?  
+     Klftwo->Klf4 :   
+    Gbxtwo->Esrrb :   
+    Esrrb->Gbxtwo :   
+     Stat3->Esrrb :   
+     Esrrb->Stat3 :   
+ Tfcptwol1->Esrrb :   
+ Esrrb->Tfcptwol1 :?  
+      Tbx3->Esrrb :?  
+      Esrrb->Tbx3 :   
+      Oct4->Esrrb :?  
+      Esrrb->Oct4 :?  
+     Nanog->Esrrb :?  
+     Esrrb->Nanog :   
+      Klf4->Esrrb :   
+      Esrrb->Klf4 :   
+    Klftwo->Esrrb :   
+    Esrrb->Klftwo :?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 4
+Seconds           : 21
+Milliseconds      : 661
+Ticks             : 2616619728
+TotalDays         : 0.00302849505555556
+TotalHours        : 0.0726838813333333
+TotalMinutes      : 4.36103288
+TotalSeconds      : 261.6619728
+TotalMilliseconds : 261661.9728
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>cd ../BREIN_nuXmv_version 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>CALL minimal_pl.bat 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>rem building NAE... 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>javac NAE\*.java validate\*.java 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>jar cvfm NAE.jar NAE\manifest.txt NAE\*.class validate\*.class 
+added manifest
+adding: NAE/Converter$SpecType.class(in = 1031) (out= 564)(deflated 45%)
+adding: NAE/Converter.class(in = 7532) (out= 3965)(deflated 47%)
+adding: NAE/ConverterFactory.class(in = 1453) (out= 801)(deflated 44%)
+adding: NAE/CTL$Experiment$Observation.class(in = 891) (out= 511)(deflated 42%)
+adding: NAE/CTL$Experiment.class(in = 1699) (out= 959)(deflated 43%)
+adding: NAE/CTL.class(in = 7208) (out= 3814)(deflated 47%)
+adding: NAE/Function.class(in = 9392) (out= 3469)(deflated 63%)
+adding: NAE/Input.class(in = 355) (out= 269)(deflated 24%)
+adding: NAE/NAE.class(in = 6202) (out= 3304)(deflated 46%)
+adding: NAE/Node.class(in = 4840) (out= 2329)(deflated 51%)
+adding: NAE/NuSMVInterface$1.class(in = 780) (out= 498)(deflated 36%)
+adding: NAE/NuSMVInterface.class(in = 3672) (out= 1844)(deflated 49%)
+adding: NAE/ResultSet$NodeData.class(in = 504) (out= 351)(deflated 30%)
+adding: NAE/ResultSet.class(in = 709) (out= 367)(deflated 48%)
+adding: NAE/TemporalLogic$Experiment$Observation.class(in = 971) (out= 528)(deflated 45%)
+adding: NAE/TemporalLogic$Experiment.class(in = 2257) (out= 1172)(deflated 48%)
+adding: NAE/TemporalLogic.class(in = 12708) (out= 6381)(deflated 49%)
+adding: NAE/TimeStep.class(in = 10567) (out= 5670)(deflated 46%)
+adding: validate/AbstractModel.class(in = 305) (out= 225)(deflated 26%)
+adding: validate/AbstractNode.class(in = 704) (out= 445)(deflated 36%)
+adding: validate/Assertion.class(in = 4459) (out= 2220)(deflated 50%)
+adding: validate/Input.class(in = 367) (out= 273)(deflated 25%)
+adding: validate/Observation.class(in = 1715) (out= 852)(deflated 50%)
+adding: validate/Predicate.class(in = 3462) (out= 1818)(deflated 47%)
+adding: validate/Validate$State.class(in = 1035) (out= 562)(deflated 45%)
+adding: validate/Validate.class(in = 10684) (out= 5056)(deflated 52%)
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>rem Running time_step models: 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 1 TestModels\minimal_pl\model.net TestModels\minimal_pl\observations.spec time_step | Out-Default}" 
+                   0  
+     Soxtwo->Oct4 :?  
+     Oct4->Soxtwo :   
+      Nanog->Tcf3 :   
+      Tcf3->Nanog :   
+    Soxtwo->Sall4 :   
+    Sall4->Soxtwo :?  
+    Soxtwo->Stat3 :   
+    Stat3->Soxtwo :   
+      Tcf3->Stat3 :?  
+      Stat3->Tcf3 :   
+ Sall4->Tfcptwol1 :   
+ Tfcptwol1->Sall4 :?  
+     Soxtwo->Tbx3 :?  
+     Tbx3->Soxtwo :   
+       Tcf3->Tbx3 :?  
+       Tbx3->Tcf3 :   
+      Sall4->Tbx3 :   
+      Tbx3->Sall4 :   
+     Gbxtwo->Tbx3 :?  
+     Tbx3->Gbxtwo :   
+  Tfcptwol1->Tbx3 :   
+  Tbx3->Tfcptwol1 :   
+       Tcf3->Oct4 :   
+       Oct4->Tcf3 :   
+     Gbxtwo->Oct4 :   
+     Oct4->Gbxtwo :?  
+  Tfcptwol1->Oct4 :   
+  Oct4->Tfcptwol1 :?  
+    Soxtwo->Nanog :   
+    Nanog->Soxtwo :?  
+ Tfcptwol1->Nanog :   
+ Nanog->Tfcptwol1 :   
+      Oct4->Nanog :?  
+      Nanog->Oct4 :   
+     Gbxtwo->Klf4 :?  
+     Klf4->Gbxtwo :?  
+  Tfcptwol1->Klf4 :   
+  Klf4->Tfcptwol1 :?  
+       Tbx3->Klf4 :   
+       Klf4->Tbx3 :   
+     Tcf3->Klftwo :   
+     Klftwo->Tcf3 :   
+    Sall4->Klftwo :?  
+    Klftwo->Sall4 :   
+   Gbxtwo->Klftwo :?  
+   Klftwo->Gbxtwo :   
+Tfcptwol1->Klftwo :?  
+Klftwo->Tfcptwol1 :   
+     Tbx3->Klftwo :   
+     Klftwo->Tbx3 :   
+     Oct4->Klftwo :   
+     Klftwo->Oct4 :?  
+    Nanog->Klftwo :   
+    Klftwo->Nanog :?  
+     Klf4->Klftwo :?  
+     Klftwo->Klf4 :   
+    Gbxtwo->Esrrb :   
+    Esrrb->Gbxtwo :   
+     Stat3->Esrrb :   
+     Esrrb->Stat3 :   
+ Tfcptwol1->Esrrb :?  
+ Esrrb->Tfcptwol1 :?  
+      Tbx3->Esrrb :   
+      Esrrb->Tbx3 :   
+      Oct4->Esrrb :   
+      Esrrb->Oct4 :?  
+     Nanog->Esrrb :?  
+     Esrrb->Nanog :   
+      Klf4->Esrrb :   
+      Esrrb->Klf4 :   
+    Klftwo->Esrrb :?  
+    Esrrb->Klftwo :   
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 4
+Seconds           : 20
+Milliseconds      : 936
+Ticks             : 2609366378
+TotalDays         : 0.00302009997453704
+TotalHours        : 0.0724823993888889
+TotalMinutes      : 4.34894396333333
+TotalSeconds      : 260.9366378
+TotalMilliseconds : 260936.6378
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>cd .. 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021>cd BREIN_nuSmv_version 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>CALL minimal_pl.bat 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>rem building NAE... 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>javac NAE\*.java validate\*.java 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>jar cvfm NAE.jar NAE\manifest.txt NAE\*.class validate\*.class 
+added manifest
+adding: NAE/Converter$SpecType.class(in = 1031) (out= 564)(deflated 45%)
+adding: NAE/Converter.class(in = 7532) (out= 3965)(deflated 47%)
+adding: NAE/ConverterFactory.class(in = 1453) (out= 801)(deflated 44%)
+adding: NAE/CTL$Experiment$Observation.class(in = 891) (out= 511)(deflated 42%)
+adding: NAE/CTL$Experiment.class(in = 1699) (out= 959)(deflated 43%)
+adding: NAE/CTL.class(in = 7208) (out= 3814)(deflated 47%)
+adding: NAE/Function.class(in = 9392) (out= 3469)(deflated 63%)
+adding: NAE/Input.class(in = 355) (out= 269)(deflated 24%)
+adding: NAE/NAE.class(in = 6202) (out= 3304)(deflated 46%)
+adding: NAE/Node.class(in = 4840) (out= 2329)(deflated 51%)
+adding: NAE/NuSMVInterface$1.class(in = 780) (out= 498)(deflated 36%)
+adding: NAE/NuSMVInterface.class(in = 3672) (out= 1841)(deflated 49%)
+adding: NAE/ResultSet$NodeData.class(in = 504) (out= 351)(deflated 30%)
+adding: NAE/ResultSet.class(in = 709) (out= 367)(deflated 48%)
+adding: NAE/TemporalLogic$Experiment$Observation.class(in = 971) (out= 528)(deflated 45%)
+adding: NAE/TemporalLogic$Experiment.class(in = 2257) (out= 1172)(deflated 48%)
+adding: NAE/TemporalLogic.class(in = 12708) (out= 6381)(deflated 49%)
+adding: NAE/TimeStep.class(in = 10567) (out= 5670)(deflated 46%)
+adding: validate/AbstractModel.class(in = 305) (out= 225)(deflated 26%)
+adding: validate/AbstractNode.class(in = 704) (out= 445)(deflated 36%)
+adding: validate/Assertion.class(in = 4459) (out= 2220)(deflated 50%)
+adding: validate/Input.class(in = 367) (out= 273)(deflated 25%)
+adding: validate/Observation.class(in = 1715) (out= 852)(deflated 50%)
+adding: validate/Predicate.class(in = 3462) (out= 1818)(deflated 47%)
+adding: validate/Validate$State.class(in = 1035) (out= 562)(deflated 45%)
+adding: validate/Validate.class(in = 10684) (out= 5056)(deflated 52%)
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>rem Running time_step models: 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>powershell -Command "Measure-Command { java -jar NAE.jar 1 TestModels\minimal_pl\model.net TestModels\minimal_pl\observations.spec time_step | Out-Default}" 
+                   0  
+     Soxtwo->Oct4 :   
+     Oct4->Soxtwo :?  
+      Nanog->Tcf3 :   
+      Tcf3->Nanog :   
+    Soxtwo->Sall4 :?  
+    Sall4->Soxtwo :   
+    Soxtwo->Stat3 :   
+    Stat3->Soxtwo :   
+      Tcf3->Stat3 :?  
+      Stat3->Tcf3 :   
+ Sall4->Tfcptwol1 :   
+ Tfcptwol1->Sall4 :?  
+     Soxtwo->Tbx3 :?  
+     Tbx3->Soxtwo :   
+       Tcf3->Tbx3 :?  
+       Tbx3->Tcf3 :   
+      Sall4->Tbx3 :   
+      Tbx3->Sall4 :?  
+     Gbxtwo->Tbx3 :?  
+     Tbx3->Gbxtwo :   
+  Tfcptwol1->Tbx3 :   
+  Tbx3->Tfcptwol1 :   
+       Tcf3->Oct4 :   
+       Oct4->Tcf3 :   
+     Gbxtwo->Oct4 :?  
+     Oct4->Gbxtwo :?  
+  Tfcptwol1->Oct4 :?  
+  Oct4->Tfcptwol1 :   
+    Soxtwo->Nanog :   
+    Nanog->Soxtwo :   
+ Tfcptwol1->Nanog :?  
+ Nanog->Tfcptwol1 :   
+      Oct4->Nanog :   
+      Nanog->Oct4 :?  
+     Gbxtwo->Klf4 :   
+     Klf4->Gbxtwo :   
+  Tfcptwol1->Klf4 :   
+  Klf4->Tfcptwol1 :?  
+       Tbx3->Klf4 :   
+       Klf4->Tbx3 :   
+     Tcf3->Klftwo :   
+     Klftwo->Tcf3 :   
+    Sall4->Klftwo :?  
+    Klftwo->Sall4 :   
+   Gbxtwo->Klftwo :?  
+   Klftwo->Gbxtwo :   
+Tfcptwol1->Klftwo :   
+Klftwo->Tfcptwol1 :?  
+     Tbx3->Klftwo :   
+     Klftwo->Tbx3 :?  
+     Oct4->Klftwo :   
+     Klftwo->Oct4 :?  
+    Nanog->Klftwo :   
+    Klftwo->Nanog :?  
+     Klf4->Klftwo :?  
+     Klftwo->Klf4 :   
+    Gbxtwo->Esrrb :   
+    Esrrb->Gbxtwo :   
+     Stat3->Esrrb :   
+     Esrrb->Stat3 :   
+ Tfcptwol1->Esrrb :   
+ Esrrb->Tfcptwol1 :?  
+      Tbx3->Esrrb :?  
+      Esrrb->Tbx3 :   
+      Oct4->Esrrb :   
+      Esrrb->Oct4 :?  
+     Nanog->Esrrb :?  
+     Esrrb->Nanog :   
+      Klf4->Esrrb :   
+      Esrrb->Klf4 :   
+    Klftwo->Esrrb :   
+    Esrrb->Klftwo :?  
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 4
+Seconds           : 13
+Milliseconds      : 733
+Ticks             : 2537336960
+TotalDays         : 0.00293673259259259
+TotalHours        : 0.0704815822222222
+TotalMinutes      : 4.22889493333333
+TotalSeconds      : 253.733696
+TotalMilliseconds : 253733.696
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_NuSMV_version>cd ../BREIN_nuXmv_version 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>CALL minimal_pl.bat 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>rem building NAE... 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>javac NAE\*.java validate\*.java 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>jar cvfm NAE.jar NAE\manifest.txt NAE\*.class validate\*.class 
+added manifest
+adding: NAE/Converter$SpecType.class(in = 1031) (out= 564)(deflated 45%)
+adding: NAE/Converter.class(in = 7532) (out= 3965)(deflated 47%)
+adding: NAE/ConverterFactory.class(in = 1453) (out= 801)(deflated 44%)
+adding: NAE/CTL$Experiment$Observation.class(in = 891) (out= 511)(deflated 42%)
+adding: NAE/CTL$Experiment.class(in = 1699) (out= 959)(deflated 43%)
+adding: NAE/CTL.class(in = 7208) (out= 3814)(deflated 47%)
+adding: NAE/Function.class(in = 9392) (out= 3469)(deflated 63%)
+adding: NAE/Input.class(in = 355) (out= 269)(deflated 24%)
+adding: NAE/NAE.class(in = 6202) (out= 3304)(deflated 46%)
+adding: NAE/Node.class(in = 4840) (out= 2329)(deflated 51%)
+adding: NAE/NuSMVInterface$1.class(in = 780) (out= 498)(deflated 36%)
+adding: NAE/NuSMVInterface.class(in = 3672) (out= 1844)(deflated 49%)
+adding: NAE/ResultSet$NodeData.class(in = 504) (out= 351)(deflated 30%)
+adding: NAE/ResultSet.class(in = 709) (out= 367)(deflated 48%)
+adding: NAE/TemporalLogic$Experiment$Observation.class(in = 971) (out= 528)(deflated 45%)
+adding: NAE/TemporalLogic$Experiment.class(in = 2257) (out= 1172)(deflated 48%)
+adding: NAE/TemporalLogic.class(in = 12708) (out= 6381)(deflated 49%)
+adding: NAE/TimeStep.class(in = 10567) (out= 5670)(deflated 46%)
+adding: validate/AbstractModel.class(in = 305) (out= 225)(deflated 26%)
+adding: validate/AbstractNode.class(in = 704) (out= 445)(deflated 36%)
+adding: validate/Assertion.class(in = 4459) (out= 2220)(deflated 50%)
+adding: validate/Input.class(in = 367) (out= 273)(deflated 25%)
+adding: validate/Observation.class(in = 1715) (out= 852)(deflated 50%)
+adding: validate/Predicate.class(in = 3462) (out= 1818)(deflated 47%)
+adding: validate/Validate$State.class(in = 1035) (out= 562)(deflated 45%)
+adding: validate/Validate.class(in = 10684) (out= 5056)(deflated 52%)
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>rem Running time_step models: 
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>powershell -Command "Measure-Command { java -jar NAE.jar 1 TestModels\minimal_pl\model.net TestModels\minimal_pl\observations.spec time_step | Out-Default}" 
+                   0  
+     Soxtwo->Oct4 :?  
+     Oct4->Soxtwo :   
+      Nanog->Tcf3 :   
+      Tcf3->Nanog :   
+    Soxtwo->Sall4 :   
+    Sall4->Soxtwo :?  
+    Soxtwo->Stat3 :   
+    Stat3->Soxtwo :   
+      Tcf3->Stat3 :?  
+      Stat3->Tcf3 :   
+ Sall4->Tfcptwol1 :   
+ Tfcptwol1->Sall4 :?  
+     Soxtwo->Tbx3 :?  
+     Tbx3->Soxtwo :   
+       Tcf3->Tbx3 :?  
+       Tbx3->Tcf3 :   
+      Sall4->Tbx3 :   
+      Tbx3->Sall4 :   
+     Gbxtwo->Tbx3 :?  
+     Tbx3->Gbxtwo :   
+  Tfcptwol1->Tbx3 :   
+  Tbx3->Tfcptwol1 :   
+       Tcf3->Oct4 :   
+       Oct4->Tcf3 :   
+     Gbxtwo->Oct4 :   
+     Oct4->Gbxtwo :?  
+  Tfcptwol1->Oct4 :   
+  Oct4->Tfcptwol1 :?  
+    Soxtwo->Nanog :   
+    Nanog->Soxtwo :?  
+ Tfcptwol1->Nanog :   
+ Nanog->Tfcptwol1 :   
+      Oct4->Nanog :?  
+      Nanog->Oct4 :   
+     Gbxtwo->Klf4 :?  
+     Klf4->Gbxtwo :?  
+  Tfcptwol1->Klf4 :   
+  Klf4->Tfcptwol1 :?  
+       Tbx3->Klf4 :   
+       Klf4->Tbx3 :   
+     Tcf3->Klftwo :   
+     Klftwo->Tcf3 :   
+    Sall4->Klftwo :?  
+    Klftwo->Sall4 :   
+   Gbxtwo->Klftwo :?  
+   Klftwo->Gbxtwo :   
+Tfcptwol1->Klftwo :?  
+Klftwo->Tfcptwol1 :   
+     Tbx3->Klftwo :   
+     Klftwo->Tbx3 :   
+     Oct4->Klftwo :   
+     Klftwo->Oct4 :?  
+    Nanog->Klftwo :   
+    Klftwo->Nanog :?  
+     Klf4->Klftwo :?  
+     Klftwo->Klf4 :   
+    Gbxtwo->Esrrb :   
+    Esrrb->Gbxtwo :   
+     Stat3->Esrrb :   
+     Esrrb->Stat3 :   
+ Tfcptwol1->Esrrb :?  
+ Esrrb->Tfcptwol1 :?  
+      Tbx3->Esrrb :   
+      Esrrb->Tbx3 :   
+      Oct4->Esrrb :   
+      Esrrb->Oct4 :?  
+     Nanog->Esrrb :?  
+     Esrrb->Nanog :   
+      Klf4->Esrrb :   
+      Esrrb->Klf4 :   
+    Klftwo->Esrrb :?  
+    Esrrb->Klftwo :   
+
+
+
+Days              : 0
+Hours             : 0
+Minutes           : 4
+Seconds           : 30
+Milliseconds      : 458
+Ticks             : 2704583008
+TotalDays         : 0.00313030440740741
+TotalHours        : 0.0751273057777778
+TotalMinutes      : 4.50763834666667
+TotalSeconds      : 270.4583008
+TotalMilliseconds : 270458.3008
+
+
+
+
+C:\Users\user\Documents\Career\Summer 2021\Bar Ilan\dev\biu-cs-2021\BREIN_nuXmv_version>cd .. 
