@@ -51,17 +51,45 @@ public class NuSMVInterface{
     }
     
 
+//    private String checkLTL_BMC(String spec)throws Exception{
+//        //remove newlines
+//        spec = spec.replaceAll("\\n", "").replace("@"," ");
+//        //get bound
+//        int duration = c.getDuration()+1;
+//        //execute command
+//        out.println("check_ltlspec_bmc_inc -k "+duration+" -p \""+spec+"\"");
+//        out.flush();
+//        String s = readPrompt();
+//        System.out.println("Normal Prompt: ");
+//        return s;
+//    }
+//
+    //Experimental1
     private String checkLTL_BMC(String spec)throws Exception{
         //remove newlines
         spec = spec.replaceAll("\\n", "").replace("@"," ");
         //get bound
         int duration = c.getDuration()+1;
         //execute command
-        out.println("check_ltlspec_bmc_inc -k "+duration+" -p \""+spec+"\"");
+        out.println("msat_check_ltl_spec_bmc -k "+duration+" -p \""+spec+"\"");
         out.flush();
         String s = readPrompt();
+        System.out.println("Special Prompt: ");
         return s;
     }
+
+//    //Experimental2
+//    private String checkLTL_BMC(String spec)throws Exception{
+//        //remove newlines
+//        spec = spec.replaceAll("\\n", "").replace("@"," ");
+//        //get bound
+//        int duration = c.getDuration()+1;
+//        //execute command
+//        out.println("check_ltlspec_sbmc_inc -k "+duration+" -p \""+spec+"\"");
+//        out.flush();
+//        String s = readPrompt();
+//        return s;
+//    }
     
 
     private String checkLTL_BDD(String spec)throws Exception{
