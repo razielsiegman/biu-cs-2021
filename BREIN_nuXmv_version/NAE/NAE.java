@@ -122,12 +122,18 @@ public class NAE{
             }
         }
         //finally run NAE!
+
         NAE nae = new NAE(c,solutionLimit);
+        if(args[args.length - 1].equals("-p")){
+            nae.printSMVFile(nae.converter.getFileName());
+        }
         nae.runAnalysisInteractive();
         nae.printResults();
         if(validate) nae.validate(model,spec);
     }
-    
+
+
+
     //the arguments are the names of the files to analyze
     public NAE(Converter c,int solutionLimit){
         this.solutionLimit = solutionLimit;
@@ -205,6 +211,15 @@ public class NAE{
         String[] nodes = n.split("\\.");
         //replace occurences of identifier, a string defined in Converter that is appended to nodes to make them unique from NuSMV keywords 
         return (nodes[1]+"->"+nodes[0]).replace(Converter.identifier,"");
+    }
+
+    void printSMVFile(String fileName) throws IOException{
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
     }
 
 
