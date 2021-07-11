@@ -55,7 +55,7 @@ def generate_bool_expression(rc_spec, incoming_edges):
     # (NoRepressors AND NOT NoActivators) OR (NOT AllRepressors AND AllActivators)
     elif rc_spec == '3':
         lhs = And(no_repressors_expr(incoming_edges),Not(no_activators_expr(incoming_edges)))
-        rhs = And(Not(all_repressors_expr(incoming_edges),all_activators_expr(incoming_edges)))
+        rhs = And(Not(all_repressors_expr(incoming_edges)),all_activators_expr(incoming_edges))
         bool_expression = Or(lhs,rhs)
     
     # AllActivators
