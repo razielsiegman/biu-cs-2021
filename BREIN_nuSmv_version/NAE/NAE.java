@@ -198,6 +198,28 @@ public class NAE{
             out.append("\n");
         }
         System.out.println(out.toString());
+
+        // collect cummulative stats on which rc's were used in solutions
+        Map<String, int[]> nodeToRCCount = new HashMap<>();        
+        for(ResultSet rs: resultSets) {
+            for(String nodeName: rs.nodeVals.keySet()) {
+                if (!nodeToRCCount.keySet().contains(nodeName)) {
+                    nodeToRCCount.put(nodeName, new int[18]);
+                }
+            }
+            for (Map.Entry<String,ResultSet.NodeData> entry: rs.nodeVals.entrySet()) {
+                String nodeName = entry.getKey();
+                int regCondition = entry.getValue().function;
+                nodeToRCCount.get(nodeName)[regCondition]++;
+            }
+        }
+        // print the stats
+        System.out.println(String.format("\nReg Condition:\t%s", " 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17"));
+        for (Map.Entry entry: nodeToRCCount.entrySet()) {
+            System.out.println(
+                String.format("\nNode %s:\t%s", entry.getKey(), Arrays.toString((int[])entry.getValue()) )
+            );
+        }
     }    
 
     //converts a string of form X.B to B->X for use in printResults
