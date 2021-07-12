@@ -3,6 +3,7 @@ from sympy.logic.boolalg import *
 from sympy import *
 
 DEFAULT_RC_SPEC = '0' # chose randomly
+EXPORT_TYPE = ''
 
 '''
 CLASSES 
@@ -31,14 +32,17 @@ def parse_node_id(full_node_id):
     full_node_id = full_node_id.replace(' ','_')
     return full_node_id[full_node_id.find(':')+1:]
 
-# translate from python boolean-logic syntax to BooleSim readable syntax
+# translate from python boolean-logic syntax to BooleSim/BoolNet readable syntax
 def clean_bool_expression(bool_expression):
-    return bool_expression.replace('&','&&').replace('|','||').replace('~','!')
+    if EXPORT_TYPE == 'bs':
+        return bool_expression.replace('&','&&').replace('|','||').replace('~','!')
+    elif EXPORT_TYPE == 'bn':
+        return bool_expression.replace('~','!')
 
 # takes in regulatory conditions specifications, along with the interactions of the node, 
 # and translates those into a boolean expression readable by BooleSim  
 def generate_bool_expression(rc_spec, incoming_edges):
-    bool_expression = symbols('false') # random init
+    bool_expression = symbols('false') # arbitrary init
     
     # AllActivators AND NoRepressors
     if rc_spec == '0':
@@ -169,11 +173,13 @@ def get_repressor_nodes(incoming_edges):
 Main Script
 '''
 def main():
+    global EXPORT_TYPE
+    EXPORT_TYPE = input('Enter export type, BooleSim or BoolNet ["bs"/"bn"]: ')
     # init data structures
     node_set = set()
     node_to_incoming_edges = {}
     rc_specs = {}
-    boolesim_rules = {}
+    rules = {}
     
     sif_filename = input('Enter .sif filename: ')
     rc_specs_filename = input('Enter rc_specs filename: ')
@@ -208,13 +214,13 @@ def main():
 
     # generate BooleSim rules for all nodes, using the rc_specs
     for node, incoming_edges in node_to_incoming_edges.items():
-        boolesim_rules[node] = generate_bool_expression(rc_specs[node], incoming_edges)
+        rules[node] = generate_bool_expression(rc_specs[node], incoming_edges)
     print('answer:')
-    pp.pprint(boolesim_rules)
+    pp.pprint(rules)
 
     with open('output_'+sif_filename, 'w') as f:
         text = ''
-        for node, rule in boolesim_rules.items():
+        for node, rule in rules.items():
             text += '{} = {}\n'.format(node, rule)
         f.write(text.rstrip())
 

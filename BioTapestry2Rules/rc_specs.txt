@@ -1,0 +1,3 @@
+Gene2	8
+Gene1	3
+Gene0	0
