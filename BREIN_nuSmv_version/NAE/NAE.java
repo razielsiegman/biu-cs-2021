@@ -2,6 +2,8 @@ package NAE;
 import validate.*;
 import java.io.*;
 import java.util.*;
+
+import NAE.Converter.Uniqueness;
 //NAE stands for network analysis engine
 //This is the main class of NAE
 public class NAE{
@@ -184,6 +186,7 @@ public class NAE{
         
         StringBuilder out = new StringBuilder("                   ");
         String[] connections = converter.getOptionalConnectionNames();
+        Set<String> nodeNames = converter.nodes.keySet();
         for(int i = 0;i<resultSets.size();i++){
             out.append(i+" "+(i>9 ? "":" "));
         }
@@ -197,8 +200,19 @@ public class NAE{
             }
             out.append("\n");
         }
+        if(converter.uniqueness == Uniqueness.REGULATION_CONDITIONS) {
+            out.append("** Regulation\nConditions\nUsed:  **\n");
+            for(String name: nodeNames) {
+                out.append(String.format("%1$17s :", name.replace(Converter.identifier, "")));
+                for(int j = 0;j<resultSets.size();j++){              
+                    int regCondition = resultSets.get(j).nodeVals.get(name).function;
+                    out.append(String.format("%-3d",regCondition));
+                }
+                out.append("\n");
+            }
+        }
         System.out.println(out.toString());
-
+        /*
         // collect cummulative stats on which rc's were used in solutions
         Map<String, int[]> nodeToRCCount = new HashMap<>();        
         for(ResultSet rs: resultSets) {
@@ -220,6 +234,7 @@ public class NAE{
                 String.format("\nNode %s:\t%s", entry.getKey(), Arrays.toString((int[])entry.getValue()) )
             );
         }
+        */
     }    
 
     //converts a string of form X.B to B->X for use in printResults

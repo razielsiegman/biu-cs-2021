@@ -2,6 +2,7 @@ package NAE;
 
 import java.io.*;
 import java.util.*;
+import NAE.Converter.Uniqueness;
 
 public class TimeStep extends Converter{
     
@@ -25,6 +26,12 @@ public class TimeStep extends Converter{
             String prefix = connectionValue ? "" : "!";
             
             restriction.append(prefix+connections[i]+"_connected");
+        }
+        if (this.uniqueness == Uniqueness.REGULATION_CONDITIONS) {
+            for (String name: this.nodes.keySet()) {
+                int regCondition = r.nodeVals.get(name).function;
+                restriction.append(String.format("&%s.transition%d",name,regCondition));
+            }
         }
         restriction.append(")");
         restrictions.add(restriction.toString());

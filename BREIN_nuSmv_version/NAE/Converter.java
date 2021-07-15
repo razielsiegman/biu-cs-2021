@@ -7,13 +7,14 @@ public abstract class Converter{
     
     //an enum that describes how this converter's specs should be run
     public static enum SpecType {LTL_BMC_0,LTL_BMC, LTL_BDD,CTL}
+    public static enum Uniqueness {INTERACTIONS, REGULATION_CONDITIONS}
     
     String modelFileName;
     String observationFileName;
     
     //added to all node identifiers to make them distinct from nusmv keywords. we want the string to be unusual, as it will cause problems if found in an identifier
     public static final String identifier = "iIi";
-    
+
     //name of the NuSMV file created
     String fileName;
     
@@ -23,6 +24,7 @@ public abstract class Converter{
     //needed to add to resultSet, as these functions won't be gleaned from parsing counterexample
     HashMap<String,Integer> nodesWithOneFunction = new HashMap<>(); 
     boolean sync = true;
+    Uniqueness uniqueness = null;
 
     //data from observation:
     //a list of macro definitions
@@ -81,7 +83,23 @@ public abstract class Converter{
                 }else{
                     throw new RuntimeException("ERROR at line "+lineNumber+ ": directive updates must be followed by 'sync' or 'async'. Found: "+line.substring(18).trim());
                 }                
-            }else if(line.startsWith("directive")){
+            }
+            else if(line.startsWith("directive uniqueness ")) {
+                String u = line.split("\\s+")[2].replace(";", "");
+                switch (u) {
+                    case "interactions":
+                        this.uniqueness = Uniqueness.INTERACTIONS;
+                        break;
+                    case "regulation_conditions":
+                        this.uniqueness = Uniqueness.REGULATION_CONDITIONS;
+                        break;
+                    default:
+                        throw new RuntimeException(
+                            "ERROR at line "+lineNumber+
+                             ": directive uniqueness must be followed by 'interactions' or 'regulation_conditions'. Found: "+u);
+                }
+            }
+            else if(line.startsWith("directive")){
                 //ignore for now
             }else{
                 //if it does not start with directive, it can be either a node or a connection.
