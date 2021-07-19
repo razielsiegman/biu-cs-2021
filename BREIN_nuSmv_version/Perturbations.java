@@ -23,7 +23,7 @@ public class Perturbations {
 		String timeStep = args[6];
 
 		//parse model to get a list of nodes
-		List<String> nodes = parseModelNodes(modelFileName);
+		List<String> nodes = parseModelNodes(modelFileName , typeOfPerturbationArg);
 
 		//Get text of spec file as template
 		StringBuilder specFileTemplate = new StringBuilder();
@@ -37,20 +37,7 @@ public class Perturbations {
 		//Boot up NAE
 		Runtime rt = Runtime.getRuntime();
 		Process pr1 = rt.exec("javac NAE/*.java validate/*.java");
-		/*BufferedReader reader=new BufferedReader(new InputStreamReader(
-				pr1.getInputStream()));
-		String line;
-		while((line = reader.readLine()) != null) {
-			System.out.println(line);
-		}*/
 		Process pr2 = rt.exec("jar cvfm NAE.jar NAE/manifest.txt NAE/*.class validate/*.class");
-		/*BufferedReader reader1=new BufferedReader(new InputStreamReader(
-				pr2.getInputStream()));
-		String line1;
-		while((line1 = reader1.readLine()) != null) {
-			System.out.println(line1);
-		}*/
-		//Process pr3 = rt.exec("java -jar NAE.jar 1 src/main/java/TestModels/toy_model/model.net src/main/java/TestModels/toy_model/observations.spec time_step");
 		boolean onFileSolutionsExist = false;
 		boolean offFileSolutionsExist = false;
 		StringBuilder out = new StringBuilder();
@@ -76,14 +63,14 @@ public class Perturbations {
 			for(String node1 : nodes){
 				for(String node2 : nodes){
 					if(node1.equals(targetNode) || node2.equals(targetNode) || node2.equals(node1)) continue;
-						String onFile = createDoubleSpecFile(nodes, specFileTemplate, node1, node2, 1, typeOfPerturbationArg, targetNode,
-								typeOfPerturbation, timeStep, modelFileName);
-						onFileSolutionsExist = runNAE(onFile, modelFileName, rt, mode);
-						String offFile = createDoubleSpecFile(nodes, specFileTemplate, node1, node2, 0, typeOfPerturbationArg,
-								targetNode, typeOfPerturbation, timeStep, modelFileName);
-						//System.out.println("Expecting target [" + targetNode + "] to be OFF...");
-						offFileSolutionsExist = runNAE(offFile, modelFileName, rt, mode);
-						processResults(out, onFileSolutionsExist, offFileSolutionsExist, node1 + " & " + node2);
+					String onFile = createDoubleSpecFile(nodes, specFileTemplate, node1, node2, 1, typeOfPerturbationArg, targetNode,
+							typeOfPerturbation, timeStep, modelFileName);
+					onFileSolutionsExist = runNAE(onFile, modelFileName, rt, mode);
+					String offFile = createDoubleSpecFile(nodes, specFileTemplate, node1, node2, 0, typeOfPerturbationArg,
+							targetNode, typeOfPerturbation, timeStep, modelFileName);
+					//System.out.println("Expecting target [" + targetNode + "] to be OFF...");
+					offFileSolutionsExist = runNAE(offFile, modelFileName, rt, mode);
+					processResults(out, onFileSolutionsExist, offFileSolutionsExist, node1 + " & " + node2);
 				}
 			}
 
@@ -108,7 +95,7 @@ public class Perturbations {
 	}
 
 	private static boolean runNAE(String completeSpecFile, String modelFile, Runtime rt, String mode) throws IOException {
-		Process pr = rt.exec("java -jar NAE.jar 100 " + modelFile + " " + completeSpecFile + " " + mode);
+		Process pr = rt.exec("java -jar NAE.jar 1 " + modelFile + " " + completeSpecFile + " " + mode);
 		BufferedReader reader=new BufferedReader(new InputStreamReader(
 				pr.getInputStream()));
 		/*String line;
@@ -161,8 +148,8 @@ public class Perturbations {
 	}
 
 	private static String createDoubleSpecFile(List<String> nodes , StringBuilder specFileTemplate, String curPerturbedNode1, String curPerturbedNode2,
-										 int value, String typeOfPerturbationArg, String targetNode, String typeOfPerturbation,
-										 String timeStep, String modelFileName) throws Exception {
+											   int value, String typeOfPerturbationArg, String targetNode, String typeOfPerturbation,
+											   String timeStep, String modelFileName) throws Exception {
 		StringBuilder curSpecFile = new StringBuilder(specFileTemplate);
 		curSpecFile.append("\n//Perturbations Specs");
 		//Final result
@@ -200,7 +187,7 @@ public class Perturbations {
 		return retFileName;
 	}
 
-	static List<String> parseModelNodes(String modelFileName) throws IOException {
+	static List<String> parseModelNodes(String modelFileName, String typeOfPerturbationArg) throws IOException {
 		List<String> nodes = new ArrayList<>();
 		BufferedReader model = readFile(modelFileName);
 		//read through the file
@@ -222,7 +209,11 @@ public class Perturbations {
 					nameOfNode.append(c.charAt(i));
 				}
 			}
-			nodes.add(nameOfNode.toString().trim());
+			if(c.split("\\[|\\]")[1].contains("-") && typeOfPerturbationArg.equals("KO")){
+				nodes.add(nameOfNode.toString().trim());
+			}else if(c.split("\\[|\\]")[1].contains("+") && typeOfPerturbationArg.equals("FE")){
+				nodes.add(nameOfNode.toString().trim());
+			}
 		}
 		return nodes;
 	}
