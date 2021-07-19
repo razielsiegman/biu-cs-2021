@@ -1,0 +1,463 @@
+// Degrading DTC signaling
+
+// Synchronous dynamics 
+directive updates sync;
+
+// Default regulation conditions
+directive regulation default;
+ 
+S1(0..8); DTC[!](0..17); APX1[!](0..17); LAG2[!](0..17); GLP1[-+!](0..17); GLP1ICD[!](1,3,5..17); LAG1[!](0..17); SEL8[!](0..17); HOP1[!](0..17); SEL10(0..17); SEL12[!](0..17); LST1[-+!](0..17); FBF1B[!](1,3,5..17); FBF1U(1,3,5..17); FBF2[!](1,3,5..17); AxisandSCprotein(1,3,5..17); GLD1[-+!](0..17); GLD2[-!](0..17); GLD3[!](1,3,5..17); NOS3(0..17); SCFPROM1(0..17);   SYGL1[-+!](0..17); CYE1CDK2(0..17); MeioticDev[!](0..17); StemcellFate(0..17); S2[!](0..8); S3[!](0..8); 
+
+
+FBF1U	GLD3	positive; 
+LST1	FBF1U	negative	optional; 
+SYGL1	FBF1U	negative	optional; 
+S1	S2	positive; 
+S2	S3	positive; 
+S3	DTC	positive; 
+CYE1CDK2	StemcellFate	positive; 
+SCFPROM1	CYE1CDK2	negative; 
+SCFPROM1	StemcellFate	negative; 
+GLD2	StemcellFate	negative; 
+GLD1	StemcellFate	negative; 
+SCFPROM1	MeioticDev	positive; 
+GLD2	MeioticDev	positive; 
+GLD1	MeioticDev	positive; 
+AxisandSCprotein	MeioticDev	positive; 
+SYGL1	FBF1B	positive	optional; 
+LAG1	SYGL1	positive; 
+FBF1B	SCFPROM1	negative	optional; 
+NOS3	GLD1	positive	optional; 
+GLD2	GLD1	positive	optional; 
+FBF1B	GLD3	negative	optional; 
+GLD3	GLD2	positive; 
+FBF2	GLD1	negative	optional; 
+FBF1B	GLD1	negative	optional; 
+FBF2	AxisandSCprotein	negative	optional; 
+FBF1B	AxisandSCprotein	negative	optional; 
+LAG1	FBF2	positive	optional; 
+LST1	FBF1B	positive	optional; 
+LAG1	LST1	positive; 
+SEL10	GLP1ICD	negative; 
+SEL10	SEL12	negative; 
+SEL12	GLP1ICD	positive	optional; 
+HOP1	GLP1ICD	positive	optional; 
+GLP1	SEL12	positive	optional; 
+GLP1	HOP1	positive	optional; 
+SEL8	LAG1	positive; 
+GLP1ICD	SEL8	positive; 
+GLP1ICD	LAG1	positive; 
+APX1	GLP1	positive; 
+LAG2	GLP1	positive; 
+DTC	LAG2	positive; 
+DTC	APX1	positive; 
+LST1	GLD1	negative	optional; 
+
+
+$Condition1 := { S1 = 1};
+$Condition2 := { S2 = 1};
+$Condition3 := { S3 = 1};
+
+$DTCContact := {
+ DTC = 1 and
+ StemcellFate  = 1 
+};
+
+$ContactConditions := {
+ LAG2	= 1 and
+ APX1	= 1 and
+ GLP1	= 1 and
+ LAG1	= 0 and
+ LST1 	= 0 and
+ SYGL1	= 0 and
+ FBF1B	= 0 and
+ FBF2	= 0 and
+ FBF1U	= 1 and
+ GLP1ICD	= 0 and
+ SEL8	= 0 and
+ HOP1 	= 0 and
+ SEL12 	= 0 and
+ SEL10	= 0 and
+ GLD1	= 0 and
+ GLD2	= 0 and
+ GLD3	= 0 and
+ NOS3	= 0 and
+ AxisandSCprotein = 0 and
+ SCFPROM1 = 0 and
+ CYE1CDK2	= 1 and
+ MeioticDev  = 0 
+ and StemcellFate  = 1 
+};
+
+$NoKnockOuts := {
+ KO(GLP1) = 0 and
+ KO(SYGL1) = 0 and
+ KO(LST1) = 0 and
+ KO(GLD1) = 0 and
+ KO(GLD2) = 0 
+};
+
+$NoOverExpression := {
+ FE(GLP1)=0 and
+ FE(LST1)=0 and
+ FE(SYGL1)=0
+};
+
+ $GLD1Pathway := {
+ FBF1B	= 0 and
+ GLD1	= 1 and
+ MeioticDev  = 1 
+ and StemcellFate  = 0 
+ };
+ 
+ $SCFPROM1Pathway := {
+ FBF1B	= 0 and
+ SCFPROM1 = 1 and
+ MeioticDev  = 1 
+ and StemcellFate  = 0 
+};
+
+ $AxisandSCproteinPathway := {
+ FBF1B	= 0 and
+ FBF2	= 0 and
+ AxisandSCprotein = 1 and
+ MeioticDev  = 1 
+};
+
+ $GLD2Pathway := { 
+ FBF1B	= 0 and
+ FBF1U	= 1 and
+ GLD3	= 1 and
+ GLD2	= 1 and
+ MeioticDev  = 1 
+ and StemcellFate  = 0 
+ };
+ 
+$GLP1KnockOutStep0 := {
+ GLP1	= 0 };
+ 
+$LST1SYGL1KnockOutStep0 := {
+ LST1 	= 0 and
+ SYGL1	= 0 };
+ 
+$GLD1GLD2KnockOutStep0 := {
+ GLD1 	= 0 and
+ GLD2	= 0 };
+ 
+$LST1KnockOutStep0 := {
+ LST1 	= 0 };
+ 
+$SYGL1KnockOutStep0 := {
+ SYGL1 	= 0 };
+ 
+$GLP1OverExpressionStep0 := {
+ GLP1	= 1 };
+ 
+$LST1OverExpressionStep0 := {
+ LST1 	= 1 };
+ 
+$SYGL1OverExpressionStep0 := {
+ SYGL1 	= 1 };
+ 
+$GLP1KnockOutConditions := {
+ LAG2	= 1 and
+ APX1	= 1 and
+ GLP1	= 0 and
+ LAG1	= 0 and
+ LST1 	= 0 and
+ SYGL1	= 0 and
+ FBF1B	= 0 and
+ FBF2	= 0 and
+ FBF1U	= 1 and
+ GLP1ICD	= 0 and
+ SEL8	= 0 and
+ HOP1 	= 0 and
+ SEL12 	= 0 and
+ SEL10	= 0 and
+ GLD1	= 0 and
+ GLD2	= 0 and
+ GLD3	= 0 and
+ NOS3	= 0 and
+ AxisandSCprotein = 0 and
+ SCFPROM1 = 0 and
+ CYE1CDK2	= 1 and
+ MeioticDev  = 0 
+ and StemcellFate  = 1 
+};
+
+$LST1SYGL1KnockOutConditions := {
+ LST1 	= 0 and
+ SYGL1	= 0 
+};
+
+$GLP1GeneKnockOut := {
+ KO(GLP1) = 1 and
+ KO(SYGL1) = 0 and
+ KO(LST1) = 0 and
+ KO(GLD1) = 0 and
+ KO(GLD2) = 0 
+};
+
+$LST1SYGL1GeneKnockOut := {
+ KO(GLP1) = 0 and
+ KO(SYGL1) = 1 and
+ KO(LST1) = 1 and
+ KO(GLD1) = 0 and
+ KO(GLD2) = 0 
+};
+
+$GLD1GLD2GeneKnockOut := {
+ KO(GLP1) = 0 and
+ KO(SYGL1) = 0 and
+ KO(LST1) = 0 and
+ KO(GLD1) = 1 and
+ KO(GLD2) = 1 
+};
+
+$LST1GeneKnockOut := {
+ KO(GLP1) = 0 and
+ KO(SYGL1) = 0 and
+ KO(LST1) = 1 and
+ KO(GLD1) = 0 and
+ KO(GLD2) = 0 
+}; 
+
+$SYGL1GeneKnockOut := {
+ KO(GLP1) = 0 and
+ KO(SYGL1) = 1 and
+ KO(LST1) = 0 and
+ KO(GLD1) = 0 and
+ KO(GLD2) = 0 
+};
+
+$FinalStateGLP1ZeroExpression := {
+ GLP1  = 0 and
+ MeioticDev  = 1 
+};
+
+$FinalStateLST1SYGL1ZeroExpression := {
+ LST1 = 0 and
+ SYGL1 = 0 and
+ MeioticDev  = 1 
+};
+
+$FinalStateGLD1GLD2ZeroExpression := {
+ GLD1	= 0 and
+ GLD2	= 0 and
+ MeioticDev  = 0 
+};
+
+$FinalStateLST1ZeroExpression := {
+ LST1 = 0 and
+ MeioticDev  = 1 
+ and StemcellFate  = 0 
+};
+
+$FinalStateSYGL1ZeroExpression := {
+ SYGL1 = 0 and
+ MeioticDev  = 1 
+ and StemcellFate  = 0
+};
+
+$GLP1OverExpressionConditions := {
+ LAG2	= 1 and
+ APX1	= 1 and
+ GLP1	= 1 
+};
+
+$LST1OverExpressionConditions := {
+ LST1 = 1 and
+ FBF1B = 1 
+};
+
+$SYGL1OverExpressionConditions := {
+ SYGL1 = 1 and
+ FBF1B = 1 
+};
+
+$GLP1GeneOverExpression := {
+ FE(GLP1) = 1 and
+ FE(LST1) = 0 and
+ FE(SYGL1) = 0
+};
+
+$LST1GeneOverExpression := {
+ FE(GLP1) = 0 and
+ FE(LST1) = 1 and
+ FE(SYGL1) = 0
+};
+
+$SYGL1GeneOverExpression := {
+ FE(GLP1) = 0 and
+ FE(LST1) = 0 and
+ FE(SYGL1) = 1
+};
+
+$FinalStateGLP1OverExpression := {
+ GLP1 = 1 and
+ MeioticDev  = 0 
+};
+
+$FinalStateLST1OverExpression := {
+ LST1 = 1 and
+ MeioticDev  = 0
+};
+
+$FinalStateSYGL1OverExpression := {
+ SYGL1	= 1 and
+ MeioticDev  = 0 
+};
+
+//experimental observations
+
+//GLD1 Pathway Development
+(#ExperimentOne[0] |= $Condition1)  and
+(#ExperimentOne[0] |= $DTCContact)  and
+(#ExperimentOne[1] |= $Condition2)  and
+(#ExperimentOne[1] |= $DTCContact)  and
+(#ExperimentOne[2] |= $Condition3)  and
+(#ExperimentOne[2] |= $DTCContact)  and
+(#ExperimentOne[2] |= $ContactConditions)and
+(#ExperimentOne[2] |= $NoKnockOuts) and
+(#ExperimentOne[2] |= $NoOverExpression) and
+(#ExperimentOne[17] |= $GLD1Pathway);
+
+//SCFPROM1 Pathway Development
+(#ExperimentTwo[0] |= $Condition1)  and
+(#ExperimentTwo[0] |= $DTCContact)  and
+(#ExperimentTwo[1] |= $Condition2)  and
+(#ExperimentTwo[1] |= $DTCContact)  and
+(#ExperimentTwo[2] |= $Condition3)  and
+(#ExperimentTwo[2] |= $DTCContact)  and
+(#ExperimentTwo[2] |= $ContactConditions) and
+(#ExperimentTwo[2] |= $NoKnockOuts) and
+(#ExperimentTwo[2] |= $NoOverExpression) and
+(#ExperimentTwo[17] |= $SCFPROM1Pathway);
+
+//AxisandSCprotein Pathway Development
+(#ExperimentThree[0] |= $Condition1)  and
+(#ExperimentThree[0] |= $DTCContact)  and
+(#ExperimentThree[1] |= $Condition2)  and
+(#ExperimentThree[1] |= $DTCContact)  and
+(#ExperimentThree[2] |= $Condition3)  and
+(#ExperimentThree[2] |= $DTCContact)  and
+(#ExperimentThree[2] |= $ContactConditions) and
+(#ExperimentThree[2] |= $NoKnockOuts) and
+(#ExperimentThree[2] |= $NoOverExpression) and
+(#ExperimentThree[17] |= $AxisandSCproteinPathway);
+
+//GLD2 Pathway Development
+(#ExperimentFour[0] |= $Condition1) and
+(#ExperimentFour[0] |= $DTCContact)  and
+(#ExperimentFour[1] |= $Condition2) and
+(#ExperimentFour[1] |= $DTCContact)  and
+(#ExperimentFour[2] |= $Condition3) and
+(#ExperimentFour[2] |= $DTCContact)  and
+(#ExperimentFour[2] |= $ContactConditions) and
+(#ExperimentFour[2] |= $NoKnockOuts) and
+(#ExperimentFour[2] |= $NoOverExpression) and
+(#ExperimentFour[17] |= $GLD2Pathway);
+
+// GLP1 KO
+(#ExperimentFive[0] |= $Condition1) and
+(#ExperimentFive[0] |= $DTCContact)  and
+(#ExperimentFive[0] |= $GLP1KnockOutStep0) and
+(#ExperimentFive[1] |= $Condition2) and
+(#ExperimentFive[1] |= $DTCContact)  and
+(#ExperimentFive[2] |= $Condition3) and
+(#ExperimentFive[2] |= $DTCContact)  and
+(#ExperimentFive[2] |= $GLP1KnockOutConditions) and
+(#ExperimentFive[2] |= $GLP1GeneKnockOut) and
+(#ExperimentFive[2] |= $NoOverExpression) and
+(#ExperimentFive[17] |= $FinalStateGLP1ZeroExpression);
+
+// LST1SYGL1 KO
+(#ExperimentSix[0] |= $Condition1) and
+(#ExperimentSix[0] |= $DTCContact)  and
+(#ExperimentSix[0] |= $LST1SYGL1KnockOutStep0) and
+(#ExperimentSix[1] |= $Condition2) and
+(#ExperimentSix[1] |= $DTCContact)  and
+(#ExperimentSix[2] |= $Condition3) and
+(#ExperimentSix[2] |= $DTCContact)  and
+(#ExperimentSix[2] |= $LST1SYGL1KnockOutConditions) and
+(#ExperimentSix[2] |= $LST1SYGL1GeneKnockOut) and
+(#ExperimentSix[2] |= $NoOverExpression) and
+(#ExperimentSix[17] |= $FinalStateLST1SYGL1ZeroExpression);
+
+// GLD1GLD2 KO
+(#ExperimentSeven[0] |= $Condition1) and
+(#ExperimentSeven[0] |= $DTCContact)  and
+(#ExperimentSeven[0] |= $GLD1GLD2KnockOutStep0)  and
+(#ExperimentSeven[1] |= $Condition2) and
+(#ExperimentSeven[1] |= $DTCContact)  and
+(#ExperimentSeven[2] |= $Condition3) and
+(#ExperimentSeven[2] |= $DTCContact)  and
+(#ExperimentSeven[2] |= $ContactConditions) and
+(#ExperimentSeven[2] |= $GLD1GLD2GeneKnockOut) and
+(#ExperimentSeven[2] |= $NoOverExpression) and
+(#ExperimentSeven[17] |= $FinalStateGLD1GLD2ZeroExpression);
+
+// LST1 KO
+(#ExperimentEight[0] |= $Condition1) and
+(#ExperimentEight[0] |= $DTCContact)  and
+(#ExperimentEight[0] |= $LST1KnockOutStep0)  and
+(#ExperimentEight[1] |= $Condition2) and
+(#ExperimentEight[1] |= $DTCContact)  and
+(#ExperimentEight[2] |= $Condition3) and
+(#ExperimentEight[2] |= $DTCContact)  and
+(#ExperimentEight[2] |= $ContactConditions) and
+(#ExperimentEight[2] |= $LST1GeneKnockOut) and
+(#ExperimentEight[2] |= $NoOverExpression) and
+(#ExperimentEight[17] |= $FinalStateLST1ZeroExpression);
+
+// SYGL1 KO
+(#ExperimentNine[0] |= $Condition1) and
+(#ExperimentNine[0] |= $DTCContact)  and
+(#ExperimentNine[0] |= $SYGL1KnockOutStep0)  and
+(#ExperimentNine[1] |= $Condition2) and
+(#ExperimentNine[1] |= $DTCContact)  and
+(#ExperimentNine[2] |= $Condition3) and
+(#ExperimentNine[2] |= $DTCContact)  and
+(#ExperimentNine[2] |= $ContactConditions) and
+(#ExperimentNine[2] |= $SYGL1GeneKnockOut) and
+(#ExperimentNine[2] |= $NoOverExpression) and
+(#ExperimentNine[17] |= $FinalStateSYGL1ZeroExpression);
+
+// GLP1 OE
+(#ExperimentTen[0] |= $Condition1) and
+(#ExperimentTen[0] |= $DTCContact)  and
+(#ExperimentTen[0] |= $GLP1OverExpressionStep0)  and
+(#ExperimentTen[1] |= $Condition2) and
+(#ExperimentTen[1] |= $DTCContact)  and
+(#ExperimentTen[2] |= $Condition3) and
+(#ExperimentTen[2] |= $DTCContact)  and
+(#ExperimentTen[2] |= $GLP1OverExpressionConditions);
+(#ExperimentTen[2] |= $NoKnockOuts)and
+(#ExperimentTen[2] |= $GLP1GeneOverExpression);
+(#ExperimentTen[17] |= $FinalStateGLP1OverExpression);
+
+// LST1 OE
+(#ExperimentEleven[0] |= $Condition1) and
+(#ExperimentEleven[0] |= $DTCContact)  and
+(#ExperimentEleven[0] |= $LST1OverExpressionStep0)  and
+(#ExperimentEleven[1] |= $Condition2) and
+(#ExperimentEleven[1] |= $DTCContact)  and
+(#ExperimentEleven[2] |= $Condition3) and
+(#ExperimentEleven[2] |= $DTCContact)  and
+(#ExperimentEleven[2] |= $LST1OverExpressionConditions) and
+(#ExperimentEleven[2] |= $NoKnockOuts) and
+(#ExperimentEleven[2] |= $LST1GeneOverExpression);
+(#ExperimentEleven[17] |= $FinalStateLST1OverExpression);
+
+// SYGL1 OE
+(#ExperimentTwelve[0] |= $Condition1) and
+(#ExperimentTwelve[0] |= $DTCContact)  and
+(#ExperimentTwelve[0] |= $SYGL1OverExpressionStep0)  and
+(#ExperimentTwelve[1] |= $Condition2) and
+(#ExperimentTwelve[1] |= $DTCContact)  and
+(#ExperimentTwelve[2] |= $Condition3) and
+(#ExperimentTwelve[2] |= $DTCContact)  and
+(#ExperimentTwelve[2] |= $SYGL1OverExpressionConditions) and
+(#ExperimentTwelve[2] |= $NoKnockOuts)and
+(#ExperimentTwelve[2] |= $SYGL1GeneOverExpression);
+(#ExperimentTwelve[17] |= $FinalStateSYGL1OverExpression);
