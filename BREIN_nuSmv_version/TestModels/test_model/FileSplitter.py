@@ -23,6 +23,13 @@ directive updates sync;
 // Default regulation conditions
 directive regulation default;
 '''
+def remove_comments(text):
+    new_text = ''
+    for line in text.splitlines():
+        if not line.startswith('//'):
+            new_text += line+'\n'
+    return new_text.rstrip()
+
 def add_extra_directives(text):
     unfound_directives = list(DIRECTIVE_DEFAULTS.keys()).copy()
     for line in text.splitlines():
@@ -47,6 +54,7 @@ def main():
         #text_split = f.read().split('$', 1)
         text = f.read()
     text = add_extra_directives(text)
+    text = remove_comments(text)
     split_index = text.find('$')
     with open('model.net', 'w') as f:
         #f.write(text_split[0])
