@@ -10,19 +10,7 @@ $All := {Gene0 = 1 and Gene1 = 1 and Gene2 = 1};
 
 
 // Observations
-#Experiment1[0] |= $ZeroAndOne;
-#Experiment1[1] |= $None;
-#Experiment1[2] |= $Zero;
-
-#Experiment2[0] |= $One;
-#Experiment2[1] |= $Two;
-#Experiment2[2] |= $None;
-
-#Experiment3[0] |= $ZeroAndTwo;
-#Experiment3[1] |= $One;
-
-#Experiment4[0] |= $OneAndTwo;
-#Experiment4[1] |= $Two;
-
-#Experiment5[0] |= $All;
-#Experiment5[1] |= $One;
+#Experiment1[0] |= $ZeroAndOne and
+#Experiment1[1] |= $None and
+#Experiment1[2] |= $Zero and
+fixpoint(#Experiment1[2]);
