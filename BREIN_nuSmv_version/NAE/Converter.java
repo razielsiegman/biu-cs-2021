@@ -172,6 +172,21 @@ public abstract class Converter{
     }  
           
      int[] getFunctions(String f){
+
+        Set<Integer> functions = new HashSet<>();
+        String[] tokens = f.split(",");
+        for (String token: tokens) {
+            if (token.contains("..")) functions.addAll(getIntervalSet(token));
+            else functions.add(Integer.parseInt(token));
+        }
+        int[] result = new int[functions.size()];
+        int i = 0;
+        for(Integer num: functions) result[i++] = num;
+        return result;
+        /*
+        BELOW IS GOLDFEDER'S ORIGINAL VERSION OF THIS METHOD
+        WE CHANGED IT BECAUSE IT DID NOT SUPPORT THE FOLLOWING
+        SYNTAX: 1,3,5..17
         if(f.contains(",")){
             //this is not a list
             String[] functions = f.split(",");
@@ -194,6 +209,17 @@ public abstract class Converter{
             //it is a single number
             return new int[]{Integer.parseInt(f)};
         }
+         */
+        
+    }
+
+    Set<Integer> getIntervalSet(String str) {
+        String[] functions = str.split("\\.\\.");
+        int start = Integer.parseInt(functions[0]);
+        int end = Integer.parseInt(functions[1]);
+        Set<Integer> results = new HashSet<>();
+        for(int i = start; i <= end;i++) results.add(i);
+        return results;
     }
 
     void createConnection(String line){
