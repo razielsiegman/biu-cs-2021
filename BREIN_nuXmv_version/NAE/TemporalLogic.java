@@ -326,6 +326,7 @@ public class TemporalLogic extends Converter{
             line = line.replaceAll("\\s+","");
                      
             if(line.contains("--specification")&&line.contains("istrue")) return null;
+            if(line.contains("Property")&&line.contains("istrue")) return null;
 
         
             //parse connections --

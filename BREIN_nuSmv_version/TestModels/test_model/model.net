@@ -1,0 +1,62 @@
+directive limit 2;
+directive uniqueness rcs;
+directive length 15;
+// DTC is constitutively active
+
+// Synchronous dynamics 
+directive updates sync;
+
+// Default regulation conditions
+directive regulation default;
+
+
+S1(0..8); DTC[!](0..17); APX1[!](0..17); LAG2[!](0..17); GLP1[-+!](0..17); GLP1ICD[!](1,3,5..17); LAG1[!](0..17); SEL8[!](0..17); HOP1[!](0..17); SEL10(0..17); SEL12[!](0..17); LST1[-+!](0..17); FBF1B[!](1,3,5..17); FBF2[!](1,3,5..17); AxisandSCprotein(1,3,5..17); GLD1[-+!](0..17); GLD2[-!](0..17); GLD3[!](1,3,5..17); NOS3(0..17); SCFPROM1(0..17); SYGL1[-+!](0..17); CYE1CDK2(0..17); MeioticDev[!](0..17); StemcellFate(0..17); S3[!](0..8); S2[!](0..8); FBF1U(1,3,5..17); S0[!](0..8); 
+
+
+LST1	GLD1	negative	optional; 
+DTC	APX1	positive; 
+DTC	LAG2	positive; 
+LAG2	GLP1	positive; 
+APX1	GLP1	positive; 
+GLP1ICD	LAG1	positive; 
+GLP1ICD	SEL8	positive; 
+SEL8	LAG1	positive; 
+GLP1	HOP1	positive	optional; 
+GLP1	SEL12	positive	optional; 
+HOP1	GLP1ICD	positive	optional; 
+SEL12	GLP1ICD	positive	optional; 
+SEL10	SEL12	negative; 
+SEL10	GLP1ICD	negative; 
+LAG1	LST1	positive; 
+LST1	FBF1B	positive	optional; 
+LAG1	FBF2	positive	optional; 
+FBF1B	AxisandSCprotein	negative	optional; 
+FBF2	AxisandSCprotein	negative	optional; 
+FBF1B	GLD1	negative	optional; 
+FBF2	GLD1	negative	optional; 
+GLD3	GLD2	positive; 
+FBF1B	GLD3	negative	optional; 
+GLD2	GLD1	positive	optional; 
+NOS3	GLD1	positive	optional; 
+FBF1B	SCFPROM1	negative	optional; 
+LAG1	SYGL1	positive; 
+SYGL1	FBF1B	positive	optional; 
+AxisandSCprotein	MeioticDev	positive; 
+GLD1	MeioticDev	positive; 
+GLD2	MeioticDev	positive; 
+SCFPROM1	MeioticDev	positive; 
+GLD1	StemcellFate	negative; 
+GLD2	StemcellFate	negative; 
+SCFPROM1	StemcellFate	negative; 
+SCFPROM1	CYE1CDK2	negative; 
+CYE1CDK2	StemcellFate	positive; 
+S3	DTC	positive; 
+S2	S3	positive; 
+S1	S2	positive; 
+SYGL1	FBF1U	negative	optional; 
+LST1	FBF1U	negative	optional; 
+FBF1U	GLD3	positive; 
+S0	DTC	positive; 
+S0	S0	positive; 
+
+
