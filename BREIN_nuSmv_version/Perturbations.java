@@ -1,15 +1,12 @@
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * How to run:
+ */
 public class Perturbations {
-	/**
-	 * TODO:
-	 *
-	 * @param args
-	 * @throws Exception
-	 */
+
 	public static void main(String[] args) throws Exception {
 		//Parse args
 		if(args.length < 7 || args.length > 7){
