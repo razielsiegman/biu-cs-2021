@@ -6,14 +6,15 @@ import java.util.List;
 public class Perturbations {
 	/**
 	 * TODO:
-	 * Time step param
-	 * ret file location generic
 	 *
 	 * @param args
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
 		//Parse args
+		if(args.length < 7 || args.length > 7){
+			throw new Exception("Must be 7 Arguments");
+		}
 		String modelFileName = args[0];
 		String specFileName = args[1];
 		String mode = args[2];
@@ -22,6 +23,15 @@ public class Perturbations {
 		String typeOfPerturbationArg = args[5];
 		String typeOfPerturbation = typeOfPerturbationArg.equals("KO") ? "Knockout" : "Overexpress";
 		String timeStep = args[6];
+
+		//Error checking
+		if(!nPertubations.equals("single") && !nPertubations.equals("double")){
+			throw new Exception("Argument must be 'single' or 'double'");
+		}
+		if((!typeOfPerturbationArg.equals("KO")) && (!typeOfPerturbationArg.equals("FE"))){
+			System.out.println(typeOfPerturbationArg.equals("FE"));
+			throw new Exception("Argument must be 'KO' or 'FE'");
+		}
 
 		//parse model to get a list of nodes
 		List<String> nodes = parseModelNodes(modelFileName , typeOfPerturbationArg);
@@ -39,6 +49,7 @@ public class Perturbations {
 		Runtime rt = Runtime.getRuntime();
 		Process pr1 = rt.exec("javac NAE/*.java validate/*.java");
 		Process pr2 = rt.exec("jar cvfm NAE.jar NAE/manifest.txt NAE/*.class validate/*.class");
+
 		boolean onFileSolutionsExist = false;
 		boolean offFileSolutionsExist = false;
 		StringBuilder out = new StringBuilder();
