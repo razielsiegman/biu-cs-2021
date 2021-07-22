@@ -26,7 +26,6 @@ public class Perturbations {
 			throw new Exception("Argument must be 'single' or 'double'");
 		}
 		if((!typeOfPerturbationArg.equals("KO")) && (!typeOfPerturbationArg.equals("FE"))){
-			System.out.println(typeOfPerturbationArg.equals("FE"));
 			throw new Exception("Argument must be 'KO' or 'FE'");
 		}
 
@@ -57,11 +56,13 @@ public class Perturbations {
 				//Create spec file where target node is expected to be ON and run NAE
 				String onFile = createSpecFile(nodes, specFileTemplate, node, 1, typeOfPerturbationArg,
 						targetNode, typeOfPerturbation, timeStep, modelFileName);
+				System.out.println(node + " Expecting target: On...");
 				onFileSolutionsExist = runNAE(onFile, modelFileName, rt, mode);
 
 				//Create spec file where target node is expected to be OFF and run NAE
 				String offFile = createSpecFile(nodes, specFileTemplate, node, 0, typeOfPerturbationArg,
 						targetNode, typeOfPerturbation, timeStep, modelFileName);
+				System.out.println(node + " Expecting target: Off...");
 				offFileSolutionsExist = runNAE(offFile, modelFileName, rt, mode);
 				//Process result to see if we have a prediction
 				processResults(out, onFileSolutionsExist, offFileSolutionsExist, node);
@@ -73,10 +74,12 @@ public class Perturbations {
 					//Create spec file where target node is expected to be ON and run NAE
 					String onFile = createDoubleSpecFile(nodes, specFileTemplate, node1, node2, 1, typeOfPerturbationArg, targetNode,
 							typeOfPerturbation, timeStep, modelFileName);
+					System.out.println(node1 + " & " + node2 + ": Expecting target on...");
 					onFileSolutionsExist = runNAE(onFile, modelFileName, rt, mode);
 					//Create spec file where target node is expected to be OFF and run NAE
 					String offFile = createDoubleSpecFile(nodes, specFileTemplate, node1, node2, 0, typeOfPerturbationArg,
 							targetNode, typeOfPerturbation, timeStep, modelFileName);
+					System.out.println(node1 + " & " + node2 + ": Expecting target: off...");
 					offFileSolutionsExist = runNAE(offFile, modelFileName, rt, mode);
 					//Process result to see if we have a prediction
 					processResults(out, onFileSolutionsExist, offFileSolutionsExist, node1 + " & " + node2);
@@ -106,7 +109,16 @@ public class Perturbations {
 		Process pr = rt.exec("java -jar NAE.jar 1 " + modelFile + " " + completeSpecFile + " " + mode);
 		BufferedReader reader=new BufferedReader(new InputStreamReader(
 				pr.getInputStream()));
-		return !(reader.readLine().equals("No Solutions Found"));
+		String firstLine = null;
+		String line;
+		int i = 0;
+		while((line = reader.readLine()) != null){
+			if(i == 0){
+				firstLine = line;
+			}
+			System.out.println(line);
+		}
+		return !(firstLine.equals("No Solutions Found"));
 	}
 
 	private static String createSpecFile(List<String> nodes , StringBuilder specFileTemplate, String curPerturbedNode,
