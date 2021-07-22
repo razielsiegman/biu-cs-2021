@@ -2,8 +2,11 @@ package NAE;
 import validate.*;
 import java.io.*;
 import java.util.*;
+import java.util.Map.Entry;
+import java.util.zip.*;
 
 import NAE.Converter.Uniqueness;
+import NAE.ResultSet.NodeData;
 //NAE stands for network analysis engine
 //This is the main class of NAE
 public class NAE{
@@ -128,6 +131,7 @@ public class NAE{
         nae.runAnalysisInteractive();
         nae.printResults();
         if(validate) nae.validate(model,spec);
+        if(nae.converter.uniqueness == Uniqueness.REGULATION_CONDITIONS) nae.generateRCSPECS();
     }
     
     //the arguments are the names of the files to analyze
@@ -201,7 +205,7 @@ public class NAE{
             out.append("\n");
         }
         if(converter.uniqueness == Uniqueness.REGULATION_CONDITIONS) {
-            out.append("** Regulation\nConditions\nUsed:  **\n");
+            out.append("**********\n Regulation\nConditions\nUsed:  \n**********\n");
             for(String name: nodeNames) {
                 out.append(String.format("%1$17s :", name.replace(Converter.identifier, "")));
                 for(int j = 0;j<resultSets.size();j++){              
@@ -244,6 +248,29 @@ public class NAE{
         return (nodes[1]+"->"+nodes[0]).replace(Converter.identifier,"");
     }
 
+    void generateRCSPECS() throws IOException {
+        File f = new File("rc_specs.zip");
+        ZipOutputStream out = new ZipOutputStream(new FileOutputStream(f));       
+        for (int i = 0; i < resultSets.size(); i++) {
+            String text = "";
+            ResultSet rs = resultSets.get(i);
+            for (Map.Entry<String,NodeData> entry: rs.nodeVals.entrySet()) {
+                String name = entry.getKey().replace(Converter.identifier, "");
+                int function = entry.getValue().function;
+                text += String.format("%s\t%d\n", name, function);
+            }
+            addTextAsFileToZip("solution"+i+".rcspec", text, out);
+        }
+        out.close();        
+    }
+
+    void addTextAsFileToZip(String filename, String text, ZipOutputStream out) throws IOException {
+        ZipEntry entry = new ZipEntry(filename);
+        out.putNextEntry(entry);
+        byte[] data = text.getBytes();
+        out.write(data, 0, data.length);
+        out.closeEntry();
+    }
 
     
 }
