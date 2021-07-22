@@ -21,7 +21,7 @@ public class NAE{
     private static final String helpString = "";
     
     private static final int defaultBMCLength = 20;
-    
+    private static final String pythonScriptFilename = "btp2RulesUsingCmdLineArgs.py";
     //an analysis can be run from the cmd-line
     public static void main(String args[])throws Exception{
         /*here is the format:
@@ -131,7 +131,8 @@ public class NAE{
         nae.runAnalysisInteractive();
         nae.printResults();
         if(validate) nae.validate(model,spec);
-        if(nae.converter.uniqueness == Uniqueness.REGULATION_CONDITIONS) nae.generateRCSPECS();
+        //if(nae.converter.uniqueness == Uniqueness.REGULATION_CONDITIONS) nae.generateRCspecsZip();
+        if(nae.converter.uniqueness == Uniqueness.REGULATION_CONDITIONS) nae.generateRulesFiles();
     }
     
     //the arguments are the names of the files to analyze
@@ -248,7 +249,7 @@ public class NAE{
         return (nodes[1]+"->"+nodes[0]).replace(Converter.identifier,"");
     }
 
-    void generateRCSPECS() throws IOException {
+    void generateRCspecsZip() throws IOException {
         File f = new File("rc_specs.zip");
         ZipOutputStream out = new ZipOutputStream(new FileOutputStream(f));       
         for (int i = 0; i < resultSets.size(); i++) {
@@ -272,5 +273,53 @@ public class NAE{
         out.closeEntry();
     }
 
-    
+    void generateRulesFiles() throws IOException {
+        // generate sif file
+        String sifFileName = (new Date()).toString().replace(" ", "--").replace(":", "-")+".sif";
+        StringBuilder sifText = new StringBuilder();
+        for(Node node: this.converter.nodes.values()) {
+            String to = node.name.replace(Converter.identifier, "");
+            for(Input input: node.inputs) {
+                String from = input.name.replace(Converter.identifier, "");
+                String interaction = (input.isPositive) ? "PROMOTES" : "REPRESSES";
+                sifText.append(String.format("%s\t%s\t%s\n", from, interaction, to));
+            }
+        }
+        FileWriter fw = new FileWriter(sifFileName); 
+        fw.write(sifText.toString());
+        fw.close();
+        for (int i = 0; i < resultSets.size(); i++) {
+            String rcspecFileName = "solution"+i+".rcspec";
+            // generate rcspec file
+            StringBuilder rcspecText = new StringBuilder();
+            ResultSet rs = resultSets.get(i);
+            for (Map.Entry<String,NodeData> entry: rs.nodeVals.entrySet()) {
+                String name = entry.getKey().replace(Converter.identifier, "");
+                int function = entry.getValue().function;
+                rcspecText.append(String.format("%s\t%d\n", name, function));
+            }
+            fw = new FileWriter(rcspecFileName); 
+            fw.write(rcspecText.toString());
+            fw.close();
+            // generate rules file
+            String rulesText = getRulesFileText("bs", sifFileName, rcspecFileName);
+            fw = new FileWriter(String.format("rules_%s_%s.txt", sifFileName.replace(".sif", ""), rcspecFileName.replace(".rcspec", ""))); 
+            fw.write(rulesText);
+            fw.close();
+        }
+    }
+
+    String getRulesFileText(String exportType, String sifFileName, String rcspecFileName) {
+        StringBuilder text = new StringBuilder();
+        String[] args = {"python", pythonScriptFilename, exportType, sifFileName, rcspecFileName};
+        Process p;
+        try {
+            p = Runtime.getRuntime().exec(args);
+            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line=br.readLine()) != null) text.append(line+"\n");
+        } catch (IOException e) {e.printStackTrace();}
+        return text.toString();
+    }
+
 }
