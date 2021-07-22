@@ -219,12 +219,10 @@ def main():
     for node, incoming_edges in node_to_incoming_edges.items():
         rules[node] = generate_bool_expression(rc_specs[node], incoming_edges)
     
-    outfile = 'rules_{}_{}'.format(sif_filename.removesuffix('.sif'),rc_specs_filename.removesuffix('.rcspec'))
-    with open(outfile, 'w') as f:
-        text = ''
-        for node, rule in rules.items():
-            text += '{} = {}\n'.format(node, rule)
-        f.write(text.rstrip())
+    text = ''
+    for node, rule in rules.items():
+        text += '{} = {}\n'.format(node, rule)
+    print(text)
 
 main()
 

@@ -274,8 +274,19 @@ public class NAE{
     }
 
     void generateRulesFiles() throws IOException {
-        // generate sif file
         String sifFileName = (new Date()).toString().replace(" ", "--").replace(":", "-")+".sif";
+        generateSifFile(sifFileName);
+        for (int i = 0; i < resultSets.size(); i++) {
+            String rcspecFileName = "solution"+i+".rcspec";
+            generateRCspecFile(rcspecFileName, i);
+            String rulesText = getRulesFileText("bs", sifFileName, rcspecFileName);
+            FileWriter fw = new FileWriter(String.format("rules_%s_%s.txt", sifFileName.replace(".sif", ""), rcspecFileName.replace(".rcspec", ""))); 
+            fw.write(rulesText);
+            fw.close();
+        }
+    }
+
+    void generateSifFile(String sifFileName) throws IOException {
         StringBuilder sifText = new StringBuilder();
         for(Node node: this.converter.nodes.values()) {
             String to = node.name.replace(Converter.identifier, "");
@@ -288,25 +299,19 @@ public class NAE{
         FileWriter fw = new FileWriter(sifFileName); 
         fw.write(sifText.toString());
         fw.close();
-        for (int i = 0; i < resultSets.size(); i++) {
-            String rcspecFileName = "solution"+i+".rcspec";
-            // generate rcspec file
-            StringBuilder rcspecText = new StringBuilder();
-            ResultSet rs = resultSets.get(i);
-            for (Map.Entry<String,NodeData> entry: rs.nodeVals.entrySet()) {
-                String name = entry.getKey().replace(Converter.identifier, "");
-                int function = entry.getValue().function;
-                rcspecText.append(String.format("%s\t%d\n", name, function));
-            }
-            fw = new FileWriter(rcspecFileName); 
-            fw.write(rcspecText.toString());
-            fw.close();
-            // generate rules file
-            String rulesText = getRulesFileText("bs", sifFileName, rcspecFileName);
-            fw = new FileWriter(String.format("rules_%s_%s.txt", sifFileName.replace(".sif", ""), rcspecFileName.replace(".rcspec", ""))); 
-            fw.write(rulesText);
-            fw.close();
+    }
+
+    void generateRCspecFile(String rcspecFileName, int solutionNum) throws IOException {
+        StringBuilder rcspecText = new StringBuilder();
+        ResultSet rs = resultSets.get(solutionNum);
+        for (Map.Entry<String,NodeData> entry: rs.nodeVals.entrySet()) {
+            String name = entry.getKey().replace(Converter.identifier, "");
+            int function = entry.getValue().function;
+            rcspecText.append(String.format("%s\t%d\n", name, function));
         }
+        FileWriter fw = new FileWriter(rcspecFileName); 
+        fw.write(rcspecText.toString());
+        fw.close();
     }
 
     String getRulesFileText(String exportType, String sifFileName, String rcspecFileName) {
