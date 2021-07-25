@@ -51,6 +51,7 @@ public class NAE{
         boolean temporalLogicMode = false;
         int bmc_length = defaultBMCLength;
         boolean validate = false;
+        boolean generateRulesFiles = false;
 
         for(int i =0;i<args.length-1;i++){
             if(args[i].equals("-bmc")) {
@@ -84,7 +85,7 @@ public class NAE{
             bmc = false;
         }
         for(String a:args) {if (a.equals("-v")) validate = true;}
-        
+        for(String a:args) {if (a.equals("-r")) generateRulesFiles = true;}        
 
         
         //see if combos  are legal and advisable
@@ -126,12 +127,19 @@ public class NAE{
                 c.setDuration(bmc_length);
             }
         }
+
         //finally run NAE!
         NAE nae = new NAE(c,solutionLimit);
         nae.runAnalysisInteractive();
         nae.printResults();
         if(validate) nae.validate(model,spec);
-        if(nae.converter.uniqueness == Uniqueness.REGULATION_CONDITIONS) nae.generateRulesFiles();
+        if (generateRulesFiles) {
+            if(nae.converter.uniqueness != Uniqueness.REGULATION_CONDITIONS) {
+                System.out.println("Please note that specifying uniqueness=interactions\n"+
+                "will yield rules files generation that is inexhaustive.");
+            }
+            else nae.generateRulesFiles();
+        }
         // alternatively, to only generate rcspecs as a .zip, run the line below instead     
         //if(nae.converter.uniqueness == Uniqueness.REGULATION_CONDITIONS) nae.generateRCspecsZip();
     }
