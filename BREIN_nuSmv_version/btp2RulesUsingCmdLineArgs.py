@@ -132,6 +132,7 @@ Shortcut methods to retrieve the 4 basic expressions
 '''
 def all_activators_expr(incoming_edges):
     activator_nodes = get_activator_nodes(incoming_edges)
+    if len(activator_nodes) == 0: return symbols('false')
     bool_expression = symbols('true')
     for i in range(len(activator_nodes)):
         bool_expression = And(bool_expression,symbols(activator_nodes[i]))
@@ -146,6 +147,7 @@ def no_activators_expr(incoming_edges):
 
 def all_repressors_expr(incoming_edges):
     repressor_nodes = get_repressor_nodes(incoming_edges)
+    if len(repressor_nodes) == 0: return symbols('false')
     bool_expression = symbols('true')
     for i in range(len(repressor_nodes)):
         bool_expression = And(bool_expression,symbols(repressor_nodes[i]))
