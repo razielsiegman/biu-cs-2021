@@ -176,6 +176,7 @@ public abstract class Converter{
         Set<Integer> functions = new HashSet<>();
         String[] tokens = f.split(",");
         for (String token: tokens) {
+            token= token.trim();
             if (token.contains("..")) functions.addAll(getIntervalSet(token));
             else functions.add(Integer.parseInt(token));
         }

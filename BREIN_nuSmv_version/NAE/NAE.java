@@ -138,7 +138,7 @@ public class NAE{
                 System.out.println("Please note that specifying uniqueness=interactions\n"+
                 "will yield rules files generation that is inexhaustive.");
             }
-            else nae.generateRulesFiles();
+            nae.generateRulesFiles();
         }
         // alternatively, to only generate rcspecs as a .zip, run the line below instead     
         //if(nae.converter.uniqueness == Uniqueness.REGULATION_CONDITIONS) nae.generateRCspecsZip();
