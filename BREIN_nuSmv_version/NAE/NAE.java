@@ -2,8 +2,11 @@ package NAE;
 import validate.*;
 import java.io.*;
 import java.util.*;
+import java.util.Map.Entry;
+import java.util.zip.*;
 
 import NAE.Converter.Uniqueness;
+import NAE.ResultSet.NodeData;
 //NAE stands for network analysis engine
 //This is the main class of NAE
 public class NAE{
@@ -18,7 +21,7 @@ public class NAE{
     private static final String helpString = "";
     
     private static final int defaultBMCLength = 20;
-    
+    private static final String pythonScriptFilename = "btp2RulesUsingCmdLineArgs.py";
     //an analysis can be run from the cmd-line
     public static void main(String args[])throws Exception{
         /*here is the format:
@@ -48,6 +51,7 @@ public class NAE{
         boolean temporalLogicMode = false;
         int bmc_length = defaultBMCLength;
         boolean validate = false;
+        boolean generateRulesFiles = false;
 
         for(int i =0;i<args.length-1;i++){
             if(args[i].equals("-bmc")) {
@@ -81,7 +85,7 @@ public class NAE{
             bmc = false;
         }
         for(String a:args) {if (a.equals("-v")) validate = true;}
-        
+        for(String a:args) {if (a.equals("-r")) generateRulesFiles = true;}        
 
         
         //see if combos  are legal and advisable
@@ -123,11 +127,21 @@ public class NAE{
                 c.setDuration(bmc_length);
             }
         }
+
         //finally run NAE!
         NAE nae = new NAE(c,solutionLimit);
         nae.runAnalysisInteractive();
         nae.printResults();
         if(validate) nae.validate(model,spec);
+        if (generateRulesFiles) {
+            if(nae.converter.uniqueness != Uniqueness.REGULATION_CONDITIONS) {
+                System.out.println("Please note that specifying uniqueness=interactions\n"+
+                "will yield rules files generation that is inexhaustive.");
+            }
+            else nae.generateRulesFiles();
+        }
+        // alternatively, to only generate rcspecs as a .zip, run the line below instead     
+        //if(nae.converter.uniqueness == Uniqueness.REGULATION_CONDITIONS) nae.generateRCspecsZip();
     }
     
     //the arguments are the names of the files to analyze
@@ -166,12 +180,7 @@ public class NAE{
                 break;
             }
             resultSets.add(resultSet);
-            
-            
-       
             converter.restrictResult(resultSet);
-            
-            
         }
     }
       
@@ -201,7 +210,7 @@ public class NAE{
             out.append("\n");
         }
         if(converter.uniqueness == Uniqueness.REGULATION_CONDITIONS) {
-            out.append("** Regulation\nConditions\nUsed:  **\n");
+            out.append("**********\n Regulation\nConditions\nUsed:  \n**********\n");
             for(String name: nodeNames) {
                 out.append(String.format("%1$17s :", name.replace(Converter.identifier, "")));
                 for(int j = 0;j<resultSets.size();j++){              
@@ -244,6 +253,86 @@ public class NAE{
         return (nodes[1]+"->"+nodes[0]).replace(Converter.identifier,"");
     }
 
+    void generateRCspecsZip() throws IOException {
+        File f = new File("rc_specs.zip");
+        ZipOutputStream out = new ZipOutputStream(new FileOutputStream(f));       
+        for (int i = 0; i < resultSets.size(); i++) {
+            String text = "";
+            ResultSet rs = resultSets.get(i);
+            for (Map.Entry<String,NodeData> entry: rs.nodeVals.entrySet()) {
+                String name = entry.getKey().replace(Converter.identifier, "");
+                int function = entry.getValue().function;
+                text += String.format("%s\t%d\n", name, function);
+            }
+            addTextAsFileToZip("solution"+i+".rcspec", text, out);
+        }
+        out.close();        
+    }
 
-    
+    void addTextAsFileToZip(String filename, String text, ZipOutputStream out) throws IOException {
+        ZipEntry entry = new ZipEntry(filename);
+        out.putNextEntry(entry);
+        byte[] data = text.getBytes();
+        out.write(data, 0, data.length);
+        out.closeEntry();
+    }
+
+    void generateRulesFiles() throws IOException {
+        String dateString = (new Date()).toString().replace(" ", "--").replace(":", "-");
+        File parentDir = new File("rules_"+dateString);
+        parentDir.mkdir();
+        File sifFile = new File(parentDir, dateString+".sif");
+        generateSifFile(sifFile);
+        for (int i = 0; i < resultSets.size(); i++) {
+            File rcspecFile = new File(parentDir,"solution"+i+".rcspec");
+            generateRCspecFile(rcspecFile, i);
+            String rulesText = getRulesFileText("bs", sifFile.getPath(), rcspecFile.getPath());
+            File rulesFile = new File(parentDir, String.format("rules_%s_%s.txt", sifFile.getName().replace(".sif", ""), rcspecFile.getName().replace(".rcspec", "")));
+            FileWriter fw = new FileWriter(rulesFile); 
+            fw.write(rulesText);
+            fw.close();
+        }
+    }
+
+    void generateSifFile(File sifFile) throws IOException {
+        StringBuilder sifText = new StringBuilder();
+        for(Node node: this.converter.nodes.values()) {
+            String to = node.name.replace(Converter.identifier, "");
+            for(Input input: node.inputs) {
+                String from = input.name.replace(Converter.identifier, "");
+                String interaction = (input.isPositive) ? "PROMOTES" : "REPRESSES";
+                sifText.append(String.format("%s\t%s\t%s\n", from, interaction, to));
+            }
+        }
+        FileWriter fw = new FileWriter(sifFile); 
+        fw.write(sifText.toString());
+        fw.close();
+    }
+
+    void generateRCspecFile(File rcspecFile, int solutionNum) throws IOException {
+        StringBuilder rcspecText = new StringBuilder();
+        ResultSet rs = resultSets.get(solutionNum);
+        for (Map.Entry<String,NodeData> entry: rs.nodeVals.entrySet()) {
+            String name = entry.getKey().replace(Converter.identifier, "");
+            int function = entry.getValue().function;
+            rcspecText.append(String.format("%s\t%d\n", name, function));
+        }
+        FileWriter fw = new FileWriter(rcspecFile); 
+        fw.write(rcspecText.toString());
+        fw.close();
+    }
+
+    String getRulesFileText(String exportType, String sifFileName, String rcspecFileName) {
+        StringBuilder text = new StringBuilder();
+        String[] args = {"python", pythonScriptFilename, exportType, sifFileName, rcspecFileName};
+        Process p;
+        try {
+            p = Runtime.getRuntime().exec(args);
+            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line=br.readLine()) != null) text.append(line+"\n");
+        } catch (IOException e) {e.printStackTrace();}
+        return text.toString();
+    }
+
 }
