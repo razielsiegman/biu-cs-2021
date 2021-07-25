@@ -3,7 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * How to run:
+ * Arguments:
+ * <model file> <spec file> <mode> <single or double> <target node> <type of perturbation (KO or FE)> <time step>
+ *
+ * Example:
+ *  java Perturbations TestModels\toy_model\model.net TestModels\toy_model\observations.spec time_step single B KO 18
  */
 public class Perturbations {
 
