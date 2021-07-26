@@ -221,6 +221,8 @@ def main():
     with open(outfile, 'w') as f:
         text = ''
         for node, rule in rules.items():
+            if rule == 'True': rule = '{} || !{}'.format(node,node) # (A || !A) is a stand-in for true
+            elif rule == 'False': rule = '{} && !{}'.format(node,node) # (A && !A) is a stand-in for false
             text += '{} = {}\n'.format(node, rule)
         f.write(text.rstrip())
 

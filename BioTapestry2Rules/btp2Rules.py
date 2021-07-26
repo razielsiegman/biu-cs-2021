@@ -40,7 +40,7 @@ def clean_bool_expression(bool_expression):
         return bool_expression.replace('~','!')
 
 # takes in regulatory conditions specifications, along with the interactions of the node, 
-# and translates those into a boolean expression readable by BooleSim  
+# and translates those into a boolean expression readable by BooleSim or BoolNet
 def generate_bool_expression(rc_spec, incoming_edges):
     bool_expression = symbols('false') # arbitrary init
     
@@ -213,12 +213,12 @@ def main():
     # generate BooleSim rules for all nodes, using the rc_specs
     for node, incoming_edges in node_to_incoming_edges.items():
         rules[node] = generate_bool_expression(rc_specs[node], incoming_edges)
-    print('answer:')
-    pp.pprint(rules)
 
     with open('output_'+sif_filename, 'w') as f:
         text = ''
-        for node, rule in rules.items():
+        for (node, rule) in rules.items():
+            if rule == 'True': rule = '{} || !{}'.format(node,node) # (A || !A) is a stand-in for true
+            elif rule == 'False': rule = '{} && !{}'.format(node,node) # (A && !A) is a stand-in for false
             text += '{} = {}\n'.format(node, rule)
         f.write(text.rstrip())
 
