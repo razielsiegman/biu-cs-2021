@@ -281,15 +281,18 @@ public class NAE{
         String dateString = (new Date()).toString().replace(" ", "--").replace(":", "-");
         File parentDir = new File("rules_"+dateString);
         parentDir.mkdir();
-
         for (int i = 0; i < resultSets.size(); i++) {
-            File sifFile = new File(parentDir, "solution"+i+".sif");
+            File solutionDir = new File(parentDir, "solution"+i);
+            solutionDir.mkdir();
+            File inputFilesUsedDir = new File(solutionDir, "input_files_used");
+            inputFilesUsedDir.mkdir();
+            File sifFile = new File(inputFilesUsedDir, "solution"+i+".sif");
             generateSifFile(sifFile, i);
-            File rcspecFile = new File(parentDir,"solution"+i+".rcspec");
+            File rcspecFile = new File(inputFilesUsedDir,"solution"+i+".rcspec");
             generateRCspecFile(rcspecFile, i);
             String rulesText = getRulesFileText("bs", sifFile.getPath(), rcspecFile.getPath());
-            File rulesFile = new File(parentDir, String.format("rules_%s_%s.txt", sifFile.getName().replace(".sif", ""), rcspecFile.getName().replace(".rcspec", "")));
-            FileWriter fw = new FileWriter(rulesFile); 
+            File rulesFile = new File(solutionDir, String.format("rules_solution%d.txt", i));
+            FileWriter fw = new FileWriter(rulesFile);
             fw.write(rulesText);
             fw.close();
         }
