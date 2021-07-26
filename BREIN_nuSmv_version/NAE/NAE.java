@@ -21,7 +21,7 @@ public class NAE{
     private static final String helpString = "";
     
     private static final int defaultBMCLength = 20;
-    private static final String pythonScriptFilename = "btp2RulesUsingCmdLineArgs.py";
+    private static final String pythonScriptFilename = "btp2RulesUsingCmdLineArgsPrintOutput.py";
     //an analysis can be run from the cmd-line
     public static void main(String args[])throws Exception{
         /*here is the format:

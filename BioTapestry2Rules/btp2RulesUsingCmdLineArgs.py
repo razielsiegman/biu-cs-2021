@@ -74,7 +74,7 @@ def generate_bool_expression(rc_spec, incoming_edges):
     
     # NOT NoActivators AND NOT AllRepressors
     elif rc_spec == '6':
-        bool_expression = And(Not(no_activators_expr(incoming_edges) , Not(all_repressors_expr(incoming_edges))))
+        bool_expression = And(Not(no_activators_expr(incoming_edges)), Not(all_repressors_expr(incoming_edges)))
     
     # (NOT NoActivators AND NOT AllRepressors) OR AllActivators
     elif rc_spec == '7':
@@ -90,15 +90,13 @@ def generate_bool_expression(rc_spec, incoming_edges):
     
     # NoRepressors OR (NOT AllRepressors AND AllActivators)
     elif rc_spec == '10':
-        bool_expression = Or(no_repressors_expr(incoming_edges), And(Not(all_repressors_expr(incoming_edges), all_activators_expr(incoming_edges))))
+        lhs = no_repressors_expr(incoming_edges)
+        rhs = And(Not(all_repressors_expr(incoming_edges)),all_activators_expr(incoming_edges))
+        bool_expression = Or(lhs, rhs)
     
     # NoRepressors OR (NOT NoActivators AND NOT AllRepressors)
     elif rc_spec == '11':
-        bool_expression = Or(no_repressors_expr(incoming_edges), And(Not(no_activators_expr(incoming_edges), Not(all_repressors_expr(incoming_edges)))))
-    
-    # NOT AllRepressors
-    elif rc_spec == '12':
-        bool_expression = Not(all_repressors_expr(incoming_edges))
+        bool_expression = Or(no_repressors_expr(incoming_edges), And(Not(no_activators_expr(incoming_edges)), Not(all_repressors_expr(incoming_edges))))
     
     # NOT AllRepressors
     elif rc_spec == '12':
@@ -132,7 +130,6 @@ Shortcut methods to retrieve the 4 basic expressions
 '''
 def all_activators_expr(incoming_edges):
     activator_nodes = get_activator_nodes(incoming_edges)
-    if len(activator_nodes) == 0: return symbols('false')
     bool_expression = symbols('true')
     for i in range(len(activator_nodes)):
         bool_expression = And(bool_expression,symbols(activator_nodes[i]))
@@ -147,7 +144,6 @@ def no_activators_expr(incoming_edges):
 
 def all_repressors_expr(incoming_edges):
     repressor_nodes = get_repressor_nodes(incoming_edges)
-    if len(repressor_nodes) == 0: return symbols('false')
     bool_expression = symbols('true')
     for i in range(len(repressor_nodes)):
         bool_expression = And(bool_expression,symbols(repressor_nodes[i]))
@@ -221,10 +217,12 @@ def main():
     for node, incoming_edges in node_to_incoming_edges.items():
         rules[node] = generate_bool_expression(rc_specs[node], incoming_edges)
     
-    text = ''
-    for node, rule in rules.items():
-        text += '{} = {}\n'.format(node, rule)
-    print(text)
+    outfile = 'rules_{}_{}'.format(sif_filename.removesuffix('.sif'),rc_specs_filename.removesuffix('.rcspec'))
+    with open(outfile, 'w') as f:
+        text = ''
+        for node, rule in rules.items():
+            text += '{} = {}\n'.format(node, rule)
+        f.write(text.rstrip())
 
 main()
 

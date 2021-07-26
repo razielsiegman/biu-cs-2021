@@ -1,6 +1,7 @@
 import pprint as pp
 from sympy.logic.boolalg import *
 from sympy import *
+import sys
 
 DEFAULT_RC_SPEC = '0' # chose randomly
 EXPORT_TYPE = ''
@@ -171,16 +172,18 @@ def get_repressor_nodes(incoming_edges):
 Main Script
 '''
 def main():
+    # cmd line call is: 
+    # python btp2RulesUsingCmdLineArgs.py <export type> <sif filename> <rcspec filename>
     global EXPORT_TYPE
-    EXPORT_TYPE = input('Enter export type, BooleSim or BoolNet ["bs"/"bn"]: ')
+    EXPORT_TYPE = sys.argv[1]
     # init data structures
     node_set = set()
     node_to_incoming_edges = {}
     rc_specs = {}
     rules = {}
     
-    sif_filename = input('Enter .sif filename: ')
-    rc_specs_filename = input('Enter rc_specs filename: ')
+    sif_filename = sys.argv[2]
+    rc_specs_filename = sys.argv[3]
 
     # iterate through .sif file
     with open(sif_filename, 'r') as f:
@@ -210,17 +213,14 @@ def main():
             rc_spec = tokens[1].rstrip()
             rc_specs[node_id] = rc_spec
 
-    # generate BooleSim rules for all nodes, using the rc_specs
+    # generate  rules for all nodes, using the rc_specs
     for node, incoming_edges in node_to_incoming_edges.items():
         rules[node] = generate_bool_expression(rc_specs[node], incoming_edges)
-    print('answer:')
-    pp.pprint(rules)
-
-    with open('output_'+sif_filename, 'w') as f:
-        text = ''
-        for node, rule in rules.items():
-            text += '{} = {}\n'.format(node, rule)
-        f.write(text.rstrip())
+    
+    text = ''
+    for node, rule in rules.items():
+        text += '{} = {}\n'.format(node, rule)
+    print(text)
 
 main()
 
