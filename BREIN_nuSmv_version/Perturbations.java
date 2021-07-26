@@ -3,11 +3,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Arguments:
- * <model file> <spec file> <mode> <single or double> <target node> <type of perturbation (KO or FE)> <time step>
+ *	A program that allows the user to view the effect of "knocking-out" or "overexpressing" every other node--or pairs of
+ *	nodes--on a selected target node at a selected time step
  *
- * Example:
- *  java Perturbations TestModels\toy_model\model.net TestModels\toy_model\observations.spec time_step single B KO 18
+ * 	Interpreting the output:
+ * 		1. A (+) indicates that that there WERE solutions for the model when the node(s) listed was perturbated (either
+ * 			KO'd or FE'd) and we anticipted that the <target node> would be ON at <time step> AND there were NO solutions
+ * 			for the model where the node(s) listed was perturbated and we anticipated that the <target node> would be OFF
+ * 			at <time step>. The implication of this result is that it gives us evidence that perturbating the
+ * 			listed node(s) plays some role in the <target node> arriving at at the ON state at <time step>.
+ *
+ * 		2. 	A (-) indicates that that there WERE solutions for the model when the node(s) listed was perturbated (either
+ *   		KO'd or FE'd) and we anticipted that the <target node> would be OFF at <time step> AND there were NO solutions
+ *  		for the model where the node(s) listed was perturbated and we anticipated that the <target node> would be ON
+ *   		at <time step>. The implication of this result is that it gives us evidence that perturbating the
+ *   		listed node(s) plays some role in the <target node> arriving at at the OFF state at <time step>.
+ *
+ *  	3. "Inconclusive" indicates that there were solutions for both or neither of the anticipated states of
+ *  		<target node> and therefore no conlcusion can be drawn as the perturbation of the listed node did not appear
+ *  		to have a direct impact on <target node>
+ *
+ * 	Arguments:
+ * 		<model file> <spec file> <mode> <single or double> <target node> <type of perturbation (KO or FE)> <time step>
+ *
+ * 	Example:
+ * 		java Perturbations TestModels\perturbations_model\model.net TestModels\perturbations_model\observations.spec time_step single B KO 18
+ *
+ * @author Jonathan Haller
  */
 public class Perturbations {
 
@@ -90,29 +112,32 @@ public class Perturbations {
 				}
 			}
 		}
-		//Print results
+
+		printResults(targetNode , typeOfPerturbation, timeStep, out);
+	}
+	private static void processResults(StringBuilder out , boolean onFileSolutionsExist , boolean offFileSolutionsExist, String node){
+		if(onFileSolutionsExist && !offFileSolutionsExist){
+			out.append(String.format("  %-8s (+)\n",node + ":"));
+		}else if(offFileSolutionsExist && !onFileSolutionsExist){
+			out.append(String.format("  %-8s (-)\n",node + ":"));
+		}else{
+			out.append(String.format("  %-8s Inconclusive\n",node + ":"));
+		}
+	}
+
+	private static void printResults(String targetNode , String typeOfPerturbation, String timeStep,StringBuilder out ) {
 		System.out.println("***************************");
 		System.out.println("Target Node: " + targetNode);
 		System.out.println("Perturbation Type: " + typeOfPerturbation);
 		System.out.println("Time Step: " + timeStep);
 		System.out.println("***************************");
 		System.out.println(out);
-
-	}
-	private static void processResults(StringBuilder out , boolean onFileSolutionsExist , boolean offFileSolutionsExist, String node){
-		if(onFileSolutionsExist && !offFileSolutionsExist){
-			out.append(node + ": On\n");
-		}else if(offFileSolutionsExist && !onFileSolutionsExist){
-			out.append(node + ": Off\n");
-		}else{
-			out.append(node + ": Inconclusive\n");
-		}
 	}
 
 	private static boolean runNAE(String completeSpecFile, String modelFile, Runtime rt, String mode) throws IOException {
-		Process pr = rt.exec("java -jar NAE.jar 1 " + modelFile + " " + completeSpecFile + " " + mode);
-		BufferedReader reader=new BufferedReader(new InputStreamReader(
-				pr.getInputStream()));
+		String[] args = new String[]{"java" , "-jar" ,  "NAE.jar",  "1", modelFile, completeSpecFile, mode};
+		Process pr = rt.exec(args);
+		BufferedReader reader=new BufferedReader(new InputStreamReader(pr.getInputStream()));
 		String firstLine = null;
 		String line;
 		int i = 0;
@@ -123,6 +148,7 @@ public class Perturbations {
 			System.out.println(line);
 		}
 		return !(firstLine.equals("No Solutions Found"));
+		//return !(firstLine = reader.readLine()).equals("No Solutions Found");
 	}
 
 	private static String createSpecFile(List<String> nodes , StringBuilder specFileTemplate, String curPerturbedNode,
