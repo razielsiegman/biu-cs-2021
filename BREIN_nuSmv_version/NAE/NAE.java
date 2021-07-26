@@ -281,9 +281,10 @@ public class NAE{
         String dateString = (new Date()).toString().replace(" ", "--").replace(":", "-");
         File parentDir = new File("rules_"+dateString);
         parentDir.mkdir();
-        File sifFile = new File(parentDir, dateString+".sif");
-        generateSifFile(sifFile);
+
         for (int i = 0; i < resultSets.size(); i++) {
+            File sifFile = new File(parentDir, "solution"+i+".sif");
+            generateSifFile(sifFile, i);
             File rcspecFile = new File(parentDir,"solution"+i+".rcspec");
             generateRCspecFile(rcspecFile, i);
             String rulesText = getRulesFileText("bs", sifFile.getPath(), rcspecFile.getPath());
@@ -294,14 +295,23 @@ public class NAE{
         }
     }
 
-    void generateSifFile(File sifFile) throws IOException {
+    boolean connectionExistsInResultSet(Node node, Input input, ResultSet rs) {
+        if (!input.optional) return true;
+        String connection = node.name + "." + input.name;
+        return rs.optionalConnections.get(connection);
+    }
+
+    void generateSifFile(File sifFile, int solutionNum) throws IOException {
         StringBuilder sifText = new StringBuilder();
+        ResultSet rs = resultSets.get(solutionNum);
         for(Node node: this.converter.nodes.values()) {
             String to = node.name.replace(Converter.identifier, "");
             for(Input input: node.inputs) {
-                String from = input.name.replace(Converter.identifier, "");
-                String interaction = (input.isPositive) ? "PROMOTES" : "REPRESSES";
-                sifText.append(String.format("%s\t%s\t%s\n", from, interaction, to));
+                if (connectionExistsInResultSet(node, input, rs)) {
+                    String from = input.name.replace(Converter.identifier, "");
+                    String interaction = (input.isPositive) ? "PROMOTES" : "REPRESSES";
+                    sifText.append(String.format("%s\t%s\t%s\n", from, interaction, to));
+                }
             }
         }
         FileWriter fw = new FileWriter(sifFile); 
