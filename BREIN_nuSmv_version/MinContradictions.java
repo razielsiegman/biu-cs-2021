@@ -1,5 +1,8 @@
+import NAE.NAE;
+
 import java.io.*;
 import java.util.*;
+import java.nio.file.*;
 
 public class MinContradictions {
 
@@ -7,6 +10,11 @@ public class MinContradictions {
         private String experimentName;
         private Set<String> constraintSet;
         private String constraints;
+
+        public Experiment(String experimentName){
+            this.experimentName = experimentName;
+            this.constraintSet = new HashSet<String>();
+        }
 
         private void addConstraint(String constraint){
             constraintSet.add(constraint);
@@ -46,8 +54,8 @@ public class MinContradictions {
 
 
     private String model;
+    private String newSpec;
     private String mode;
-    private String currentSpec;
     private String specTemplate;
     private Map<String, Experiment> experiments;
     private Set<HashSet<Experiment>> solutionSets;
@@ -55,30 +63,36 @@ public class MinContradictions {
     public static void main(String[] args) throws IOException {
         MinContradictions mc = new MinContradictions();
         mc.model = args[0];
-        mc.currentSpec = args[1];
+        mc.newSpec = args[1] + "//..//" + "observations1.spec";
+        PrintWriter pr = new PrintWriter(mc.newSpec, "UTF-8");
+        String content = Files.readString(Paths.get(args[1]));
+        pr.print(content);
+        pr.close();
         mc.mode = args[2];
         mc.experiments = new HashMap<String, Experiment>();
         mc.solutionSets = new HashSet<HashSet<Experiment>>();
-        mc.readObservation(mc.currentSpec);
+        mc.readObservation(mc.newSpec);
         mc.findMinSets();
     }
 
     private void updateSolutionSets(Set<Experiment> solution){
-        solutionSets.add((HashSet)solution);
+        solutionSets.add(new HashSet<Experiment>(solution));
     }
 
     private void readObservation(String specFileName) throws IOException {
         //Create spec file without experimental observations
         StringBuilder specFileTemplate = new StringBuilder();
-        BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/src/main/java/TestModels/test_model/" + specFileName));
+        BufferedReader br = new BufferedReader(new FileReader(specFileName));
         String line;
         while ((line = br.readLine()) != null) {
-            String experimentNumber;
+            String experimentName;
             //If line is experimental observation, add to experiment object, otherwise add to spec template
             if (line.contains("#Experiment")) {
-                experimentNumber = line.substring(0, line.indexOf("["));
-                Experiment e = experiments.get(experimentNumber);
-                e.addConstraint(line);
+                experimentName = line.substring(0, line.indexOf("["));
+                if(!experiments.containsKey(experimentName)){
+                    experiments.put(experimentName, new Experiment(experimentName));
+                }
+                experiments.get(experimentName).addConstraint(line);
             } else {
                 specFileTemplate.append(line + "\n");
             }
@@ -89,7 +103,7 @@ public class MinContradictions {
         for(Experiment e : experiments.values()){
             StringBuilder experimentSpec = new StringBuilder();
             for(String s : e.getConstraintSet()){
-                experimentSpec.append(s);
+                experimentSpec.append(s + "\n");
             }
             e.putConstraints(experimentSpec.toString());
         }
@@ -107,12 +121,12 @@ public class MinContradictions {
         Set<Experiment> remainingExperiments = new HashSet<>(experiments.values());
 
         //Check to make sure there is another solution set that exists
-        while(this.runNAE(this.currentSpec, this.model, rt, this.mode) == true){
+        while(this.runNAE(this.newSpec, this.model, rt, this.mode) == true){
             //For each element in currentExperiments: Build the spec file from scratch without current element.  If contradiction still exists, continue.  Else, put element back in set and continue.
             for(Experiment e : currentExperiments){
                 remainingExperiments.remove(e);
                 buildCurrentSpec(remainingExperiments);
-                if(this.runNAE(this.currentSpec, this.model, rt, this.mode) == true){
+                if(this.runNAE(this.newSpec, this.model, rt, this.mode) == true){
                     continue;
                 }
                 else{
@@ -127,13 +141,15 @@ public class MinContradictions {
         System.out.println(solutionSets.toString());
     }
 
-    private void buildCurrentSpec(Set<Experiment> experimentSet){
+    private void buildCurrentSpec(Set<Experiment> experimentSet) throws IOException{
         StringBuilder spec = new StringBuilder();
         spec.append(specTemplate);
         for(Experiment experiment : experimentSet){
-            spec.append(experiment.getConstraints());
+            spec.append(experiment.getConstraints() + "\n");
         }
-        this.currentSpec = spec.toString();
+        PrintWriter pr = new PrintWriter(this.newSpec, "UTF-8");
+        pr.print(spec.toString());
+        pr.close();
     }
 
     private boolean runNAE(String completeSpecFile, String modelFile, Runtime rt, String mode) throws IOException {
