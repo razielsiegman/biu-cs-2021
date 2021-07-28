@@ -35,7 +35,7 @@ def parse_node_id(full_node_id):
 def get_edge_set_from_file():
     edge_set = set()
     filename = input('Enter filename: ')
-    suffix = filename[-4:]
+    suffix = filename[filename.rfind('.'):]
     if suffix == '.btp':
         return get_edge_set_with_btp(filename)
     elif suffix == '.sif':
@@ -115,6 +115,15 @@ def get_rc_text_one_by_one(node_set):
         )
     return rc_text
 
+def rcspec_to_oneline(lines):
+    oneline = ''
+    for line in lines:
+        tokens = line.split('\t')
+        if len(tokens) < 2: continue
+        gene = tokens[0]
+        rc = tokens[1].rstrip()
+        oneline += '{}[]({}); '.format(gene, rc)
+    return oneline
 
 def manually_enter_optionals(edge_set):
     for edge in edge_set:
@@ -134,11 +143,16 @@ def get_directive_text():
 
 def get_rc_text(node_set):
     rc_pref = input(
-        'How would you like to enter regulatory conditions ["m" for manually, "o" for one-by-one]? ')
-    while (rc_pref not in ('m', 'o')):
+        'How would you like to enter regulatory conditions ["m"=manually, "o"=1-by-1, "f"=rcspec file]? ')
+    while (rc_pref not in ('m', 'o', 'f')):
         print('***Invalid response to prompt: only "m" and "o" are acceptable...')
         rc_pref = input('How would you like to enter regulatory conditions ["m" for manually, "o" for one-by-one]? ')
-    rc_text = input('Enter full regulatory conditions specs: ') if rc_pref == 'm' else get_rc_text_one_by_one(node_set)
+    rc_text = ''
+    if rc_pref == 'm': rc_text = input('Enter full regulatory conditions specs: ')
+    elif rc_pref == 'o': rc_text = get_rc_text_one_by_one(node_set)
+    else:
+        with open(input('Enter .rcspec filename: '), 'r') as f:
+            rc_text = rcspec_to_oneline(f.readlines())
     return rc_text.rstrip() + '\n'
 
 def get_edges_text(edge_set):
