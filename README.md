@@ -60,10 +60,11 @@ We built 2 programs as abstractions on top of BRE:IN
 ```
 java PerturbationSimulator <model file> <spec file> <mode> <number of perturbations> <target node> <type of perturbation> <time step>
 ``` 
-- number of perturbations - whether the user wants to perturbate every node inidividually ('single') or every pair of nodes ('double')
-- target node - the node that the user is interested in determining whether perturbating all other nodes/pairs of nodes will have an effect on it 
-- type of perturbation - the options are knockout ('KO') or overexpress ('FE')
-- time step - the time step at which the user is interested in predicting the target node's value
+- The first 3 arguments are the same as those for BRE:IN. The addtional arguments can be described as follows:
+    - number of perturbations - whether the user wants to perturbate every node inidividually ('single') or every pair of nodes ('double')
+    - target node - the node that the user is interested in determining whether perturbating all other nodes/pairs of nodes will have an effect on it 
+    - type of perturbation - the options are knockout ('KO') or overexpress ('FE')
+    - time step - the time step at which the user is interested in predicting the target node's value
 
 ### Minimal-Contradictory-Core (MCC) Identifier
 ----------
