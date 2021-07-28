@@ -33,12 +33,12 @@ import java.util.List;
  * 		<model file> <spec file> <mode> <single or double> <target node> <type of perturbation (KO or FE)> <time step>
  *
  * 	Example:
- * 		java Perturbations TestModels\perturbations_model\model.net TestModels\perturbations_model\observations.spec time_step single B KO 18
+ * 		java PerturbationSimulator TestModels\perturbations_model\model.net TestModels\perturbations_model\observations.spec time_step single B KO 18
  *
  * @author Jonathan Haller
  *
  */
-public class Perturbations {
+public class PerturbationSimulator {
 
 	public static void main(String[] args) throws Exception {
 		//Parse args
