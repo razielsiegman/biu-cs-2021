@@ -56,7 +56,7 @@ We built 2 programs as abstractions on top of BRE:IN
 - The copy of BRE:IN using nuXmv instead of NuSMV is located in the `BREIN_nuXmv_version` directory, and is run identically to the original version of BRE:IN
 ### Perturbation Simulator
 ----------
-- After compiling the program PerturbationSimulator.java, use the following arguments to run the simulator:
+After compiling the program PerturbationSimulator.java, use the following arguments to run the simulator:
 ```
 java PerturbationSimulator <model file> <spec file> <mode> <number of perturbations> <target node> <type of perturbation> <time step>
 ``` 
