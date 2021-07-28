@@ -1,7 +1,7 @@
 # BIU/YU Summer Research Program | Computer Science Students
 Under the guidance of Dr. Hillel Kugler
 
->*NOTE: this README assumes prior familiarity with [RE:IN](https://www.microsoft.com/en-us/research/project/reasoning-engine-for-interaction-networks-rein/) and [BRE:IN](https://github.com/kuglerh/BREIN).*
+>*NOTE: this README assumes prior familiarity with [RE:IN](https://www.microsoft.com/en-us/research/project/reasoning-engine-for-interaction-networks-rein/) and [BRE:IN](https://github.com/kuglerh/BREIN). For more detailed technical explanations of the concepts and ideas below, see __*
 
 ## Projects
 ### BRE:IN Enhancements
@@ -14,7 +14,7 @@ A number of new features and improvements were implemented in the BRE:IN tool it
 ### Programs Built On Top of BRE:IN
 ----------
 We built 2 programs as abstractions on top of BRE:IN
-- Pertubation Predictor
+- Pertubation Simulator
 - Minimal-Contradictory-Core (MCC) Identifier
 ### Inter-tool Conversions
 ----------
@@ -53,4 +53,9 @@ We built 2 programs as abstractions on top of BRE:IN
     ```
     ![image not found](media/myloid_boolesim.png)
 - The copy of BRE:IN using nuXmv instead of NuSMV is located in the `BREIN_nuXmv_version` directory, and is run identically to the original version of BRE:IN
-## Details
+### Pertubation Simulator
+----------
+- jonathan fill in
+### Minimal-Contradictory-Core (MCC) Identifier
+----------
+- raziel fill in
