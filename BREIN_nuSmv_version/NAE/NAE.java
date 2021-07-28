@@ -52,6 +52,7 @@ public class NAE{
         int bmc_length = defaultBMCLength;
         boolean validate = false;
         boolean generateRulesFiles = false;
+        String exportType = "";
 
         for(int i =0;i<args.length-1;i++){
             if(args[i].equals("-bmc")) {
@@ -85,7 +86,13 @@ public class NAE{
             bmc = false;
         }
         for(String a:args) {if (a.equals("-v")) validate = true;}
-        for(String a:args) {if (a.equals("-r")) generateRulesFiles = true;}        
+        for(int i = 0; i < args.length - 1; i++) {
+            if (args[i].equals("-r")) {
+                generateRulesFiles = true;
+                exportType = args[i+1];
+                break;
+            }
+        }        
 
         
         //see if combos  are legal and advisable
@@ -138,7 +145,7 @@ public class NAE{
                 System.out.println("Please note that specifying uniqueness=interactions\n"+
                 "will yield rules files generation that is inexhaustive.");
             }
-            nae.generateRulesFiles();
+            nae.generateRulesFiles(exportType);
         }
         // alternatively, to only generate rcspecs as a .zip, run the line below instead     
         //if(nae.converter.uniqueness == Uniqueness.REGULATION_CONDITIONS) nae.generateRCspecsZip();
@@ -277,7 +284,7 @@ public class NAE{
         out.closeEntry();
     }
 
-    void generateRulesFiles() throws IOException {
+    void generateRulesFiles(String exportType) throws IOException {
         String dateString = (new Date()).toString().replace(" ", "--").replace(":", "-");
         File parentDir = new File("rules_"+dateString);
         parentDir.mkdir();
@@ -290,7 +297,7 @@ public class NAE{
             generateSifFile(sifFile, i);
             File rcspecFile = new File(inputFilesUsedDir,"solution"+i+".rcspec");
             generateRCspecFile(rcspecFile, i);
-            String rulesText = getRulesFileText("bs", sifFile.getPath(), rcspecFile.getPath());
+            String rulesText = getRulesFileText(exportType, sifFile.getPath(), rcspecFile.getPath());
             File rulesFile = new File(solutionDir, String.format("rules_solution%d.txt", i));
             FileWriter fw = new FileWriter(rulesFile);
             fw.write(rulesText);
