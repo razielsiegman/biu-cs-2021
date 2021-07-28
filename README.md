@@ -14,7 +14,7 @@ A number of new features and improvements were implemented in the BRE:IN tool it
 ### Programs Built On Top of BRE:IN
 ----------
 We built 2 programs as abstractions on top of BRE:IN
-- Pertubation Simulator
+- Perturbation Simulator
     - allows the user to view the effect of perturbating ("knocking out" or "overexpressing") every other node--or pairs of nodes--on a selected target node at a selected time step
 - Minimal-Contradictory-Core (MCC) Identifier
 ### Inter-tool Conversions
