@@ -10,12 +10,12 @@ A number of new features and improvements were implemented in the BRE:IN tool it
 - Broader support for regulation condition input syntax, i.e. the combination of comma-separated function numbers and '..' separated ranges
 - Capability to define uniqueness of solutions by regulatory conditions used (as opposed to concrete interactions)
 - Support for showing the user which regulatory conditions were used in each solution, with the option to export solutions to the BooleSim simulator or an R BoolNet network object
-- A copy of the BRE:IN tool that utilizes the new [nuXmv](https://nuxmv.fbk.eu/) model checker in place of [NuSMV](https://nusmv.fbk.eu/), located in the "BREIN_nuXmv_version" directory
+- A copy of the BRE:IN tool that utilizes the new [nuXmv](https://nuxmv.fbk.eu/) model checker in place of [NuSMV](https://nusmv.fbk.eu/)
 ### Programs Built On Top of BRE:IN
 ----------
 We built 2 programs as abstractions on top of BRE:IN
 - Pertubation Predictor
-- Minimal-Contradictory-Core Identifier
+- Minimal-Contradictory-Core (MCC) Identifier
 ### Inter-tool Conversions
 ----------
 - [BioTapestry](http://www.biotapestry.org/) (.btp) Conversions
@@ -34,7 +34,7 @@ We built 2 programs as abstractions on top of BRE:IN
     directive uniqueness regulation_conditions;
     ```
     - The output will then look something like this:
-    
+
     ![image not found](media/toy_model2__output_rc.png)
     - To have BRE:IN generate rules files for each solution, which can be fed into BooleSim or BoolNet, run BRE:IN as usual with the additional `-r` flag, followed by either `bs` for BooleSim export syntax, or `bn` for Boolnet
     - The output will be a child directory of `BREIN_nuSmv_version` called `rules_<date executed>`, that holds the output files for each solution. _Note that this file generation can take a bit of time._ An example BooleSim output file (representing a solution to the myloid model) is shown below, along with the corresponding visual network:
@@ -52,5 +52,5 @@ We built 2 programs as abstractions on top of BRE:IN
     SCL = GATA1 || !PU1
     ```
     ![image not found](media/myloid_boolesim.png)
-
+- The copy of BRE:IN using nuXmv instead of NuSMV is located in the `BREIN_nuXmv_version` directory, and is run identically to the original version of BRE:IN
 ## Details
