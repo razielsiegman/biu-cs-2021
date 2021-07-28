@@ -15,6 +15,7 @@ A number of new features and improvements were implemented in the BRE:IN tool it
 ----------
 We built 2 programs as abstractions on top of BRE:IN
 - Pertubation Simulator
+    - allows the user to view the effect of perturbating ("knocking out" or "overexpressing") every other node--or pairs of nodes--on a selected target node at a selected time step
 - Minimal-Contradictory-Core (MCC) Identifier
 ### Inter-tool Conversions
 ----------
@@ -53,9 +54,17 @@ We built 2 programs as abstractions on top of BRE:IN
     ```
     ![image not found](media/myloid_boolesim.png)
 - The copy of BRE:IN using nuXmv instead of NuSMV is located in the `BREIN_nuXmv_version` directory, and is run identically to the original version of BRE:IN
-### Pertubation Simulator
+### Perturbation Simulator
 ----------
-- jonathan fill in
+- After compiling the program PerturbationSimulator.java, use the following arguments to run the simulator:
+```
+java PerturbationSimulator <model file> <spec file> <mode> <number of perturbations> <target node> <type of perturbation> <time step>
+``` 
+- number of perturbations - whether the user wants to perturbate every node inidividually ('single') or every pair of nodes ('double')
+- target node - the node that the user is interested in determining whether perturbating all other nodes/pairs of nodes will have an effect on it 
+- type of perturbation - the options are knockout ('KO') or overexpress ('FE')
+- time step - the time step at which the user is interested in predicting the target node's value
+
 ### Minimal-Contradictory-Core (MCC) Identifier
 ----------
 - raziel fill in
