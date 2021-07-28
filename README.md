@@ -34,6 +34,7 @@ We built 2 programs as abstractions on top of BRE:IN
     directive uniqueness regulation_conditions;
     ```
     - The output will then look something like this:
+    
     ![image not found](media/toy_model2__output_rc.png)
     - To have BRE:IN generate rules files for each solution, which can be fed into BooleSim or BoolNet, run BRE:IN as usual with the additional `-r` flag, followed by either `bs` for BooleSim export syntax, or `bn` for Boolnet
     - The output will be a child directory of `BREIN_nuSmv_version` called `rules_<date executed>`, that holds the output files for each solution. _Note that this file generation can take a bit of time._ An example BooleSim output file (representing a solution to the myloid model) is shown below, along with the corresponding visual network:
