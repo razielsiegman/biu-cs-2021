@@ -3,17 +3,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *	A program that allows the user to view the effect of "knocking-out" or "overexpressing" every other node--or pairs of
+ * TODO:
+ * 	1) Rid of printlns
+ * 	2) Comment methods
+ */
+
+/**
+ *	A program that allows the user to view the effect of "knocking out" or "overexpressing" every other node--or pairs of
  *	nodes--on a selected target node at a selected time step
  *
  * 	Interpreting the output:
- * 		1. A (+) indicates that that there WERE solutions for the model when the node(s) listed was perturbated (either
+ * 		1.  A "(+)" indicates that that there WERE solutions for the model when the node(s) listed was perturbated (either
  * 			KO'd or FE'd) and we anticipted that the <target node> would be ON at <time step> AND there were NO solutions
  * 			for the model where the node(s) listed was perturbated and we anticipated that the <target node> would be OFF
  * 			at <time step>. The implication of this result is that it gives us evidence that perturbating the
  * 			listed node(s) plays some role in the <target node> arriving at at the ON state at <time step>.
  *
- * 		2. 	A (-) indicates that that there WERE solutions for the model when the node(s) listed was perturbated (either
+ * 		2. 	A "(-)" indicates that that there WERE solutions for the model when the node(s) listed was perturbated (either
  *   		KO'd or FE'd) and we anticipted that the <target node> would be OFF at <time step> AND there were NO solutions
  *  		for the model where the node(s) listed was perturbated and we anticipated that the <target node> would be ON
  *   		at <time step>. The implication of this result is that it gives us evidence that perturbating the
@@ -30,6 +36,7 @@ import java.util.List;
  * 		java Perturbations TestModels\perturbations_model\model.net TestModels\perturbations_model\observations.spec time_step single B KO 18
  *
  * @author Jonathan Haller
+ *
  */
 public class Perturbations {
 
@@ -72,8 +79,8 @@ public class Perturbations {
 		Process pr1 = rt.exec("javac NAE/*.java validate/*.java");
 		Process pr2 = rt.exec("jar cvfm NAE.jar NAE/manifest.txt NAE/*.class validate/*.class");
 
-		boolean onFileSolutionsExist = false;
-		boolean offFileSolutionsExist = false;
+		boolean onFileSolutionsExist = false; //Do solutions exist when the <target node> is expected to be ON at <time step>
+		boolean offFileSolutionsExist = false; //Do solutions exist when the <target node> is expected to be OFF at <time step>
 		StringBuilder out = new StringBuilder();
 
 		if(nPertubations.equals("single")) {
@@ -81,30 +88,31 @@ public class Perturbations {
 				if (node.equals(targetNode)) continue;
 				//Create spec file where target node is expected to be ON and run NAE
 				String onFile = createSpecFile(nodes, specFileTemplate, node, 1, typeOfPerturbationArg,
-						targetNode, typeOfPerturbation, timeStep, modelFileName);
+						targetNode, typeOfPerturbation, timeStep, modelFileName, specFileName);
 				System.out.println(node + " Expecting target: On...");
 				onFileSolutionsExist = runNAE(onFile, modelFileName, rt, mode);
 
 				//Create spec file where target node is expected to be OFF and run NAE
 				String offFile = createSpecFile(nodes, specFileTemplate, node, 0, typeOfPerturbationArg,
-						targetNode, typeOfPerturbation, timeStep, modelFileName);
+						targetNode, typeOfPerturbation, timeStep, modelFileName, specFileName);
 				System.out.println(node + " Expecting target: Off...");
 				offFileSolutionsExist = runNAE(offFile, modelFileName, rt, mode);
 				//Process result to see if we have a prediction
 				processResults(out, onFileSolutionsExist, offFileSolutionsExist, node);
 			}
-		}else{
+		}
+		else{
 			for(String node1 : nodes){
 				for(String node2 : nodes){
 					if(node1.equals(targetNode) || node2.equals(targetNode) || node2.equals(node1)) continue;
 					//Create spec file where target node is expected to be ON and run NAE
 					String onFile = createDoubleSpecFile(nodes, specFileTemplate, node1, node2, 1, typeOfPerturbationArg, targetNode,
-							typeOfPerturbation, timeStep, modelFileName);
+							typeOfPerturbation, timeStep, modelFileName, specFileName);
 					System.out.println(node1 + " & " + node2 + ": Expecting target on...");
 					onFileSolutionsExist = runNAE(onFile, modelFileName, rt, mode);
 					//Create spec file where target node is expected to be OFF and run NAE
 					String offFile = createDoubleSpecFile(nodes, specFileTemplate, node1, node2, 0, typeOfPerturbationArg,
-							targetNode, typeOfPerturbation, timeStep, modelFileName);
+							targetNode, typeOfPerturbation, timeStep, modelFileName, specFileName);
 					System.out.println(node1 + " & " + node2 + ": Expecting target: off...");
 					offFileSolutionsExist = runNAE(offFile, modelFileName, rt, mode);
 					//Process result to see if we have a prediction
@@ -115,13 +123,14 @@ public class Perturbations {
 
 		printResults(targetNode , typeOfPerturbation, timeStep, out);
 	}
+
 	private static void processResults(StringBuilder out , boolean onFileSolutionsExist , boolean offFileSolutionsExist, String node){
 		if(onFileSolutionsExist && !offFileSolutionsExist){
-			out.append(String.format("  %-8s (+)\n",node + ":"));
+			out.append(String.format("  %-10s (+)\n",node + ":"));
 		}else if(offFileSolutionsExist && !onFileSolutionsExist){
-			out.append(String.format("  %-8s (-)\n",node + ":"));
+			out.append(String.format("  %-10s (-)\n",node + ":"));
 		}else{
-			out.append(String.format("  %-8s Inconclusive\n",node + ":"));
+			out.append(String.format("  %-10s Inconclusive\n",node + ":"));
 		}
 	}
 
@@ -151,18 +160,22 @@ public class Perturbations {
 		//return !(firstLine = reader.readLine()).equals("No Solutions Found");
 	}
 
+	/**
+	 * Given a node to be be perturbed, this method transltes that perturbation into the appropriate .spec file
+	 * semantics and creates the file
+	 * */
 	private static String createSpecFile(List<String> nodes , StringBuilder specFileTemplate, String curPerturbedNode,
 										 int value, String typeOfPerturbationArg, String targetNode, String typeOfPerturbation,
-										 String timeStep, String modelFileName) throws Exception {
+										 String timeStep, String modelFileName, String specFileName) throws Exception {
 
 		StringBuilder curSpecFile = new StringBuilder(specFileTemplate);
 		curSpecFile.append("\n//Perturbations Specs");
-		//Final result of target node
+		//Append final result of target node macro
 		curSpecFile.append("\n$" + typeOfPerturbation + "ResultExpression := {" + targetNode + " = "+ value + "};\n\n");
-		//Set time steps
+		//Append time steps
 		curSpecFile.append("#" + curPerturbedNode + typeOfPerturbation + "Experiment[0] |= $" + curPerturbedNode + typeOfPerturbation + ";\n");
 		curSpecFile.append("#" + curPerturbedNode + typeOfPerturbation + "Experiment["+ timeStep +"] |= $" + typeOfPerturbation + "ResultExpression;\n\n");
-		//Actual pertubation on bottom
+		//Append perturbation macro
 		curSpecFile.append("$" + curPerturbedNode+ typeOfPerturbation + ":=\n{\n");
 		int nodeCount = 0;
 		for (String node : nodes) {
@@ -178,6 +191,7 @@ public class Perturbations {
 			nodeCount++;
 		}
 		curSpecFile.append("};\n");
+
 		//Create and write to new spec file (perturbations.spec)
 		String path = null;
 		try {
@@ -185,24 +199,31 @@ public class Perturbations {
 		}catch (StringIndexOutOfBoundsException e){
 			path = modelFileName.substring(0, modelFileName.lastIndexOf("\\"));
 		}
-		String retFileName = path + File.separator + "perturbations.spec";
+		String fileType = specFileName.split("\\.")[1];
+		String retFileName = path + File.separator + "perturbations." + fileType;
 		PrintWriter pr = new PrintWriter(retFileName, "UTF-8");
 		pr.print(curSpecFile.toString());
 		pr.close();
 		return retFileName;
 	}
 
+	/**
+	 * Given a pair of nodes to be be perturbed, this method transltes that perturbation into the appropriate .spec file
+	 * semantics and creates the file
+	 *
+	 * @return name of the .spec file
+	 */
 	private static String createDoubleSpecFile(List<String> nodes , StringBuilder specFileTemplate, String curPerturbedNode1, String curPerturbedNode2,
 											   int value, String typeOfPerturbationArg, String targetNode, String typeOfPerturbation,
-											   String timeStep, String modelFileName) throws Exception {
+											   String timeStep, String modelFileName, String specFileName) throws Exception {
 		StringBuilder curSpecFile = new StringBuilder(specFileTemplate);
 		curSpecFile.append("\n//Perturbations Specs");
-		//Final result
+		//Append final result of target node macro
 		curSpecFile.append("\n$" + typeOfPerturbation + "ResultExpression := {" + targetNode + " = "+ value + "};\n\n");
-		//Set time step
+		//Append time steps
 		curSpecFile.append("#" + curPerturbedNode1 + "_" + curPerturbedNode2 + typeOfPerturbation + "Experiment[0] |= $" + curPerturbedNode1 + "_" + curPerturbedNode2 + typeOfPerturbation + ";\n");
 		curSpecFile.append("#" + curPerturbedNode1 + "_" + curPerturbedNode2 + typeOfPerturbation + "Experiment["+ timeStep +"] |= $" + typeOfPerturbation + "ResultExpression;\n\n");
-		//Actual pertubation on bottom
+		//Append perturbation macro
 		curSpecFile.append("$" + curPerturbedNode1 + "_" + curPerturbedNode2 + typeOfPerturbation + ":=\n{\n");
 		int nodeCount = 0;
 		for (String node : nodes) {
@@ -218,6 +239,7 @@ public class Perturbations {
 			nodeCount++;
 		}
 		curSpecFile.append("};\n");
+
 		//Create and write to new spec file (perturbations.spec)
 		String path = null;
 		try {
@@ -225,7 +247,8 @@ public class Perturbations {
 		}catch (StringIndexOutOfBoundsException e){
 			path = modelFileName.substring(0, modelFileName.lastIndexOf("\\"));
 		}
-		String retFileName = path + File.separator + "perturbations.spec";
+		String fileType = specFileName.split("\\.")[1];
+		String retFileName = path + File.separator + "perturbations." + fileType;
 		PrintWriter pr = new PrintWriter(retFileName, "UTF-8");
 		pr.print(curSpecFile.toString());
 		pr.close();
@@ -237,9 +260,8 @@ public class Perturbations {
 		BufferedReader model = readFile(modelFileName);
 		//read through the file
 		String line = null;
-		//line number for error messages
-		int lineNumber = 0;
 		line = model.readLine();
+		//We don't care about "directives", only nodes
 		while(line.startsWith("directive")) line = model.readLine();
 		String[] clauses = line.trim().split(";");
 		for(String c:clauses){
@@ -254,7 +276,7 @@ public class Perturbations {
 					nameOfNode.append(c.charAt(i));
 				}
 			}
-			//Only add the node if it has a +/-
+			//Only add the node if it has a "+" or "-"
 			if(c.split("\\[|\\]")[1].contains("-") && typeOfPerturbationArg.equals("KO")){
 				nodes.add(nameOfNode.toString().trim());
 			}else if(c.split("\\[|\\]")[1].contains("+") && typeOfPerturbationArg.equals("FE")){
