@@ -67,7 +67,7 @@ java PerturbationSimulator <model file> <spec file> <mode> <number of perturbati
     - type of perturbation - the options are knockout ('KO') or overexpress ('FE')
     - time step - the time step at which the user is interested in predicting the target node's value
 
-### Minimal-Contradictory-Core (MCC) Identifier
+### Minimal-Unsatisfiable-Core (MUC) Identifier
 ----------
 After compiling the program MinContradictions.java, use the following arguments to run the simulator:
 ```
