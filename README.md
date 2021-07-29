@@ -69,7 +69,7 @@ java PerturbationSimulator <model file> <spec file> <mode> <number of perturbati
 
 ### Minimal-Contradictory-Core (MCC) Identifier
 ----------
-- raziel fill in
+- (raziel fill in)
 ### Inter-tool Conversions
 ----------
 - BioTapestry -> BRE:IN
@@ -80,12 +80,13 @@ java PerturbationSimulator <model file> <spec file> <mode> <number of perturbati
         - find the desired (source -> target) row in the table, click on that row, and click `Edit Entry`
         - Check the `Set Custom Style` box, and choose either `dashed` or `dotted`
         ![image not found](media/make_link_optional_btp.gif)
-    - Then run the [script](BioTapestry2Brein/btp2Brein.py) using Python 3.x, and follow the command-line prompts
+    - Then run the [`btp2Brein.py` script](BioTapestry2Brein/btp2Brein.py) using Python 3.x, and follow the command-line prompts
     - Note that there are multiple options for specifying the possible regulatory conditions for each node, including one-by-one command line promts, a single input which is expected to match the .net syntax BRE:IN expects, or a [.rcspec file](https://github.com/jmcaplan/biu-cs-2021#rcspec-file-type) 
 
 
-# Details
-## RCSPEC File Type
+## Details
+### RCSPEC File Type
 ----------
 In order to streamline the process of specifying individual regulatory conditions for each node in a network, we defined semantics for the .rcspec file type, as follows:
 - each line conforms to the syntax `<node name>\t<regulatory condition>\n`
+- in the context of building a rules file, each node must have a single regulatory condition defined, whereas in the context of BRE:IN input generation, multiple regulatory conditions can be defined with comma-separated and range syntax (e.g. 1,3,5..17)
