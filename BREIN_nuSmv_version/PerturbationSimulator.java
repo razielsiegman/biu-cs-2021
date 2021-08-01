@@ -3,12 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO:
- * 	1) Rid of printlns
- * 	2) Comment methods
- */
-
-/**
  *	A program that allows the user to view the effect of "knocking out" or "overexpressing" every other node--or pairs of
  *	nodes--on a selected target node at a selected time step
  *
@@ -89,13 +83,13 @@ public class PerturbationSimulator {
 				//Create spec file where target node is expected to be ON and run NAE
 				String onFile = createSpecFile(nodes, specFileTemplate, node, 1, typeOfPerturbationArg,
 						targetNode, typeOfPerturbation, timeStep, modelFileName, specFileName);
-				System.out.println(node + " Expecting target: On...");
+				//System.out.println(node + " Expecting target: On...");
 				onFileSolutionsExist = runNAE(onFile, modelFileName, rt, mode);
 
 				//Create spec file where target node is expected to be OFF and run NAE
 				String offFile = createSpecFile(nodes, specFileTemplate, node, 0, typeOfPerturbationArg,
 						targetNode, typeOfPerturbation, timeStep, modelFileName, specFileName);
-				System.out.println(node + " Expecting target: Off...");
+				//System.out.println(node + " Expecting target: Off...");
 				offFileSolutionsExist = runNAE(offFile, modelFileName, rt, mode);
 				//Process result to see if we have a prediction
 				processResults(out, onFileSolutionsExist, offFileSolutionsExist, node);
@@ -108,12 +102,12 @@ public class PerturbationSimulator {
 					//Create spec file where target node is expected to be ON and run NAE
 					String onFile = createDoubleSpecFile(nodes, specFileTemplate, node1, node2, 1, typeOfPerturbationArg, targetNode,
 							typeOfPerturbation, timeStep, modelFileName, specFileName);
-					System.out.println(node1 + " & " + node2 + ": Expecting target on...");
+					//System.out.println(node1 + " & " + node2 + ": Expecting target on...");
 					onFileSolutionsExist = runNAE(onFile, modelFileName, rt, mode);
 					//Create spec file where target node is expected to be OFF and run NAE
 					String offFile = createDoubleSpecFile(nodes, specFileTemplate, node1, node2, 0, typeOfPerturbationArg,
 							targetNode, typeOfPerturbation, timeStep, modelFileName, specFileName);
-					System.out.println(node1 + " & " + node2 + ": Expecting target: off...");
+					//System.out.println(node1 + " & " + node2 + ": Expecting target: off...");
 					offFileSolutionsExist = runNAE(offFile, modelFileName, rt, mode);
 					//Process result to see if we have a prediction
 					processResults(out, onFileSolutionsExist, offFileSolutionsExist, node1 + " & " + node2);
@@ -149,20 +143,22 @@ public class PerturbationSimulator {
 		BufferedReader reader=new BufferedReader(new InputStreamReader(pr.getInputStream()));
 		String firstLine = null;
 		String line;
-		int i = 0;
+		/*int i = 0;
 		while((line = reader.readLine()) != null){
 			if(i == 0){
 				firstLine = line;
 			}
 			System.out.println(line);
 		}
-		return !(firstLine.equals("No Solutions Found"));
-		//return !(firstLine = reader.readLine()).equals("No Solutions Found");
+		return !(firstLine.equals("No Solutions Found"));*/
+		return !(firstLine = reader.readLine()).equals("No Solutions Found");
 	}
 
 	/**
-	 * Given a node to be be perturbed, this method transltes that perturbation into the appropriate .spec file
+	 * Given a node to be be perturbed, this method translates that perturbation into the appropriate spec file
 	 * semantics and creates the file
+	 *
+	 * @return name of the spec file
 	 * */
 	private static String createSpecFile(List<String> nodes , StringBuilder specFileTemplate, String curPerturbedNode,
 										 int value, String typeOfPerturbationArg, String targetNode, String typeOfPerturbation,
@@ -208,10 +204,10 @@ public class PerturbationSimulator {
 	}
 
 	/**
-	 * Given a pair of nodes to be be perturbed, this method transltes that perturbation into the appropriate .spec file
+	 * Given a pair of nodes to be be perturbed, this method translates that perturbation into the appropriate .spec file
 	 * semantics and creates the file
 	 *
-	 * @return name of the .spec file
+	 * @return name of the spec file
 	 */
 	private static String createDoubleSpecFile(List<String> nodes , StringBuilder specFileTemplate, String curPerturbedNode1, String curPerturbedNode2,
 											   int value, String typeOfPerturbationArg, String targetNode, String typeOfPerturbation,
@@ -276,7 +272,7 @@ public class PerturbationSimulator {
 					nameOfNode.append(c.charAt(i));
 				}
 			}
-			//Only add the node if it has a "+" or "-"
+			//Only add the node if it has a "+" or "-" corresponding to the perturbation argument
 			if(c.split("\\[|\\]")[1].contains("-") && typeOfPerturbationArg.equals("KO")){
 				nodes.add(nameOfNode.toString().trim());
 			}else if(c.split("\\[|\\]")[1].contains("+") && typeOfPerturbationArg.equals("FE")){
