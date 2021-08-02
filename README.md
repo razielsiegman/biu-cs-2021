@@ -16,8 +16,8 @@ A number of new features and improvements were implemented in the BRE:IN tool it
 We built 2 programs as abstractions on top of BRE:IN
 - I | Perturbation Simulator
     - allows the user to view the effect of perturbating ("knocking out" or "overexpressing") every other node--or pairs of nodes--on a selected target node at a selected time step
-- II | Minimal-Contradictory-Core (MCC) Identifier
-    - raz fill in
+- II | Minimal-Unsatisfiable-Core (MUC) Identifier
+    - The MUC Indentifier algorithm produces minimal sets of contradictory experiments.  Within each of these sets, it also has the capability to produce minimal sets of contradictory constraints, or alternitavely, to produce minimal sets of constraints inrrespective of experiments.
 ### 3 | Inter-tool Conversions
 ----------
 - [BioTapestry](http://www.biotapestry.org/) (.btp) Conversions
@@ -67,9 +67,16 @@ java PerturbationSimulator <model file> <spec file> <mode> <number of perturbati
     - type of perturbation - the options are knockout ('KO') or overexpress ('FE')
     - time step - the time step at which the user is interested in predicting the target node's value
 
-### Minimal-Contradictory-Core (MCC) Identifier
+### Minimal-Unsatisfiable-Core (MUC) Identifier
 ----------
-- (raziel fill in)
+After compiling the program MinContradictions.java, use the following arguments to run the simulator:
+```
+java MinContradictions <model file> <spec file> <algorithm mode>
+``` 
+- The first two arguments are the same as the second and third arguments, respectively, for BRE:IN.
+    - algorithm mode - The biological data is composed of experiments, each experiment containing multiple constraints.  The algorithm can be programmed to just find minimal sets of contradictory experiments ('e'), or, within each of these minimal sets, to also find the minimal sets of contradictory constraints ('ec').  Alternitavely, the experiments can be ignored, just finding minimal sets of constraints irrespective of the experiment they are a part of ('c').  The lattermost option has a slower runtime, as it cannot first reduce the possibilities by eliminating experiments.  On the other hand, it avoids the possibility of interference between multiple contradictory sets of overlapping experiments, ensuring that if the constraints are removed from the data set, a solution is garunteed.
+- MUCs can only be identified when running BRE:IN in 'time_step' mode, where biological constraints are optional.  When running BRE:IN using temporal logic, while it is possible for there to not be solutions, removing temporal logic constraints can cause the model to be illogical.
+
 ### Inter-tool Conversions
 ----------
 - BioTapestry -> BRE:IN
