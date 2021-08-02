@@ -17,7 +17,7 @@ We built 2 programs as abstractions on top of BRE:IN
 - I | Perturbation Simulator
     - allows the user to view the effect of perturbating ("knocking out" or "overexpressing") every other node--or pairs of nodes--on a selected target node at a selected time step
 - II | Minimal-Unsatisfiable-Core (MUC) Identifier
-    - The MUC Indentifier algorithm produces minimal sets of contradictory experiments.  Within each of these sets, it also has the capability to produce minimal sets of contradictory constraints.
+    - The MUC Indentifier algorithm produces minimal sets of contradictory experiments.  Within each of these sets, it also has the capability to produce minimal sets of contradictory constraints, or alternitavely, to produce minimal sets of constraints inrrespective of experiments.
 ### 3 | Inter-tool Conversions
 ----------
 - [BioTapestry](http://www.biotapestry.org/) (.btp) Conversions
@@ -62,19 +62,19 @@ After compiling the program PerturbationSimulator.java, use the following argume
 java PerturbationSimulator <model file> <spec file> <mode> <number of perturbations> <target node> <type of perturbation> <time step>
 ``` 
 - The first 3 arguments are the same as those for BRE:IN. The additional arguments can be described as follows:
-    - number of perturbations - whether the user wants to perturbate every node inidividually ('single') or every pair of nodes ('double')
-    - target node - the node that the user is interested in determining whether perturbating all other nodes/pairs of nodes will have an effect on it 
-    - type of perturbation - the options are knockout ('KO') or overexpress ('FE')
-    - time step - the time step at which the user is interested in predicting the target node's value
+    - Number of perturbations - whether the user wants to perturbate every node inidividually ('single') or every pair of nodes ('double')
+    - Target node - the node that the user is interested in determining whether perturbating all other nodes/pairs of nodes will have an effect on it 
+    - Type of perturbation - the options are knockout ('KO') or overexpress ('FE')
+    - Time step - the time step at which the user is interested in predicting the target node's value
 
 ### Minimal-Unsatisfiable-Core (MUC) Identifier
 ----------
 After compiling the program MinContradictions.java, use the following arguments to run the simulator:
 ```
-java MinContradictions <model file> <spec file>
+java MinContradictions <model file> <spec file> <specificity>
 ``` 
-- These two arguments are the same as the second and third arguments, respectively, for BRE:IN.
-- Upon running the program, the user will be asked whether to also solve for minimal contraints within each set of minimal experiments.
+- The first two arguments are the same as the second and third arguments, respectively, for BRE:IN.
+- The biological data is composed of experiments, each experiment containing multiple constraints.  The algorithm can be programmed to just find minimal sets of contradictory experiments ('e'), or, within each of these minimal sets, to also find the minimal sets of contradictory constraints ('ec').  Alternitavely, the experiments can be ignored, just finding minimal sets of constraints irrespective of the experiment they are a part of ('c').  The lattermost option has a slower runtime, as it cannot first reduce the possibilities by eliminating experiments.  On the other hand, it avoids the possibility of interference between multiple contradictory sets of overlapping experiments, ensuring that if the constraints are removed from the data set, a solution is garunteed.
 ### Inter-tool Conversions
 ----------
 - BioTapestry -> BRE:IN
