@@ -62,19 +62,19 @@ After compiling the program PerturbationSimulator.java, use the following argume
 java PerturbationSimulator <model file> <spec file> <mode> <number of perturbations> <target node> <type of perturbation> <time step>
 ``` 
 - The first 3 arguments are the same as those for BRE:IN. The additional arguments can be described as follows:
-    - Number of perturbations - whether the user wants to perturbate every node inidividually ('single') or every pair of nodes ('double')
-    - Target node - the node that the user is interested in determining whether perturbating all other nodes/pairs of nodes will have an effect on it 
-    - Type of perturbation - the options are knockout ('KO') or overexpress ('FE')
-    - Time step - the time step at which the user is interested in predicting the target node's value
+    - number of perturbations - whether the user wants to perturbate every node inidividually ('single') or every pair of nodes ('double')
+    - target node - the node that the user is interested in determining whether perturbating all other nodes/pairs of nodes will have an effect on it 
+    - type of perturbation - the options are knockout ('KO') or overexpress ('FE')
+    - time step - the time step at which the user is interested in predicting the target node's value
 
 ### Minimal-Unsatisfiable-Core (MUC) Identifier
 ----------
 After compiling the program MinContradictions.java, use the following arguments to run the simulator:
 ```
-java MinContradictions <model file> <spec file> <specificity>
+java MinContradictions <model file> <spec file> <algorithm mode>
 ``` 
 - The first two arguments are the same as the second and third arguments, respectively, for BRE:IN.
-- The biological data is composed of experiments, each experiment containing multiple constraints.  The algorithm can be programmed to just find minimal sets of contradictory experiments ('e'), or, within each of these minimal sets, to also find the minimal sets of contradictory constraints ('ec').  Alternitavely, the experiments can be ignored, just finding minimal sets of constraints irrespective of the experiment they are a part of ('c').  The lattermost option has a slower runtime, as it cannot first reduce the possibilities by eliminating experiments.  On the other hand, it avoids the possibility of interference between multiple contradictory sets of overlapping experiments, ensuring that if the constraints are removed from the data set, a solution is garunteed.
+- algorithm mode - The biological data is composed of experiments, each experiment containing multiple constraints.  The algorithm can be programmed to just find minimal sets of contradictory experiments ('e'), or, within each of these minimal sets, to also find the minimal sets of contradictory constraints ('ec').  Alternitavely, the experiments can be ignored, just finding minimal sets of constraints irrespective of the experiment they are a part of ('c').  The lattermost option has a slower runtime, as it cannot first reduce the possibilities by eliminating experiments.  On the other hand, it avoids the possibility of interference between multiple contradictory sets of overlapping experiments, ensuring that if the constraints are removed from the data set, a solution is garunteed.
 ### Inter-tool Conversions
 ----------
 - BioTapestry -> BRE:IN
