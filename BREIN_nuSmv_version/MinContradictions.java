@@ -56,7 +56,6 @@ public class MinContradictions {
     private String model;
     private String newSpec;
     private String mode;
-    private String currentSpec;
     private String specTemplate;
     private Map<String, Experiment> experiments;
     private Set<HashSet<Experiment>> expSolutionSets;
@@ -64,42 +63,73 @@ public class MinContradictions {
     private Runtime rt;
     private boolean constraints;
 
+    /**
+     * The program, in its current state, must be generated from the main method.
+     * Note: all file paths are assumed to be relative.
+     *
+     * @param  args the model.net file, observation.spec file, and algorithm
+     * mode, respectively
+     */
     public static void main(String[] args) throws IOException {
         if(args[1].contains("ltl") || args[1].contains("ctl")) {
             throw new IllegalArgumentException("Minimal solution sets cannot be found for temporal logic models");
+        }
+        if(!args[2].equals("e") && !args[2].equals("c") && !args[2].equals("ec")){
+            throw new IllegalArgumentException("Algorithm type must be a \"e\" or \"ec\" or \"c\"");
         }
         //Boot up NAE
         Runtime rt = Runtime.getRuntime();
         Process pr1 = rt.exec("javac NAE/*.java validate/*.java");
         Process pr2 = rt.exec("jar cvfm NAE.jar NAE/manifest.txt NAE/*.class validate/*.class");
-        MinContradictions mc = new MinContradictions();
-        System.out.println("Would you like minimal constraint sets in addition to minimal experiment sets? (\"y\" for yes, \"n\" for no)");
-        Scanner scanner = new Scanner(System.in);
-        String s = scanner.nextLine();
-        if(!s.equals("y") && !s.equals("n")){
-            throw new IllegalArgumentException("Input must be a \"y\" or \"n\"");
-        }
-        if(s.equals("y")){
-            mc.constraints = true;
-        }
-        else{
-            mc.constraints = false;
-        }
-        mc.rt = rt;
-        mc.model = args[0];
-        mc.newSpec = args[1] + "//..//" + "observations1.spec";
-        PrintWriter pr = new PrintWriter(mc.newSpec, "UTF-8");
-        String content = Files.readString(Paths.get(args[1]));
-        pr.print(content);
-        pr.close();
-        mc.mode = "time_step";
-        mc.experiments = new HashMap<String, Experiment>();
-        mc.expSolutionSets = new HashSet<HashSet<Experiment>>();
-        mc.conSolutionSets = new HashSet<HashSet<String>>();
-        mc.readObservation(mc.newSpec);
-        mc.findMinExpSets();
+        new MinContradictions(rt, args[0], args[1], args[2]);
     }
 
+    /**
+     * Class constructor specifying user args.
+     *
+     * @param  algMode specifies whether the algorithm detects minimal sets:
+     *                  a) of experiments; b) of experiments on the constraint
+     *                  level of granularity; c) of constraints, irrespective
+     *                  of experiments
+     * @param  rt      runtime environment with booted NAE program
+     * @param  model   model.net file path
+     * @param  newSpec observation1.spec file path, to be edited in each
+     *                 iteration of the program
+     */
+    private MinContradictions(Runtime rt, String model, String originalSpec, String algMode) throws IOException{
+        if(algMode.equals("ec")){
+            this.constraints = true;
+        }
+        this.rt = rt;
+        this.model = model;
+        //Copy spec file to prevent tampering with original
+        this.newSpec = originalSpec + "//..//" + "observations1.spec";
+        PrintWriter pr = new PrintWriter(this.newSpec, "UTF-8");
+        String content = Files.readString(Paths.get(originalSpec));
+        pr.print(content);
+        pr.close();
+
+        this.mode = "time_step";
+        this.experiments = new HashMap<String, Experiment>();
+        this.expSolutionSets = new HashSet<HashSet<Experiment>>();
+        this.conSolutionSets = new HashSet<HashSet<String>>();
+
+        //Run Program
+        this.readObservation(this.newSpec);
+        if(algMode.equals("c")) {
+            this.findMinConSets(new HashSet<Experiment>(this.experiments.values()));
+        }
+        else{
+            this.findMinExpSets();
+        }
+    }
+
+    /**
+     * Parses the spec file into its macros, stored as specTemplate, and its
+     * experimental data.
+     *
+     * @param  specFileName file path of spec file to be parsed
+     */
     private void readObservation(String specFileName) throws IOException {
         //Create spec file without experimental observations
         StringBuilder specFileTemplate = new StringBuilder();
@@ -130,6 +160,11 @@ public class MinContradictions {
         }
     }
 
+    /**
+     *  If the user either specified 'e' or 'ec' as the algorithm mode, find
+     *  minimal sets of contradictory experiments.
+     * @see #MinContradictions
+     */
     private void findMinExpSets() throws IOException {
         //All experiments being checked in current iteration (The complement of the union of all solution sets)
         Set<Experiment> currentExperiments = new HashSet<>(experiments.values());
@@ -161,6 +196,17 @@ public class MinContradictions {
         }
     }
 
+    /**
+     *  If the user either specified 'ec' or 'c' as the algorithm mode, find
+     *  minimal sets of contradictory constraints.
+     *  <p>
+     *  In case of algorithm mode 'c', all experiments will be inputted, and in
+     *  case of mode 'ec', one minimal set of contradictory experiments will be
+     *  inputted.
+     *
+     * @param  exps the set of experiments that contain the desired constraints
+     * @see #MinContradictions
+     */
     private void findMinConSets(Set<Experiment> exps) throws IOException {
         //All experiments being checked in current iteration (The complement of the union of all solution sets)
         Set<String> currentConstraints = new HashSet<String>();
@@ -192,6 +238,13 @@ public class MinContradictions {
         }
     }
 
+    /**
+     *  Given a set of experiments, rebuild the observation1.spec file to only
+     *  contain given experiments (where each experiment can contain many
+     *  constraints).
+     *
+     * @param experimentSet the set of experiments for the spec file
+     */
     private void buildCurrentSpecExp(Set<Experiment> experimentSet) throws IOException{
         StringBuilder spec = new StringBuilder();
         spec.append(specTemplate);
@@ -203,6 +256,12 @@ public class MinContradictions {
         pr.close();
     }
 
+    /**
+     *  Given a set of constraints, rebuild the observation1.spec file to only
+     *  contain given constraints.
+     *
+     * @param constraintSet the set of constraints for the spec file
+     */
     private void buildCurrentSpecCon(Set<String> constraintSet) throws IOException{
         StringBuilder spec = new StringBuilder();
         spec.append(specTemplate);
@@ -214,6 +273,16 @@ public class MinContradictions {
         pr.close();
     }
 
+    /**
+     *  Executes NAE.
+     *
+     * @param completeSpecFile spec file path containing specTemplate as well
+     *                         as a set of constraints
+     * @param modelFile        model.net file path
+     * @param rt               runtime environment with booted NAE program
+     * @param mode             BRE:IN mode, which must be 'time_step' when
+     *                         finding minimal sets of contradictory data
+     */
     private boolean runNAE(String completeSpecFile, String modelFile, Runtime rt, String mode) throws IOException {
         Process pr = rt.exec("java -jar NAE.jar 1 " + modelFile + " " + completeSpecFile + " " + mode);
         BufferedReader reader = new BufferedReader(new InputStreamReader(pr.getInputStream()));
