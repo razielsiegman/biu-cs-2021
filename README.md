@@ -1,7 +1,7 @@
 # BIU/YU Summer Research Program | Computer Science Students
 Under the guidance of Dr. Hillel Kugler
 
->*NOTE: this README assumes prior familiarity with [RE:IN](https://www.microsoft.com/en-us/research/project/reasoning-engine-for-interaction-networks-rein/) and [BRE:IN](https://github.com/kuglerh/BREIN). For more detailed technical explanations of the concepts and ideas below, see BREIN-nuSmv-version/readME.txt
+>*NOTE: this README assumes prior familiarity with [RE:IN](https://www.microsoft.com/en-us/research/project/reasoning-engine-for-interaction-networks-rein/) and [BRE:IN](https://github.com/kuglerh/BREIN).
 
 ## Projects
 ### 1 | BRE:IN Enhancements
