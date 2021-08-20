@@ -1,5 +1,5 @@
-# BIU/YU Summer Research Program | Computer Science Students
-Under the guidance of Dr. Hillel Kugler
+# BIU/YU Summer Research Project | Computer Science 
+Authors: Jonathan Haller, Raziel Siegman, and Yiar Caplan, under the guidance of Dr. Hillel Kugler
 
 >*NOTE: this README assumes prior familiarity with [RE:IN](https://www.microsoft.com/en-us/research/project/reasoning-engine-for-interaction-networks-rein/) and [BRE:IN](https://github.com/kuglerh/BREIN).
 
